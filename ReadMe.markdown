@@ -8,11 +8,3 @@
 
 1. Split C++ file set to libraries and sublibraries. 
 2. ".cpp" files should provide functionality (method bodys on any platform). ".ipp" files can be responsible for platfrom specific implementations.
-
-# Table
-
-<table>
-  <tr>
-    <td>X</td><td>Y</td>
-  </tr>
-</table>
