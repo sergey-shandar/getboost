@@ -47,7 +47,7 @@ namespace builder
             }
         }
 
-        public static void Run(string id, IEnumerable<File> fileList)
+        private static void CreateNuspec(string id, IEnumerable<File> fileList)
         {
             var versionRange =
                 "[" +
@@ -84,6 +84,11 @@ namespace builder
                 {
                     UseShellExecute = false,
                 }).WaitForExit();
+        }
+
+        public static void Create(string id, IEnumerable<File> fileList)
+        {
+            CreateNuspec(id, fileList);
         }
     }
 }

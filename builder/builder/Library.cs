@@ -40,7 +40,7 @@ namespace builder
                 var srcFiles =
                     package.FileList.Select(f => new Nuspec.File(
                         Path.Combine(Directory, f),
-                        Path.Combine(targetSrcPath, f)));
+                        Path.Combine(Targets.SrcPath, f)));
                 var unitFiles =
                     package.
                     CompilationUnitList.
@@ -48,85 +48,29 @@ namespace builder
                         u => 
                             new Nuspec.File(
                                 u.FileName(packageId), 
-                                Path.Combine(targetSrcPath, u.LocalPath)
+                                Path.Combine(Targets.SrcPath, u.LocalPath)
                             )
                     );
-                var targetsFile = nuspecId + ".targets";
                 //
                 foreach (var u in package.CompilationUnitList)
                 {
                     u.Make(packageId, package);
                 }
                 //
-                var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
-                var srcPath = Path.Combine(
-                        @"$(MSBuildThisFileDirectory)..\..\", targetSrcPath);
-                /*
-                var additionalIncludeDirectories =
-                    ".;%(AdditionalIncludeDirectories)";
-                 * */
-                var unitList = 
-                    package.
-                    CompilationUnitList.
-                    Select(
-                        u =>
-                            M("ClCompile",
-                                Xml.A(
-                                    "Include",
-                                    Path.Combine(
-                                        srcPath,
-                                        u.LocalPath,
-                                        u.FileName(packageId))
-                                )
-                            ).Append(
-                                M(
-                                    "PrecompiledHeader", 
-                                    "NotUsing"
-                                ),
-                                M(
-                                    "AdditionalIncludeDirectories",
-                                    Path.Combine(srcPath, u.LocalPath) +
-                                        ";%(AdditionalIncludeDirectories)"
-                                )
-                            )
-                    );
-                var targets =
-                    M("Project", Xml.A("ToolVersion", "4.0")).Append(
-                        M("ItemDefinitionGroup").Append(
-                            M("ClCompile").Append(
-                                M("PreprocessorDefinitions", pd)
-                            )
-                        ),
-                        M("ItemGroup").Append(unitList)
-                    );
-                targets.CreateDocument().Save(targetsFile);
-                Nuspec.Run(
+                var targetsFile =
+                    Targets.Create(
+                        nuspecId, packageId, package.CompilationUnitList);
+                Nuspec.Create(
                     nuspecId,
                     srcFiles.
-                    Concat(unitFiles).
-                    Concat(
-                        new[] { 
-                            new Nuspec.File(targetsFile, targetBuildPath)
-                        })
+                        Concat(unitFiles).
+                        Concat(
+                            new[] { 
+                                new Nuspec.File(targetsFile, targetBuildPath)
+                            })
                 );
             }
         }
-
-        private static XElement M(
-            string elementName, params XAttribute[] attributeList)
-        {
-            return m.Element(elementName, attributeList);
-        }
-
-        private static XElement M(string elementName, string content)
-        {
-            return M(elementName).Append(content);
-        }
-
-        private static readonly XNamespace m = XNamespace.Get(
-            "http://schemas.microsoft.com/developer/msbuild/2003");
-
-        private const string targetSrcPath = @"lib\native\src\";
 
         private const string targetBuildPath = @"build\native\";
     }
