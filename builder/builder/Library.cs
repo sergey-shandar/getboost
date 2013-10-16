@@ -53,12 +53,19 @@ namespace builder
                 //
                 var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
                 var clCompile = Targets.M("PreprocessorDefinitions", pd);
+                var versionRange =
+                    "[" +
+                    new Version(Config.Version.Major, Config.Version.Minor) +
+                    "," +
+                    new Version(Config.Version.Major, Config.Version.Minor + 1) +
+                    ")";
                 Nuspec.Create(
                     nuspecId,
                     packageId,
                     clCompile,
                     srcFiles,
-                    package.CompilationUnitList
+                    package.CompilationUnitList,
+                    new[] { new Nuspec.Dependency("boost", versionRange) }
                 );
             }
         }

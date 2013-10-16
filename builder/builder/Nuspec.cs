@@ -48,14 +48,32 @@ namespace builder
             }
         }
 
-        private static void CreateNuspec(string id, IEnumerable<File> fileList)
+        public class Dependency
         {
+            public readonly string Id;
+
+            public readonly string Version;
+
+            public Dependency(string id, string version)
+            {
+                Id = id;
+                Version = version;
+            }
+        };
+
+        private static void CreateNuspec(
+            string id,
+            IEnumerable<File> fileList,
+            IEnumerable<Dependency> dependencyList)
+        {
+            /*
             var versionRange =
                 "[" +
                 new Version(Config.Version.Major, Config.Version.Minor) +
                 "," +
                 new Version(Config.Version.Major, Config.Version.Minor + 1) +
                 ")";
+             * */
             var nuspec =
                 N("package").Append(
                     N("metadata").Append(
@@ -68,10 +86,13 @@ namespace builder
                         N("requireLicenseAcceptance", "false"),
                         N("description", id),
                         N("dependencies").Append(
-                            N(
-                                "dependency",
-                                Xml.A("id", "boost"),
-                                Xml.A("version", versionRange)
+                            dependencyList.Select(
+                                d => 
+                                    N(
+                                        "dependency",
+                                        Xml.A("id", d.Id),
+                                        Xml.A("version", d.Version)
+                                    )
                             )
                         )
                     ),
@@ -92,7 +113,8 @@ namespace builder
             string packageId, 
             XElement clCompile,
             IEnumerable<File> fileList,
-            IEnumerable<CompilationUnit> compilationUnitList)
+            IEnumerable<CompilationUnit> compilationUnitList,
+            IEnumerable<Nuspec.Dependency> dependencyList)
         {
             var unitFiles =
                 compilationUnitList.
@@ -110,7 +132,8 @@ namespace builder
                 nuspecId,
                 fileList.
                     Concat(unitFiles).
-                    Concat(new[] { new File(targetsFile, Targets.BuildPath) })
+                    Concat(new[] { new File(targetsFile, Targets.BuildPath) }),
+                dependencyList
             );
         }
     }

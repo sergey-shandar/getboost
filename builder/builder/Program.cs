@@ -114,7 +114,8 @@ namespace builder
                                 Path.Combine(Targets.IncludePath, f)
                             )
                     ),
-                    new CompilationUnit[0]
+                    new CompilationUnit[0],
+                    new Nuspec.Dependency[0]
                 );
             }
             // libraries.

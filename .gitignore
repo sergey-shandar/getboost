@@ -1,2 +1,5 @@
 builder/builder/obj/
 builder/builder/bin/
+test/ipch/
+*.opensdf
+*.sdf
