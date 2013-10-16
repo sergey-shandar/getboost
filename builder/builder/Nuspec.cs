@@ -103,7 +103,7 @@ namespace builder
         public static void Create(
             string nuspecId,
             string packageId, 
-            XElement clCompile,
+            Targets.ClCompile clCompile,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,
             IEnumerable<Nuspec.Dependency> dependencyList)

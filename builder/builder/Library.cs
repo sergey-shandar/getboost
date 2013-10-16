@@ -35,39 +35,7 @@ namespace builder
         {
             foreach (var package in PackageList)
             {
-                var packageId = package.PackageId(Name);
-                var nuspecId = packageId;
-                var srcFiles =
-                    package.FileList.Select(
-                        f => 
-                            new Nuspec.File(
-                                Path.Combine(Directory, f),
-                                Path.Combine(Targets.SrcPath, f)
-                            )
-                    );
-                //
-                foreach (var u in package.CompilationUnitList)
-                {
-                    u.Make(packageId, package);
-                }
-                //
-                var pd =
-                    packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
-                var clCompile = Targets.M("PreprocessorDefinitions", pd);
-                var versionRange =
-                    "[" +
-                    new Version(Config.Version.Major, Config.Version.Minor) +
-                    "," +
-                    new Version(Config.Version.Major, Config.Version.Minor + 1) +
-                    ")";
-                Nuspec.Create(
-                    nuspecId,
-                    packageId,
-                    clCompile,
-                    srcFiles,
-                    package.CompilationUnitList,
-                    new[] { new Nuspec.Dependency("boost", versionRange) }
-                );
+                package.Create(Name, Directory);
             }
         }
 

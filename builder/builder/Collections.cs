@@ -44,5 +44,24 @@ namespace builder
             }
             return result;
         }
+
+        public static Split SplitFirst(this string value, char c)
+        {
+            return new Split(value, value.IndexOf(c));
+        }
+
+        /*
+        public static string BeforeFirst(this string value, char c)
+        {
+            var index = value.IndexOf(c);
+            return index == -1 ? value : value.Substring(0, index);
+        }
+
+        public static string AfterFirst(this string value, char c)
+        {
+            var index = value.IndexOf(c);
+            return index == -1 ? value : value.Substring(index + 1);
+        }
+         * */
     }
 }

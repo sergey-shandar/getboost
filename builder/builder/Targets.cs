@@ -16,6 +16,72 @@ namespace builder
 
         public const string BuildPath = @"build\native\";
 
+        public enum PrecompiledHeader
+        {
+            NotUsing,
+            Create,
+            Use,
+        }
+
+        public class ClCompile
+        {
+            public readonly string Include;
+
+            public readonly PrecompiledHeader? PrecompiledHeader;
+
+            public readonly string PreprocessorDefinitions;
+
+            public readonly string AdditionalIncludeDirectories;
+
+            public ClCompile(
+                string include = null,
+                PrecompiledHeader? precompiledHeader = null,
+                string preprocessorDefinitions = null,
+                string additionalIncludeDirectories = null)
+            {
+                Include = include;
+                PrecompiledHeader = precompiledHeader;
+                PreprocessorDefinitions = preprocessorDefinitions;
+                AdditionalIncludeDirectories = additionalIncludeDirectories;
+            }
+
+            private static void Append(
+                XElement clCompile, string name, string value)
+            {
+                if(value != null)
+                {
+                    clCompile.Append(M(name, value + ";%(" + name + ")"));
+                }
+            }
+
+            public XElement X
+            {
+                get
+                {
+                    var clCompile = M("ClCompile");
+                    if (Include != null)
+                    {
+                        clCompile.Append(Xml.A("Include", Include));
+                    }
+                    if (PrecompiledHeader != null)
+                    {
+                        clCompile.Append(
+                            M("PrecompiledHeader", PrecompiledHeader.ToString())
+                        );
+                    }
+                    Append(
+                        clCompile,
+                        "PreprocessorDefinitions",
+                        PreprocessorDefinitions);
+                    Append(
+                        clCompile, 
+                        "AdditionalIncludeDirectories",
+                        AdditionalIncludeDirectories);
+                    return clCompile;
+                }
+            }
+        }
+
         public static string PathFromThis(string path)
         {
             return Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", path);
@@ -38,10 +104,11 @@ namespace builder
         public static string Create(
             string nuspecId,
             string packageId,
-            XElement clCompile,
+            ClCompile clCompile,
             IEnumerable<CompilationUnit> compilationUnitList)
         {
             var srcPath = PathFromThis(SrcPath);
+            /*
             var unitList =
                 compilationUnitList.
                 Select(
@@ -66,17 +133,30 @@ namespace builder
                             )
                         )
                 );
+             * */
+            var clCompileList =
+                compilationUnitList.
+                Select(
+                    u =>
+                        new ClCompile(
+                            include:
+                                Path.Combine(
+                                    srcPath,
+                                    u.LocalPath,
+                                    u.FileName(packageId)
+                                ),
+                            precompiledHeader:
+                                PrecompiledHeader.NotUsing,
+                            additionalIncludeDirectories:
+                                Path.Combine(srcPath, u.LocalPath)
+                        )
+                );
             var targetsFile = nuspecId + ".targets";
-            //var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
             var targets =
                 M("Project", Xml.A("ToolVersion", "4.0")).Append(
-                    M("ItemDefinitionGroup").Append(
-                        M("ClCompile").Append(
-                            clCompile /*M("PreprocessorDefinitions", pd) */
-                        )
-                ),
-                M("ItemGroup").Append(unitList)
-            );
+                    M("ItemDefinitionGroup").Append(clCompile.X),
+                    M("ItemGroup").Append(clCompileList.Select(u => u.X))
+                );
             targets.CreateDocument().Save(targetsFile);
             return targetsFile;
         }

@@ -44,6 +44,44 @@ namespace builder
         public string PackageId(string libraryName)
         {
             return "boost_" + libraryName + (Name == null ? "": "_" + Name);
-        }        
+        }
+
+        public void Create(string libraryName, string directory)
+        {
+            var packageId = PackageId(libraryName);
+            var nuspecId = packageId;
+            var srcFiles =
+                FileList.Select(
+                    f =>
+                        new Nuspec.File(
+                            Path.Combine(directory, f),
+                            Path.Combine(Targets.SrcPath, f)
+                        )
+                );
+            //
+            foreach (var u in CompilationUnitList)
+            {
+                u.Make(packageId, this);
+            }
+            //
+            var clCompile =
+                new Targets.ClCompile(
+                    preprocessorDefinitions: packageId.ToUpper() + "_NO_LIB");
+            var versionRange =
+                "[" +
+                new Version(Config.Version.Major, Config.Version.Minor) +
+                "," +
+                new Version(Config.Version.Major, Config.Version.Minor + 1) +
+                ")";
+            Nuspec.Create(
+                nuspecId,
+                packageId,
+                clCompile,
+                srcFiles,
+                CompilationUnitList,
+                new[] { new Nuspec.Dependency("boost", versionRange) }
+            );
+
+        }
     }
 }

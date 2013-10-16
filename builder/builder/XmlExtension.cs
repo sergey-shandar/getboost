@@ -17,6 +17,22 @@ namespace builder
         }
 
         public static XElement Append(
+            this XElement element, IEnumerable<XAttribute> attributeList)
+        {
+            foreach (var attribute in attributeList)
+            {
+                element.Add(attribute);
+            }
+            return element;
+        }
+
+        public static XElement Append(
+            this XElement element, params XAttribute[] attributeList)
+        {
+            return element.Append((IEnumerable<XAttribute>)attributeList);
+        }
+
+        public static XElement Append(
             this XElement element, IEnumerable<XElement> childList)
         {
             foreach (var child in childList)

@@ -91,24 +91,21 @@ namespace builder
 
         static void Main(string[] args)
         {
-            // headers only.
+            // headers only library.
             {
                 var path = Path.Combine(Config.BoostDir, "boost");
                 var fileList =
                     new Dir(new DirectoryInfo(path), "boost").
                     FileList(f => true);
-                var clCompile =
-                    Targets.M(
-                        "AdditionalIncludeDirectories", 
-                        Targets.PathFromThis(Targets.IncludePath) +
-                            ";%(AdditionalIncludeDirectories)"
-                    );
                 Nuspec.Create(
                     "boost",
                     "boost",
-                    clCompile,
+                    new Targets.ClCompile(
+                        additionalIncludeDirectories:
+                            Targets.PathFromThis(Targets.IncludePath)
+                    ),
                     fileList.Select(
-                        f => 
+                        f =>
                             new Nuspec.File(
                                 Path.Combine(Config.BoostDir, f),
                                 Path.Combine(Targets.IncludePath, f)
@@ -138,6 +135,31 @@ namespace builder
                     MakeLibrary(libraryConfig, src);
                 }
             }
+            // compiler specific libraries
+            /*
+            var librarySet = new HashSet<string>();
+            var compilerSet = new HashSet<string>();
+            foreach (
+                var file in
+                    new DirectoryInfo(
+                        Path.Combine(Config.BoostDir, @"stage_x86\lib")
+                    ).
+                    GetFiles()
+            )
+            {
+                var split = file.Name.SplitFirst('-');
+                librarySet.Add(split.Before.SplitFirst('_').After);
+                compilerSet.Add(split.After.SplitFirst('-').Before);
+            }
+            foreach (var library in librarySet)
+            {
+                Console.WriteLine("library: " + library);
+            }
+            foreach (var compiler in compilerSet)
+            {
+                Console.WriteLine("compiler: " + compiler);
+            }
+             * */
         }
 
     }
