@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 
+#include <boost/atomic.hpp>
 
 int _tmain(int argc, _TCHAR* argv[])
 {

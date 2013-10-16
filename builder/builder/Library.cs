@@ -51,7 +51,8 @@ namespace builder
                     u.Make(packageId, package);
                 }
                 //
-                var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
+                var pd =
+                    packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
                 var clCompile = Targets.M("PreprocessorDefinitions", pd);
                 var versionRange =
                     "[" +

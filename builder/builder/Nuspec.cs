@@ -66,14 +66,6 @@ namespace builder
             IEnumerable<File> fileList,
             IEnumerable<Dependency> dependencyList)
         {
-            /*
-            var versionRange =
-                "[" +
-                new Version(Config.Version.Major, Config.Version.Minor) +
-                "," +
-                new Version(Config.Version.Major, Config.Version.Minor + 1) +
-                ")";
-             * */
             var nuspec =
                 N("package").Append(
                     N("metadata").Append(

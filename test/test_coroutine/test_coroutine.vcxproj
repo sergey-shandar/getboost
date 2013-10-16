@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{66D19598-71CE-4B50-BE2E-2E1BDEDEE0ED}</ProjectGuid>
+    <ProjectGuid>{106B2073-E1F5-4FAD-95CB-065051325C6E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_atomic</RootNamespace>
+    <RootNamespace>test_coroutine</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -87,7 +87,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="test_atomic.cpp" />
+    <ClCompile Include="test_coroutine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -95,6 +95,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_atomic.1.54.0.131\build\native\boost_atomic.targets" Condition="Exists('..\packages\boost_atomic.1.54.0.131\build\native\boost_atomic.targets')" />
+    <Import Project="..\packages\boost_coroutine.1.54.0.131\build\native\boost_coroutine.targets" Condition="Exists('..\packages\boost_coroutine.1.54.0.131\build\native\boost_coroutine.targets')" />
   </ImportGroup>
 </Project>

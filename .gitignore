@@ -3,3 +3,9 @@ builder/builder/bin/
 test/ipch/
 *.opensdf
 *.sdf
+test/packages/
+test/test_atomic/Debug/
+test/test_chrono/Debug/CL.read.1.tlog
+test/test_chrono/Debug/
+test/test_coroutine/Debug/
+test/test_system/Debug/
