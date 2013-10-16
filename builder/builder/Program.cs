@@ -91,10 +91,37 @@ namespace builder
 
         static void Main(string[] args)
         {
-            var boostLibs = 
-                @"..\..\..\..\..\boost_1_54_0\libs\";
-            // TODO: include hpp/cpp/asm files from src folder.
-            foreach (var directory in Directory.GetDirectories(boostLibs))
+            // headers only.
+            {
+                var path = Path.Combine(Config.BoostDir, "boost");
+                var fileList =
+                    new Dir(new DirectoryInfo(path), "boost").
+                    FileList(f => true);
+                var clCompile =
+                    Targets.M(
+                        "AdditionalIncludeDirectories", 
+                        Targets.PathFromThis(Targets.IncludePath) +
+                            ";%(AdditionalIncludeDirectories)"
+                    );
+                Nuspec.Create(
+                    "boost",
+                    "boost",
+                    clCompile,
+                    fileList.Select(
+                        f => 
+                            new Nuspec.File(
+                                Path.Combine(Config.BoostDir, f),
+                                Path.Combine(Targets.IncludePath, f)
+                            )
+                    ),
+                    new CompilationUnit[0]
+                );
+            }
+            // libraries.
+            foreach (
+                var directory in
+                    Directory.GetDirectories(
+                        Path.Combine(Config.BoostDir, "libs")))
             {
                 var src = Path.Combine(directory, "src");
                 if (Directory.Exists(src))

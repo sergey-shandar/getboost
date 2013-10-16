@@ -29,8 +29,8 @@ namespace builder
         {
             return
                 packageId + 
-                "-" +
-                CppFile.Replace('\\', '-');
+                "." +
+                CppFile.Replace('\\', '.');
         }
 
         public void Make(string packageId, Package package)
@@ -48,8 +48,9 @@ namespace builder
                         new[]
                         { 
                             "#include \"" + Path.GetFileName(CppFile) + "\""
-                        })
-                );
+                        }
+                    )
+            );
         }
     }
 }

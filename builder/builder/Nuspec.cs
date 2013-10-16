@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.IO;
 
 namespace builder
 {
@@ -86,9 +87,31 @@ namespace builder
                 }).WaitForExit();
         }
 
-        public static void Create(string id, IEnumerable<File> fileList)
+        public static void Create(
+            string nuspecId,
+            string packageId, 
+            XElement clCompile,
+            IEnumerable<File> fileList,
+            IEnumerable<CompilationUnit> compilationUnitList)
         {
-            CreateNuspec(id, fileList);
+            var unitFiles =
+                compilationUnitList.
+                Select(
+                    u =>
+                        new Nuspec.File(
+                            u.FileName(packageId),
+                            Path.Combine(Targets.SrcPath, u.LocalPath)
+                        )
+                );
+            var targetsFile =
+                Targets.Create(
+                    nuspecId, packageId, clCompile, compilationUnitList);
+            CreateNuspec(
+                nuspecId,
+                fileList.
+                    Concat(unitFiles).
+                    Concat(new[] { new File(targetsFile, Targets.BuildPath) })
+            );
         }
     }
 }

@@ -38,17 +38,11 @@ namespace builder
                 var packageId = package.PackageId(Name);
                 var nuspecId = packageId;
                 var srcFiles =
-                    package.FileList.Select(f => new Nuspec.File(
-                        Path.Combine(Directory, f),
-                        Path.Combine(Targets.SrcPath, f)));
-                var unitFiles =
-                    package.
-                    CompilationUnitList.
-                    Select(
-                        u => 
+                    package.FileList.Select(
+                        f => 
                             new Nuspec.File(
-                                u.FileName(packageId), 
-                                Path.Combine(Targets.SrcPath, u.LocalPath)
+                                Path.Combine(Directory, f),
+                                Path.Combine(Targets.SrcPath, f)
                             )
                     );
                 //
@@ -57,21 +51,17 @@ namespace builder
                     u.Make(packageId, package);
                 }
                 //
-                var targetsFile =
-                    Targets.Create(
-                        nuspecId, packageId, package.CompilationUnitList);
+                var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
+                var clCompile = Targets.M("PreprocessorDefinitions", pd);
                 Nuspec.Create(
                     nuspecId,
-                    srcFiles.
-                        Concat(unitFiles).
-                        Concat(
-                            new[] { 
-                                new Nuspec.File(targetsFile, targetBuildPath)
-                            })
+                    packageId,
+                    clCompile,
+                    srcFiles,
+                    package.CompilationUnitList
                 );
             }
         }
 
-        private const string targetBuildPath = @"build\native\";
     }
 }

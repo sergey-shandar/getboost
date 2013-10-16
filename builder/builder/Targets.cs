@@ -12,13 +12,22 @@ namespace builder
     {
         public const string SrcPath = @"lib\native\src\";
 
-        private static XElement M(
+        public const string IncludePath = @"lib\native\include\";
+
+        public const string BuildPath = @"build\native\";
+
+        public static string PathFromThis(string path)
+        {
+            return Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", path);
+        }
+
+        public static XElement M(
             string elementName, params XAttribute[] attributeList)
         {
             return m.Element(elementName, attributeList);
         }
 
-        private static XElement M(string elementName, string content)
+        public static XElement M(string elementName, string content)
         {
             return M(elementName).Append(content);
         }
@@ -29,10 +38,10 @@ namespace builder
         public static string Create(
             string nuspecId,
             string packageId,
+            XElement clCompile,
             IEnumerable<CompilationUnit> compilationUnitList)
         {
-            var srcPath =
-                Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", SrcPath);
+            var srcPath = PathFromThis(SrcPath);
             var unitList =
                 compilationUnitList.
                 Select(
@@ -58,12 +67,12 @@ namespace builder
                         )
                 );
             var targetsFile = nuspecId + ".targets";
-            var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
+            //var pd = packageId.ToUpper() + "_NO_LIB;%(PreprocessorDefinitions)";
             var targets =
                 M("Project", Xml.A("ToolVersion", "4.0")).Append(
                     M("ItemDefinitionGroup").Append(
                         M("ClCompile").Append(
-                            M("PreprocessorDefinitions", pd)
+                            clCompile /*M("PreprocessorDefinitions", pd) */
                         )
                 ),
                 M("ItemGroup").Append(unitList)

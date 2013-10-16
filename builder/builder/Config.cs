@@ -12,6 +12,8 @@ namespace builder
 
         public const string Authors = "Sergey Shandar, Boost";
 
+        public const string BoostDir = @"..\..\..\..\..\boost_1_54_0\";
+
         public static readonly Library[] LibraryList = new[]
         {
             // chrono depends on system
