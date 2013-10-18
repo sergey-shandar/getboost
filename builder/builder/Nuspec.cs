@@ -103,7 +103,7 @@ namespace builder
         public static void Create(
             string nuspecId,
             string packageId, 
-            Targets.ClCompile clCompile,
+            IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,
             IEnumerable<Nuspec.Dependency> dependencyList)
@@ -119,7 +119,10 @@ namespace builder
                 );
             var targetsFile =
                 Targets.Create(
-                    nuspecId, packageId, clCompile, compilationUnitList);
+                    nuspecId,
+                    packageId,
+                    itemDefinitionGroupList,
+                    compilationUnitList);
             CreateNuspec(
                 nuspecId,
                 fileList.

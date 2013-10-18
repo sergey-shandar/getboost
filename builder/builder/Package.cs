@@ -70,7 +70,7 @@ namespace builder
             Nuspec.Create(
                 nuspecId,
                 Name,
-                clCompile,
+                new[] { new Targets.ItemDefinitionGroup(clCompile: clCompile) },
                 srcFiles,
                 CompilationUnitList,
                 new[] { new Nuspec.Dependency("boost", versionRange) }

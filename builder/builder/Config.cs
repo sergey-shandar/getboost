@@ -14,6 +14,12 @@ namespace builder
 
         public const string BoostDir = @"..\..\..\..\..\boost_1_54_0\";
 
+        public static readonly Platform[] PlatformList = new[]
+        {
+            new Platform("Win32", @"stage_x86\lib"),
+            new Platform("x64", @"stage_x86_64\lib")
+        };
+
         public static readonly Library[] LibraryList = new[]
         {
             // chrono depends on system

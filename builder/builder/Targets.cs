@@ -112,18 +112,18 @@ namespace builder
         {
             public readonly string Condition;
 
-            public readonly IEnumerable<ClCompile> ClCompileList;
+            public readonly ClCompile ClCompile;
 
-            public readonly IEnumerable<Link> LinkList;
+            public readonly Link Link;
 
             public ItemDefinitionGroup(
                 string condition = null,
-                IEnumerable<ClCompile> clCompileList = null,
-                IEnumerable<Link> linkList = null)
+                ClCompile clCompile = null,
+                Link link = null)
             {
                 Condition = condition;
-                ClCompileList = clCompileList.EmptyIfNull();
-                LinkList = linkList.EmptyIfNull();
+                ClCompile = clCompile;
+                Link = link;
             }
 
             public XElement X
@@ -135,10 +135,14 @@ namespace builder
                     {
                         result.Append(Xml.A("Condition", Condition));
                     }
-                    result.Append(
-                        ClCompileList.Select(clCompile => clCompile.X));
-                    result.Append(
-                        LinkList.Select(link => link.X));
+                    if (ClCompile != null)
+                    {
+                        result.Append(ClCompile.X);
+                    }
+                    if (Link != null)
+                    {
+                        result.Append(Link.X);
+                    }
                     return result;
                 }
             }
@@ -166,8 +170,7 @@ namespace builder
         public static string Create(
             string nuspecId,
             string packageId,
-            //IEnumerable<ItemDefinitionGroup> itemDefinitionGroupList
-            ClCompile clCompile,
+            IEnumerable<ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<CompilationUnit> compilationUnitList)
         {
             var srcPath = PathFromThis(SrcPath);
@@ -177,8 +180,7 @@ namespace builder
             var targetsFile = nuspecId + ".targets";
             var targets =
                 M("Project", Xml.A("ToolVersion", "4.0")).Append(
-                    M("ItemDefinitionGroup").Append(clCompile.X),
-                    M("ItemGroup").Append(clCompileList)
+                    itemDefinitionGroupList.Select(g => g.X)
                 );
             targets.CreateDocument().Save(targetsFile);
             return targetsFile;

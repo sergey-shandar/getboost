@@ -118,8 +118,8 @@ namespace builder
 
         static void Main(string[] args)
         {
-            /*
             // headers only library.
+            /*
             {
                 var path = Path.Combine(Config.BoostDir, "boost");
                 var fileList =
@@ -128,10 +128,16 @@ namespace builder
                 Nuspec.Create(
                     "boost",
                     "boost",
-                    new Targets.ClCompile(
-                        additionalIncludeDirectories:
-                            Targets.PathFromThis(Targets.IncludePath)
-                    ),
+                    new[]
+                    {
+                        new Targets.ItemDefinitionGroup(
+                            clCompile:
+                                new Targets.ClCompile(
+                                    additionalIncludeDirectories:
+                                        Targets.PathFromThis(Targets.IncludePath)
+                                )
+                        )
+                    },
                     fileList.Select(
                         f =>
                             new Nuspec.File(
@@ -166,24 +172,38 @@ namespace builder
              * */
             // compiler specific libraries
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
-            ScanCompiledFileSet(libraryDictionary, @"stage_x86\lib");
-            ScanCompiledFileSet(libraryDictionary, @"stage_x86_64\lib");
+            foreach (var platform in Config.PlatformList)
+            {
+                ScanCompiledFileSet(libraryDictionary, platform.Directory);
+            }
+            var itemDefinitionGroupList = 
+                Config.
+                PlatformList.
+                Select(
+                    p => 
+                        new Targets.ItemDefinitionGroup(
+                            condition: "'$(Platform)'=='" + p.Name + "'",
+                            link:
+                                new Targets.Link(
+                                    additionalLibraryDirectories:
+                                        Targets.PathFromThis(
+                                            Path.Combine(
+                                                Targets.LibNativePath,
+                                                p.Directory)
+                                        )
+                                )
+                        )
+                );
             foreach (var library in libraryDictionary)
             {
                 var libraryId = "boost_" + library.Key;
-                Console.WriteLine("library: " + library.Key);
                 foreach (var package in library.Value.PackageDictionary)
                 {
-                    Console.WriteLine("    compiler: " + package.Key);
-                    foreach (var file in package.Value.FileList)
-                    {
-                        Console.WriteLine("        file: " + file);
-                    }
                     var nuspecId = libraryId + "-" + package.Key;
                     Nuspec.Create(
                         nuspecId,
                         nuspecId,
-                        new Targets.ClCompile(),
+                        itemDefinitionGroupList,
                         package.Value.FileList.Select(
                             f =>
                                 new Nuspec.File(
