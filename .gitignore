@@ -11,3 +11,10 @@ test/test_coroutine/Debug/
 test/test_system/Debug/
 test/Debug/
 test/test_date_time/Debug/
+test/test_exception/Debug/
+test/test_filesystem/Debug/
+test/test_graph/Debug/
+test/test_graph_parallel/Debug/
+test/test_mpi/Debug/
+test/test_regex/Debug/
+test/test_serialization/Debug/

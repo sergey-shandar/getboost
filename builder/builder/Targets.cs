@@ -179,8 +179,9 @@ namespace builder
                 Select(u => u.ClCompile(packageId, srcPath).X);
             var targetsFile = nuspecId + ".targets";
             var targets =
-                M("Project", Xml.A("ToolVersion", "4.0")).Append(
-                    itemDefinitionGroupList.Select(g => g.X)
+                M("Project", Xml.A("ToolVersion", "4.0")).
+                    Append(itemDefinitionGroupList.Select(g => g.X)).
+                    Append(M("ItemGroup").Append(clCompileList)
                 );
             targets.CreateDocument().Save(targetsFile);
             return targetsFile;

@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3F2398A2-0FB8-47F1-9124-5CE748E3D2CA}</ProjectGuid>
+    <ProjectGuid>{83C13D43-9A1F-4A07-94EE-6B150EAA4576}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_date_time</RootNamespace>
+    <RootNamespace>test_regex</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -87,7 +87,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="test_date_time.cpp" />
+    <ClCompile Include="test_regex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -95,6 +95,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_date_time.1.54.0.133\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.54.0.133\build\native\boost_date_time.targets')" />
+    <Import Project="..\packages\boost_regex.1.54.0.133\build\native\boost_regex.targets" Condition="Exists('..\packages\boost_regex.1.54.0.133\build\native\boost_regex.targets')" />
   </ImportGroup>
 </Project>
