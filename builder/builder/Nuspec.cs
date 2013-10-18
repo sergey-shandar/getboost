@@ -25,7 +25,7 @@ namespace builder
             return N(elementName).Append(content);
         }
 
-        public class File
+        public sealed class File
         {
             private readonly string Src;
 
@@ -48,7 +48,7 @@ namespace builder
             }
         }
 
-        public class Dependency
+        public sealed class Dependency
         {
             public readonly string Id;
 

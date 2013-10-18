@@ -43,6 +43,7 @@ namespace builder
         }
 
         static IEnumerable<Package> CreatePackageList(
+            string libraryName,
             string path,
             IEnumerable<Package> packageListConfig)
         {
@@ -58,7 +59,7 @@ namespace builder
             var dir = new Dir(new DirectoryInfo(path), "");
             yield return 
                 new Package(
-                    name: null,
+                    name: libraryName /*null*/,
                     lineList: firstPackage.LineList,
                     fileList: 
                         dir.
@@ -73,7 +74,7 @@ namespace builder
             {
                 var set = p.FileList.ToHashSet();
                 yield return new Package(
-                    name: p.Name,
+                    name: libraryName + "_" + p.Name,
                     lineList: p.LineList,
                     fileList: dir.FileList(s => set.Contains(s)));
             }
@@ -81,16 +82,43 @@ namespace builder
 
         static void MakeLibrary(Library libraryConfig, string src)
         {
+            var name = "boost_" + libraryConfig.Name;
             new Library(
-                libraryConfig.Name,
+                name,
                 src,
-                CreatePackageList(src, libraryConfig.PackageList)
+                CreatePackageList(
+                    name, src, libraryConfig.PackageList
+                )
             ).
             Create();
         }
 
+        static void ScanCompiledFileSet(
+            Dictionary<string, CompiledLibrary> dictionary, string stage)
+        {
+            foreach (
+                var file in
+                    new DirectoryInfo(
+                        Path.Combine(Config.BoostDir, stage)
+                    ).
+                    GetFiles()
+            )
+            {
+                var split = file.Name.SplitFirst('-');
+                var library = split.Before.SplitFirst('_').After;
+                var compiler = split.After.SplitFirst('-').Before;
+                //
+                var compiledLibrary = dictionary.GetOrAddNew(library);
+                var compiledPackage =
+                    compiledLibrary.PackageDictionary.GetOrAddNew(compiler);
+                compiledPackage.FileList.Add(Path.Combine(stage, file.Name));
+            }
+
+        }
+
         static void Main(string[] args)
         {
+            /*
             // headers only library.
             {
                 var path = Path.Combine(Config.BoostDir, "boost");
@@ -135,31 +163,39 @@ namespace builder
                     MakeLibrary(libraryConfig, src);
                 }
             }
-            // compiler specific libraries
-            /*
-            var librarySet = new HashSet<string>();
-            var compilerSet = new HashSet<string>();
-            foreach (
-                var file in
-                    new DirectoryInfo(
-                        Path.Combine(Config.BoostDir, @"stage_x86\lib")
-                    ).
-                    GetFiles()
-            )
-            {
-                var split = file.Name.SplitFirst('-');
-                librarySet.Add(split.Before.SplitFirst('_').After);
-                compilerSet.Add(split.After.SplitFirst('-').Before);
-            }
-            foreach (var library in librarySet)
-            {
-                Console.WriteLine("library: " + library);
-            }
-            foreach (var compiler in compilerSet)
-            {
-                Console.WriteLine("compiler: " + compiler);
-            }
              * */
+            // compiler specific libraries
+            var libraryDictionary = new Dictionary<string, CompiledLibrary>();
+            ScanCompiledFileSet(libraryDictionary, @"stage_x86\lib");
+            ScanCompiledFileSet(libraryDictionary, @"stage_x86_64\lib");
+            foreach (var library in libraryDictionary)
+            {
+                var libraryId = "boost_" + library.Key;
+                Console.WriteLine("library: " + library.Key);
+                foreach (var package in library.Value.PackageDictionary)
+                {
+                    Console.WriteLine("    compiler: " + package.Key);
+                    foreach (var file in package.Value.FileList)
+                    {
+                        Console.WriteLine("        file: " + file);
+                    }
+                    var nuspecId = libraryId + "-" + package.Key;
+                    Nuspec.Create(
+                        nuspecId,
+                        nuspecId,
+                        new Targets.ClCompile(),
+                        package.Value.FileList.Select(
+                            f =>
+                                new Nuspec.File(
+                                    Path.Combine(Config.BoostDir, f),
+                                    Path.Combine(Targets.LibNativePath, f)
+                                )
+                        ),
+                        new CompilationUnit[0],
+                        new Nuspec.Dependency[0]
+                    );
+                }
+            }
         }
 
     }

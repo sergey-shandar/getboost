@@ -35,7 +35,7 @@ namespace builder
         {
             foreach (var package in PackageList)
             {
-                package.Create(Name, Directory);
+                package.Create(Directory);
             }
         }
 

@@ -10,6 +10,8 @@ namespace builder
 {
     static class Targets
     {
+        public const string LibNativePath = @"lib\native\";
+
         public const string SrcPath = @"lib\native\src\";
 
         public const string IncludePath = @"lib\native\include\";
@@ -23,7 +25,40 @@ namespace builder
             Use,
         }
 
-        public class ClCompile
+        private static void Append(
+            XElement x, string name, string value)
+        {
+            if (value != null)
+            {
+                x.Append(M(name, value + ";%(" + name + ")"));
+            }
+        }
+
+        public sealed class Link
+        {
+            public readonly string AdditionalLibraryDirectories;
+
+            public Link(string additionalLibraryDirectories)
+            {
+                AdditionalLibraryDirectories = additionalLibraryDirectories;
+            }
+
+            public XElement X
+            {
+                get
+                {
+                    var link = M("Link");
+                    Append(
+                        link,
+                        "AdditionalLibraryDirectories",
+                        AdditionalLibraryDirectories);
+                    return link;
+                }
+            }
+
+        }
+
+        public sealed class ClCompile
         {
             public readonly string Include;
 
@@ -43,15 +78,6 @@ namespace builder
                 PrecompiledHeader = precompiledHeader;
                 PreprocessorDefinitions = preprocessorDefinitions;
                 AdditionalIncludeDirectories = additionalIncludeDirectories;
-            }
-
-            private static void Append(
-                XElement clCompile, string name, string value)
-            {
-                if(value != null)
-                {
-                    clCompile.Append(M(name, value + ";%(" + name + ")"));
-                }
             }
 
             public XElement X
@@ -82,6 +108,42 @@ namespace builder
             }
         }
 
+        public sealed class ItemDefinitionGroup
+        {
+            public readonly string Condition;
+
+            public readonly IEnumerable<ClCompile> ClCompileList;
+
+            public readonly IEnumerable<Link> LinkList;
+
+            public ItemDefinitionGroup(
+                string condition = null,
+                IEnumerable<ClCompile> clCompileList = null,
+                IEnumerable<Link> linkList = null)
+            {
+                Condition = condition;
+                ClCompileList = clCompileList.EmptyIfNull();
+                LinkList = linkList.EmptyIfNull();
+            }
+
+            public XElement X
+            {
+                get
+                {
+                    var result = M("ItemDefinitionGroup");
+                    if (Condition != null)
+                    {
+                        result.Append(Xml.A("Condition", Condition));
+                    }
+                    result.Append(
+                        ClCompileList.Select(clCompile => clCompile.X));
+                    result.Append(
+                        LinkList.Select(link => link.X));
+                    return result;
+                }
+            }
+        }
+
         public static string PathFromThis(string path)
         {
             return Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", path);
@@ -104,58 +166,19 @@ namespace builder
         public static string Create(
             string nuspecId,
             string packageId,
+            //IEnumerable<ItemDefinitionGroup> itemDefinitionGroupList
             ClCompile clCompile,
             IEnumerable<CompilationUnit> compilationUnitList)
         {
             var srcPath = PathFromThis(SrcPath);
-            /*
-            var unitList =
-                compilationUnitList.
-                Select(
-                    u =>
-                        M("ClCompile",
-                            Xml.A(
-                                "Include",
-                                Path.Combine(
-                                    srcPath,
-                                    u.LocalPath,
-                                    u.FileName(packageId))
-                            )
-                        ).Append(
-                            M(
-                                "PrecompiledHeader",
-                                "NotUsing"
-                            ),
-                            M(
-                                "AdditionalIncludeDirectories",
-                                Path.Combine(srcPath, u.LocalPath) +
-                                    ";%(AdditionalIncludeDirectories)"
-                            )
-                        )
-                );
-             * */
             var clCompileList =
                 compilationUnitList.
-                Select(
-                    u =>
-                        new ClCompile(
-                            include:
-                                Path.Combine(
-                                    srcPath,
-                                    u.LocalPath,
-                                    u.FileName(packageId)
-                                ),
-                            precompiledHeader:
-                                PrecompiledHeader.NotUsing,
-                            additionalIncludeDirectories:
-                                Path.Combine(srcPath, u.LocalPath)
-                        )
-                );
+                Select(u => u.ClCompile(packageId, srcPath).X);
             var targetsFile = nuspecId + ".targets";
             var targets =
                 M("Project", Xml.A("ToolVersion", "4.0")).Append(
                     M("ItemDefinitionGroup").Append(clCompile.X),
-                    M("ItemGroup").Append(clCompileList.Select(u => u.X))
+                    M("ItemGroup").Append(clCompileList)
                 );
             targets.CreateDocument().Save(targetsFile);
             return targetsFile;

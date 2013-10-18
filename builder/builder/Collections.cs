@@ -50,18 +50,17 @@ namespace builder
             return new Split(value, value.IndexOf(c));
         }
 
-        /*
-        public static string BeforeFirst(this string value, char c)
+        public static Value GetOrAddNew<Key, Value>(
+            this IDictionary<Key, Value> dictionary, Key key)
+            where Value: new()
         {
-            var index = value.IndexOf(c);
-            return index == -1 ? value : value.Substring(0, index);
+            Value value;
+            if (!dictionary.TryGetValue(key, out value))
+            {
+                value = new Value();
+                dictionary.Add(key, value);
+            }
+            return value;
         }
-
-        public static string AfterFirst(this string value, char c)
-        {
-            var index = value.IndexOf(c);
-            return index == -1 ? value : value.Substring(index + 1);
-        }
-         * */
     }
 }

@@ -9,11 +9,11 @@ namespace builder
 {
     sealed class CompilationUnit
     {
-        public readonly string CppFile;
+        public readonly string LocalFile;
 
-        public CompilationUnit(string cppFile)
+        public CompilationUnit(string localFile)
         {
-            CppFile = cppFile;
+            LocalFile = localFile;
         }
 
         public CompilationUnit(): this(null)
@@ -22,7 +22,7 @@ namespace builder
 
         public string LocalPath
         {
-            get { return Path.GetDirectoryName(CppFile); }
+            get { return Path.GetDirectoryName(LocalFile); }
         }
 
         public string FileName(string packageId)
@@ -30,13 +30,30 @@ namespace builder
             return
                 packageId + 
                 "." +
-                CppFile.Replace('\\', '.');
+                LocalFile.Replace('\\', '.');
         }
 
-        public void Make(string packageId, Package package)
+        public Targets.ClCompile ClCompile(string packageId, string srcPath)
+        {
+            return 
+                new Targets.ClCompile(
+                    include:
+                        Path.Combine(
+                            srcPath,
+                            LocalPath,
+                            FileName(packageId)
+                        ),
+                    precompiledHeader:
+                        Targets.PrecompiledHeader.NotUsing,
+                    additionalIncludeDirectories:
+                        Path.Combine(srcPath, LocalPath)
+                );
+        }
+
+        public void Make(Package package)
         {
             File.WriteAllLines(
-                FileName(packageId),
+                FileName(package.Name),
                 new[]
                     {
                         "#define _SCL_SECURE_NO_WARNINGS",
@@ -47,7 +64,7 @@ namespace builder
                     Concat(
                         new[]
                         { 
-                            "#include \"" + Path.GetFileName(CppFile) + "\""
+                            "#include \"" + Path.GetFileName(LocalFile) + "\""
                         }
                     )
             );

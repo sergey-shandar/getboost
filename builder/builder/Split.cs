@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace builder
 {
-    class Split
+    sealed class Split
     {
         private readonly string Source;
 

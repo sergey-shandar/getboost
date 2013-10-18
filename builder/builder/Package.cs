@@ -8,7 +8,7 @@ using System.IO;
 
 namespace builder
 {
-    class Package
+    sealed class Package
     {
         public readonly string Name;
 
@@ -41,15 +41,9 @@ namespace builder
         {
         }
 
-        public string PackageId(string libraryName)
+        public void Create(string directory)
         {
-            return "boost_" + libraryName + (Name == null ? "": "_" + Name);
-        }
-
-        public void Create(string libraryName, string directory)
-        {
-            var packageId = PackageId(libraryName);
-            var nuspecId = packageId;
+            var nuspecId = Name;
             var srcFiles =
                 FileList.Select(
                     f =>
@@ -61,12 +55,12 @@ namespace builder
             //
             foreach (var u in CompilationUnitList)
             {
-                u.Make(packageId, this);
+                u.Make(this);
             }
             //
             var clCompile =
                 new Targets.ClCompile(
-                    preprocessorDefinitions: packageId.ToUpper() + "_NO_LIB");
+                    preprocessorDefinitions: Name.ToUpper() + "_NO_LIB");
             var versionRange =
                 "[" +
                 new Version(Config.Version.Major, Config.Version.Minor) +
@@ -75,7 +69,7 @@ namespace builder
                 ")";
             Nuspec.Create(
                 nuspecId,
-                packageId,
+                Name,
                 clCompile,
                 srcFiles,
                 CompilationUnitList,
