@@ -29,13 +29,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test_coroutine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\detail\boost_coroutine.detail.coroutine_context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\detail\boost_coroutine.detail.standard_stack_allocator_windows.cpp">
+    <ClCompile Include="test_date_time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
