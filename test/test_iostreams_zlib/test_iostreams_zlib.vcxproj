@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{70F086F1-6ABE-48FC-BC98-13982E418D2F}</ProjectGuid>
+    <ProjectGuid>{5C3862E3-ADC3-4A5F-9A49-A53251E9BE97}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_graph_parallel</RootNamespace>
+    <RootNamespace>test_iostreams_zlib</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -50,14 +50,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>MSMPI_NO_DEPRECATE_20;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft HPC Pack 2012\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft HPC Pack 2012\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -67,16 +65,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>MSMPI_NO_DEPRECATE_20;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files\Microsoft HPC Pack 2012\Inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Program Files\Microsoft HPC Pack 2012\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -91,7 +87,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="test_graph_parallel.cpp" />
+    <ClCompile Include="test_iostreams_zlib.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -99,8 +95,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_graph_parallel.1.54.0.133\build\native\boost_graph_parallel.targets" Condition="Exists('..\packages\boost_graph_parallel.1.54.0.133\build\native\boost_graph_parallel.targets')" />
-    <Import Project="..\packages\boost_mpi.1.54.0.133\build\native\boost_mpi.targets" Condition="Exists('..\packages\boost_mpi.1.54.0.133\build\native\boost_mpi.targets')" />
-    <Import Project="..\packages\boost_serialization.1.54.0.133\build\native\boost_serialization.targets" Condition="Exists('..\packages\boost_serialization.1.54.0.133\build\native\boost_serialization.targets')" />
+    <Import Project="..\packages\boost_iostreams_zlib.1.54.0.133\build\native\boost_iostreams_zlib.targets" Condition="Exists('..\packages\boost_iostreams_zlib.1.54.0.133\build\native\boost_iostreams_zlib.targets')" />
+    <Import Project="..\packages\zlib.redist.1.2.8.6\build\native\zlib.redist.targets" Condition="Exists('..\packages\zlib.redist.1.2.8.6\build\native\zlib.redist.targets')" />
+    <Import Project="..\packages\zlib.1.2.8.6\build\native\zlib.targets" Condition="Exists('..\packages\zlib.1.2.8.6\build\native\zlib.targets')" />
   </ImportGroup>
 </Project>

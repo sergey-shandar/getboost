@@ -18,3 +18,9 @@ test/test_graph_parallel/Debug/
 test/test_mpi/Debug/
 test/test_regex/Debug/
 test/test_serialization/Debug/
+test/test_iostreams/Debug/
+test/test_iostreams_bzip2/Debug/
+test/test_iostreams_zlib/Debug/
+test/test_locale/Debug/
+test/test_locale_icu/Debug/
+test/test_thread/Debug/

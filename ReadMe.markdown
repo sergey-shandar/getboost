@@ -8,3 +8,15 @@
 
 1. Split C++ file set to libraries and sublibraries. 
 2. ".cpp" files should provide functionality (method bodys on any platform). ".ipp" files can be responsible for platfrom specific implementations.
+
+# Report
+
+- boost_context - no source library.
+- boost_coroutine - depends on boost_context.
+- boost_graph_parallel - depends on boost_mpi.
+- boost_mpi - depends on MPI library.
+- boost_iostreams_bzip2 - depends on bzip2.
+- boost_iostreams_zlib - depends on zlib.
+- boost_locale - dpends on boost_thread, boost_date_time.
+
+- boost_thread - depends on boost_date_time, boost_system, boost_chrono.

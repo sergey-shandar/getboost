@@ -119,6 +119,7 @@ namespace builder
         static void Main(string[] args)
         {
             // headers only library.
+            /*
             {
                 var path = Path.Combine(Config.BoostDir, "boost");
                 var fileList =
@@ -148,6 +149,7 @@ namespace builder
                     new Nuspec.Dependency[0]
                 );
             }
+            */
             // libraries.
             foreach (
                 var directory in
