@@ -8,7 +8,7 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 54, 0, 138);
+        public static readonly Version Version = new Version(1, 54, 0, 143);
 
         public const string Authors = "Sergey Shandar, Boost";
 

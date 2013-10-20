@@ -173,6 +173,7 @@ namespace builder
                     MakeLibrary(libraryConfig, src);
                 }
             }
+            /*
             // compiler specific libraries
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
             foreach (var platform in Config.PlatformList)
@@ -219,6 +220,7 @@ namespace builder
                     );
                 }
             }
+             * */
         }
 
     }

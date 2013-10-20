@@ -68,16 +68,20 @@ namespace builder
 
             public readonly string AdditionalIncludeDirectories;
 
+            public readonly bool? SDLCheck;
+
             public ClCompile(
                 string include = null,
                 PrecompiledHeader? precompiledHeader = null,
                 string preprocessorDefinitions = null,
-                string additionalIncludeDirectories = null)
+                string additionalIncludeDirectories = null,
+                bool? sDLCheck = null)
             {
                 Include = include;
                 PrecompiledHeader = precompiledHeader;
                 PreprocessorDefinitions = preprocessorDefinitions;
                 AdditionalIncludeDirectories = additionalIncludeDirectories;
+                SDLCheck = sDLCheck;
             }
 
             public XElement X
@@ -93,6 +97,12 @@ namespace builder
                     {
                         clCompile.Append(
                             M("PrecompiledHeader", PrecompiledHeader.ToString())
+                        );
+                    }
+                    if (SDLCheck != null)
+                    {
+                        clCompile.Append(
+                            M("SDLCheck", SDLCheck.ToString())
                         );
                     }
                     Append(

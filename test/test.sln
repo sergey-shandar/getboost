@@ -39,7 +39,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_locale_icu", "test_loc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_log", "test_log\test_log.vcxproj", "{74AAF16E-15E9-499C-B799-619DB867D3C4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_log_setup", "test_log_setup\test_log_setup.vcxproj", "{6B5497F6-F382-4AC3-93D7-2CD5784E3889}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_math", "test_math\test_math.vcxproj", "{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_mpi_python", "test_mpi_python\test_mpi_python.vcxproj", "{394C871A-D980-4218-9C37-827ED943EF26}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -161,12 +163,18 @@ Global
 		{74AAF16E-15E9-499C-B799-619DB867D3C4}.Release|Win32.ActiveCfg = Release|Win32
 		{74AAF16E-15E9-499C-B799-619DB867D3C4}.Release|Win32.Build.0 = Release|Win32
 		{74AAF16E-15E9-499C-B799-619DB867D3C4}.Release|Win32.Deploy.0 = Release|Win32
-		{6B5497F6-F382-4AC3-93D7-2CD5784E3889}.Debug|Win32.ActiveCfg = Debug|Win32
-		{6B5497F6-F382-4AC3-93D7-2CD5784E3889}.Debug|Win32.Build.0 = Debug|Win32
-		{6B5497F6-F382-4AC3-93D7-2CD5784E3889}.Debug|Win32.Deploy.0 = Debug|Win32
-		{6B5497F6-F382-4AC3-93D7-2CD5784E3889}.Release|Win32.ActiveCfg = Release|Win32
-		{6B5497F6-F382-4AC3-93D7-2CD5784E3889}.Release|Win32.Build.0 = Release|Win32
-		{6B5497F6-F382-4AC3-93D7-2CD5784E3889}.Release|Win32.Deploy.0 = Release|Win32
+		{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}.Debug|Win32.Build.0 = Debug|Win32
+		{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}.Debug|Win32.Deploy.0 = Debug|Win32
+		{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}.Release|Win32.ActiveCfg = Release|Win32
+		{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}.Release|Win32.Build.0 = Release|Win32
+		{032E4339-D8D7-46B5-A13C-6EF9B75C0FFC}.Release|Win32.Deploy.0 = Release|Win32
+		{394C871A-D980-4218-9C37-827ED943EF26}.Debug|Win32.ActiveCfg = Debug|Win32
+		{394C871A-D980-4218-9C37-827ED943EF26}.Debug|Win32.Build.0 = Debug|Win32
+		{394C871A-D980-4218-9C37-827ED943EF26}.Debug|Win32.Deploy.0 = Debug|Win32
+		{394C871A-D980-4218-9C37-827ED943EF26}.Release|Win32.ActiveCfg = Release|Win32
+		{394C871A-D980-4218-9C37-827ED943EF26}.Release|Win32.Build.0 = Release|Win32
+		{394C871A-D980-4218-9C37-827ED943EF26}.Release|Win32.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

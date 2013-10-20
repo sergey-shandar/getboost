@@ -22,6 +22,9 @@
 - boost_log - depends on boost_system, boost_filesystem, boost_date_time, boost_thread, boost_chrono.
 - boost_log_event - needs resource builder or something.
 - boost_log_setup - depends on boost_event_log, boost_log, boost_system, boost_filesystem, boost_date_time, boost_thread, boost_chrono.
+- boost_math.
+- boost_mpi depends on MPI and ... ?
+- boost_mpi_python depends on MPI, Python.
 
 - boost_thread - depends on boost_date_time, boost_system, boost_chrono.
 

@@ -43,10 +43,16 @@ namespace builder
                             LocalPath,
                             FileName(packageId)
                         ),
+                        /*
+                    preprocessorDefinitions: 
+                        "_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS",
+                         * */
                     precompiledHeader:
                         Targets.PrecompiledHeader.NotUsing,
                     additionalIncludeDirectories:
-                        Path.Combine(srcPath, LocalPath)
+                        Path.Combine(srcPath, LocalPath),
+                    sDLCheck: 
+                        false
                 );
         }
 
@@ -58,7 +64,7 @@ namespace builder
                     {
                         "#define _SCL_SECURE_NO_WARNINGS",
                         "#define _CRT_SECURE_NO_WARNINGS",
-                        "#pragma warning(disable: 4244 4503 4752 4800)"
+                        "#pragma warning(disable: 4244 4503 4752 4800 4996)"
                     }.
                     Concat(package.LineList).
                     Concat(
