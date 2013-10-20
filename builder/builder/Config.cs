@@ -8,7 +8,7 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 54, 0, 133);
+        public static readonly Version Version = new Version(1, 54, 0, 138);
 
         public const string Authors = "Sergey Shandar, Boost";
 
@@ -75,6 +75,12 @@ namespace builder
                         lineList: new[] 
                         { 
                             "#define BOOST_LOCALE_NO_POSIX_BACKEND" 
+                        },
+                        fileList: new[]
+                        {
+                            @"util\locale_data.hpp",
+                            @"shared\mo_hash.hpp",
+                            @"encoding\conv.hpp"
                         }
                     ),
                     // locale_posix
@@ -90,7 +96,10 @@ namespace builder
                         name: "icu",
                         fileList: new[]
                         {
-                            "icu"
+                            "icu",
+                            @"util\locale_data.hpp",
+                            @"shared\mo_hash.hpp",
+                            @"encoding\conv.hpp"
                         }
                     ),
                 }),

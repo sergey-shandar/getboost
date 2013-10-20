@@ -28,17 +28,31 @@ namespace builder
                     Info.
                     GetDirectories().
                     Select(
-                        i => new Dir(i, Path.Combine(Name, i.Name))).
-                    Where(
-                        dir => filter(dir.Name)).
+                        i => new Dir(i, Path.Combine(Name, i.Name))
+                    ).
                     SelectMany(
-                        dir => dir.FileList(filter)).
+                        dir =>
+                            filter(dir.Name) ?
+                                dir.FileList():
+                                dir.FileList(filter)
+                    ).
                     Concat(
                         Info.
                         GetFiles().
                         Select(f => Path.Combine(Name, f.Name)).
                         Where(f => filter(f))
                     );
+            }
+
+            public IEnumerable<string> FileList(IEnumerable<string> filter)
+            {
+                var set = filter.ToHashSet();
+                return FileList(name => set.Contains(name));
+            }
+
+            public IEnumerable<string> FileList()
+            {
+                return FileList(name => true);
             }
         }
 
@@ -48,36 +62,25 @@ namespace builder
             IEnumerable<Package> packageListConfig)
         {
             var firstPackage = packageListConfig.First();
-            var firstFileSet = firstPackage.FileList.ToHashSet();
-            var extraPackageList = packageListConfig.Skip(1);
-            //
-            var extraFileSet =
-                extraPackageList.
-                SelectMany(p => p.FileList).
-                ToHashSet();
-            //
             var dir = new Dir(new DirectoryInfo(path), "");
-            yield return 
-                new Package(
-                    name: libraryName /*null*/,
-                    lineList: firstPackage.LineList,
-                    fileList: 
-                        dir.
-                        FileList(
-                            s => 
-                                !extraFileSet.Contains(s) || 
-                                firstFileSet.Contains(s)
-                        )
-                );
-            //
-            foreach (var p in extraPackageList)
+            var remainder = dir.FileList().ToHashSet();
+            foreach (var p in packageListConfig.Skip(1))
             {
-                var set = p.FileList.ToHashSet();
+                var fileList = dir.FileList(p.FileList);
+                remainder.ExceptWith(fileList);
                 yield return new Package(
                     name: libraryName + "_" + p.Name,
                     lineList: p.LineList,
-                    fileList: dir.FileList(s => set.Contains(s)));
+                    fileList: fileList);
             }
+            //
+            remainder.UnionWith(dir.FileList(firstPackage.FileList));
+            yield return
+                new Package(
+                    name: libraryName,
+                    lineList: firstPackage.LineList,
+                    fileList: remainder
+                );
         }
 
         static void MakeLibrary(Library libraryConfig, string src)
@@ -118,8 +121,8 @@ namespace builder
 
         static void Main(string[] args)
         {
-            // headers only library.
             /*
+            // headers only library.
             {
                 var path = Path.Combine(Config.BoostDir, "boost");
                 var fileList =
@@ -149,7 +152,7 @@ namespace builder
                     new Nuspec.Dependency[0]
                 );
             }
-            */
+             * */
             // libraries.
             foreach (
                 var directory in

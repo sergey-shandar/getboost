@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{13C2D1D8-ECC0-49E6-91FC-BBBE46A07CA4}</ProjectGuid>
+    <ProjectGuid>{43B495AF-CE3C-4575-9253-C8E4E5AB5B4B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>test_locale_icu</RootNamespace>
+    <RootNamespace>test_log_event</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -52,12 +52,10 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Sergey\Desktop\getboost\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\Sergey\Desktop\getboost\icu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -69,14 +67,12 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\Sergey\Desktop\getboost\icu\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Users\Sergey\Desktop\getboost\icu\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -91,7 +87,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="test_locale_icu.cpp" />
+    <ClCompile Include="test_log_event.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -99,11 +95,6 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_thread.1.54.0.133\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.54.0.133\build\native\boost_thread.targets')" />
-    <Import Project="..\packages\boost_date_time.1.54.0.133\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.54.0.133\build\native\boost_date_time.targets')" />
-    <Import Project="..\packages\boost_system.1.54.0.131\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.54.0.131\build\native\boost_system.targets')" />
-    <Import Project="..\packages\boost_chrono.1.54.0.131\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.54.0.131\build\native\boost_chrono.targets')" />
-    <Import Project="..\packages\boost_locale.1.54.0.138\build\native\boost_locale.targets" Condition="Exists('..\packages\boost_locale.1.54.0.138\build\native\boost_locale.targets')" />
-    <Import Project="..\packages\boost_locale_icu.1.54.0.138\build\native\boost_locale_icu.targets" Condition="Exists('..\packages\boost_locale_icu.1.54.0.138\build\native\boost_locale_icu.targets')" />
+    <Import Project="..\packages\boost_log_event.1.54.0.138\build\native\boost_log_event.targets" Condition="Exists('..\packages\boost_log_event.1.54.0.138\build\native\boost_log_event.targets')" />
   </ImportGroup>
 </Project>

@@ -24,3 +24,6 @@ test/test_iostreams_zlib/Debug/
 test/test_locale/Debug/
 test/test_locale_icu/Debug/
 test/test_thread/Debug/
+test/test_log/Debug/
+test/test_log_event/Debug/
+test/test_log_setup/Debug/
