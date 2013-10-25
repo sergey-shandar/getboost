@@ -94,7 +94,7 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_serialization.1.54.0.133\build\native\boost_serialization.targets" Condition="Exists('..\packages\boost_serialization.1.54.0.133\build\native\boost_serialization.targets')" />
+    <Import Project="..\packages\boost.1.54.0.154\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.154\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_serialization.1.54.0.154\build\native\boost_serialization.targets" Condition="Exists('..\packages\boost_serialization.1.54.0.154\build\native\boost_serialization.targets')" />
   </ImportGroup>
 </Project>

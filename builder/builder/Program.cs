@@ -70,17 +70,17 @@ namespace builder
                 remainder.ExceptWith(fileList);
                 yield return new Package(
                     name: libraryName + "_" + p.Name,
-                    lineList: p.LineList,
-                    fileList: fileList);
+                    package: p,
+                    fileList: fileList
+                );
             }
             //
             remainder.UnionWith(dir.FileList(firstPackage.FileList));
-            yield return
-                new Package(
-                    name: libraryName,
-                    lineList: firstPackage.LineList,
-                    fileList: remainder
-                );
+            yield return new Package(
+                name: libraryName,
+                package: firstPackage,
+                fileList: remainder
+            );
         }
 
         static void MakeLibrary(Library libraryConfig, string src)
@@ -137,7 +137,11 @@ namespace builder
                             clCompile:
                                 new Targets.ClCompile(
                                     additionalIncludeDirectories:
-                                        Targets.PathFromThis(Targets.IncludePath)
+                                        new[]
+                                        {
+                                            Targets.PathFromThis(
+                                                Targets.IncludePath)
+                                        }
                                 )
                         )
                     },
@@ -152,7 +156,6 @@ namespace builder
                     new Nuspec.Dependency[0]
                 );
             }
-             * */
             // libraries.
             foreach (
                 var directory in
@@ -173,7 +176,7 @@ namespace builder
                     MakeLibrary(libraryConfig, src);
                 }
             }
-            /*
+             * */
             // compiler specific libraries
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
             foreach (var platform in Config.PlatformList)
@@ -190,11 +193,14 @@ namespace builder
                             link:
                                 new Targets.Link(
                                     additionalLibraryDirectories:
-                                        Targets.PathFromThis(
-                                            Path.Combine(
-                                                Targets.LibNativePath,
-                                                p.Directory)
-                                        )
+                                        new[]
+                                        {
+                                            Targets.PathFromThis(
+                                                Path.Combine(
+                                                    Targets.LibNativePath,
+                                                    p.Directory)
+                                            )
+                                        }
                                 )
                         )
                 );
@@ -216,11 +222,10 @@ namespace builder
                                 )
                         ),
                         new CompilationUnit[0],
-                        new Nuspec.Dependency[0]
+                        Package.BoostDependency
                     );
                 }
             }
-             * */
         }
 
     }

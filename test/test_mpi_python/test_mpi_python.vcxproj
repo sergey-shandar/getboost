@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Python27_32\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Python27_32\libs;C:\Program Files\Microsoft HPC Pack 2012\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,7 +76,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>C:\Python27_32\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Python27_32\libs;C:\Program Files\Microsoft HPC Pack 2012\Lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -98,7 +98,10 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_mpi_python.1.54.0.143\build\native\boost_mpi_python.targets" Condition="Exists('..\packages\boost_mpi_python.1.54.0.143\build\native\boost_mpi_python.targets')" />
+    <Import Project="..\packages\boost.1.54.0.154\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.154\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_mpi.1.54.0.154\build\native\boost_mpi.targets" Condition="Exists('..\packages\boost_mpi.1.54.0.154\build\native\boost_mpi.targets')" />
+    <Import Project="..\packages\boost_serialization.1.54.0.154\build\native\boost_serialization.targets" Condition="Exists('..\packages\boost_serialization.1.54.0.154\build\native\boost_serialization.targets')" />
+    <Import Project="..\packages\boost_mpi_python.1.54.0.154\build\native\boost_mpi_python.targets" Condition="Exists('..\packages\boost_mpi_python.1.54.0.154\build\native\boost_mpi_python.targets')" />
+    <Import Project="..\packages\boost_python.1.54.0.154\build\native\boost_python.targets" Condition="Exists('..\packages\boost_python.1.54.0.154\build\native\boost_python.targets')" />
   </ImportGroup>
 </Project>

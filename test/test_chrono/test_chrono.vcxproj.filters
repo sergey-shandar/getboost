@@ -41,6 +41,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_chrono.thread_clock.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_system.error_code.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

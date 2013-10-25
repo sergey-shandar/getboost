@@ -94,12 +94,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_log.1.54.0.138\build\native\boost_log.targets" Condition="Exists('..\packages\boost_log.1.54.0.138\build\native\boost_log.targets')" />
-    <Import Project="..\packages\boost_system.1.54.0.131\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.54.0.131\build\native\boost_system.targets')" />
-    <Import Project="..\packages\boost_filesystem.1.54.0.133\build\native\boost_filesystem.targets" Condition="Exists('..\packages\boost_filesystem.1.54.0.133\build\native\boost_filesystem.targets')" />
-    <Import Project="..\packages\boost_date_time.1.54.0.133\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.54.0.133\build\native\boost_date_time.targets')" />
-    <Import Project="..\packages\boost_thread.1.54.0.133\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.54.0.133\build\native\boost_thread.targets')" />
-    <Import Project="..\packages\boost_chrono.1.54.0.131\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.54.0.131\build\native\boost_chrono.targets')" />
+    <Import Project="..\packages\boost.1.54.0.154\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.154\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_chrono.1.54.0.154\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.54.0.154\build\native\boost_chrono.targets')" />
+    <Import Project="..\packages\boost_date_time.1.54.0.154\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.54.0.154\build\native\boost_date_time.targets')" />
+    <Import Project="..\packages\boost_filesystem.1.54.0.154\build\native\boost_filesystem.targets" Condition="Exists('..\packages\boost_filesystem.1.54.0.154\build\native\boost_filesystem.targets')" />
+    <Import Project="..\packages\boost_log.1.54.0.154\build\native\boost_log.targets" Condition="Exists('..\packages\boost_log.1.54.0.154\build\native\boost_log.targets')" />
+    <Import Project="..\packages\boost_system.1.54.0.154\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.54.0.154\build\native\boost_system.targets')" />
+    <Import Project="..\packages\boost_thread.1.54.0.154\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.54.0.154\build\native\boost_thread.targets')" />
   </ImportGroup>
 </Project>

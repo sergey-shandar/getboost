@@ -25,22 +25,31 @@ namespace builder
             Use,
         }
 
+        public enum ExceptionHandling
+        {
+            Async,
+            Sync,
+            SyncCThrow,
+            @false
+        }
+
         private static void Append(
-            XElement x, string name, string value)
+            XElement x, string name, IEnumerable<string> value)
         {
             if (value != null)
             {
-                x.Append(M(name, value + ";%(" + name + ")"));
+                x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
             }
         }
 
         public sealed class Link
         {
-            public readonly string AdditionalLibraryDirectories;
+            public readonly IEnumerable<string> AdditionalLibraryDirectories;
 
-            public Link(string additionalLibraryDirectories)
+            public Link(IEnumerable<string> additionalLibraryDirectories)
             {
-                AdditionalLibraryDirectories = additionalLibraryDirectories;
+                AdditionalLibraryDirectories =
+                    additionalLibraryDirectories.EmptyIfNull();
             }
 
             public XElement X
@@ -64,24 +73,29 @@ namespace builder
 
             public readonly PrecompiledHeader? PrecompiledHeader;
 
-            public readonly string PreprocessorDefinitions;
+            public readonly IEnumerable<string> PreprocessorDefinitions;
 
-            public readonly string AdditionalIncludeDirectories;
+            public readonly IEnumerable<string> AdditionalIncludeDirectories;
 
             public readonly bool? SDLCheck;
+
+            public readonly ExceptionHandling? ExceptionHandling; 
 
             public ClCompile(
                 string include = null,
                 PrecompiledHeader? precompiledHeader = null,
-                string preprocessorDefinitions = null,
-                string additionalIncludeDirectories = null,
-                bool? sDLCheck = null)
+                IEnumerable<string> preprocessorDefinitions = null,
+                IEnumerable<string> additionalIncludeDirectories = null,
+                bool? sDLCheck = null,
+                ExceptionHandling? exceptionHandling = null)
             {
                 Include = include;
                 PrecompiledHeader = precompiledHeader;
-                PreprocessorDefinitions = preprocessorDefinitions;
-                AdditionalIncludeDirectories = additionalIncludeDirectories;
+                PreprocessorDefinitions = preprocessorDefinitions.EmptyIfNull();
+                AdditionalIncludeDirectories =
+                    additionalIncludeDirectories.EmptyIfNull();
                 SDLCheck = sDLCheck;
+                ExceptionHandling = exceptionHandling;
             }
 
             public XElement X
@@ -103,6 +117,12 @@ namespace builder
                     {
                         clCompile.Append(
                             M("SDLCheck", SDLCheck.ToString())
+                        );
+                    }
+                    if (ExceptionHandling != null)
+                    {
+                        clCompile.Append(
+                            M("ExceptionHandling", ExceptionHandling.ToString())
                         );
                     }
                     Append(

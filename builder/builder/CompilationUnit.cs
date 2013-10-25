@@ -43,16 +43,14 @@ namespace builder
                             LocalPath,
                             FileName(packageId)
                         ),
-                        /*
-                    preprocessorDefinitions: 
-                        "_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS",
-                         * */
                     precompiledHeader:
                         Targets.PrecompiledHeader.NotUsing,
                     additionalIncludeDirectories:
-                        Path.Combine(srcPath, LocalPath),
+                        new[] { Path.Combine(srcPath, LocalPath) },
                     sDLCheck: 
-                        false
+                        false,
+                    exceptionHandling:
+                        Targets.ExceptionHandling.Async
                 );
         }
 

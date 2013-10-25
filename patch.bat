@@ -11,5 +11,6 @@ git apply %GETBOOST%004-thread.patch
 
 # 1. change boost_context to boost_coroutine in file boost/coroutine/detail/config.hpp
 # 2. replace all make_tuple calls to boost::python::make_tupel in file mpi/src/python/py_nonblocking.cpp
+# 3. delete libs/mpi/src/python/exception.cpp
 
 endlocal

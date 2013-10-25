@@ -29,3 +29,17 @@ test/test_log_event/Debug/
 test/test_log_setup/Debug/
 test/test_math/Debug/
 test/test_mpi_python/Debug/
+test/test_program_options/Debug/
+test/test_python/Debug/
+test/test_random/Debug/
+test/test_signals/Debug/CL.read.1.tlog
+test/test_signals/Debug/CL.write.1.tlog
+test/test_signals/Debug/
+test/test_smart_ptr/Debug/
+*.tlog
+*.lastbuildstate
+*.idb
+*.ipch
+*.nupkg
+test_vc110/packages/
+*.unsuccessfulbuild

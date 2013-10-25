@@ -12,9 +12,13 @@ namespace builder
     {
         public readonly string Name;
 
+        public readonly IEnumerable<string> PreprocessorDefinitions;
+
         public readonly IEnumerable<string> LineList;
 
         public readonly IEnumerable<string> FileList;
+
+        public readonly bool Skip;
 
         public IEnumerable<CompilationUnit> CompilationUnitList
         {
@@ -29,16 +33,43 @@ namespace builder
 
         public Package(
             string name,
+            IEnumerable<string> preprocessorDefinitions = null,
             IEnumerable<string> lineList = null,
-            IEnumerable<string> fileList = null)
+            IEnumerable<string> fileList = null,
+            bool skip = false)
         {
             Name = name;
+            PreprocessorDefinitions = preprocessorDefinitions.EmptyIfNull();
             LineList = lineList.EmptyIfNull();
             FileList = fileList.EmptyIfNull();
+            Skip = skip;
+        }
+
+        public Package(string name, Package package, IEnumerable<string> fileList):
+            this(
+                name: name,
+                preprocessorDefinitions: package.PreprocessorDefinitions,
+                lineList: package.LineList,
+                fileList: fileList)
+        {
         }
 
         public Package(): this(null)
         {
+        }
+
+        public static IEnumerable<Nuspec.Dependency> BoostDependency
+        {
+            get
+            {
+                var versionRange =
+                    "[" +
+                    new Version(Config.Version.Major, Config.Version.Minor) +
+                    "," +
+                    new Version(Config.Version.Major, Config.Version.Minor + 1) +
+                    ")";
+                return new[] { new Nuspec.Dependency("boost", versionRange) };
+            }
         }
 
         public void Create(string directory)
@@ -60,20 +91,18 @@ namespace builder
             //
             var clCompile =
                 new Targets.ClCompile(
-                    preprocessorDefinitions: Name.ToUpper() + "_NO_LIB");
-            var versionRange =
-                "[" +
-                new Version(Config.Version.Major, Config.Version.Minor) +
-                "," +
-                new Version(Config.Version.Major, Config.Version.Minor + 1) +
-                ")";
+                    preprocessorDefinitions:
+                        PreprocessorDefinitions.
+                            Concat(new[] { Name.ToUpper() + "_NO_LIB"})
+                );
+
             Nuspec.Create(
                 nuspecId,
                 Name,
                 new[] { new Targets.ItemDefinitionGroup(clCompile: clCompile) },
                 srcFiles,
                 CompilationUnitList,
-                new[] { new Nuspec.Dependency("boost", versionRange) }
+                BoostDependency
             );
 
         }

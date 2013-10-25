@@ -1,46 +1,185 @@
 # Levels
 
-1. boost, headers only. For example boost.1.54.0.0.nupkg
-2. boost_{library_name}, C++ files. For example, boost_mpi_python.1.54.0.0.nupkg.
-3. boost_{library_name}-{compiler}, DLL/lib files. For example, boost_atomic-vc110.1.54.nupkg.
+1. **boost**, headers only. For example **boost.1.54.0.0.nupkg**
+2. **boost\_{library\_name}**, C++ files. For example, **boost\_mpi\_python.1.54.0.0.nupkg**.
+3. **boost\_{library\_name}-{compiler}**, DLL/lib files. For example, **boost\_atomic-vc110.1.54.nupkg**.
 
-# Recomendations to Boost library authors
+# Packages
 
-1. Split C++ file set to libraries and sublibraries. 
-2. ".cpp" files should provide functionality (method bodys on any platform). ".ipp" files can be responsible for platfrom specific implementations.
+## boost\_atomic
+- **boost\_atomic** (source)
+- **boost\_atomic-vc110** (static/shared)
 
-# Report
+## boost\_chrono
 
-- boost_context - needs ASM.
-- boost_coroutine - depends on boost_context.
-- boost_graph_parallel - depends on boost_mpi.
-- boost_mpi - depends on MPI library.
-- boost_iostreams_bzip2 - depends on bzip2.
-- boost_iostreams_zlib - depends on zlib.
-- boost_locale - dpends on boost_thread, boost_date_time, boost_system, boost_chrono.
-- boost_locale_icu - depends on icu, boost_locale, boost_thread, boost_date_time, boost_system, boost_chrono.
-- boost_log - depends on boost_system, boost_filesystem, boost_date_time, boost_thread, boost_chrono.
-- boost_log_event - needs resource builder or something.
-- boost_log_setup - depends on boost_event_log, boost_log, boost_system, boost_filesystem, boost_date_time, boost_thread, boost_chrono.
-- boost_math.
-- boost_mpi depends on MPI and ... ?
-- boost_mpi_python depends on MPI, Python.
+The package depends on **boost\_system**.
 
-- boost_thread - depends on boost_date_time, boost_system, boost_chrono.
+- **boost\_chrono** (source)
+- **boost\_chrono-vc110** (static/shared).
 
-# Visitors
+## boost\_context.
+- source library needs ASM.
+- **boost\_context-vc110** (static/shared)
 
-- sublibrary
-  - directory:
-    - contains  => dir.FileList(f => true) : true
-    - otherwise => dir.FileList(filter)    : false
-  - file:
-    - contains  => include       : true
-    - otherwise => don't include : false
-- main
-  - directory
-    - excluded  => empty                : false
-    - otherwise => dir.FileList(filter) : null
-  - file
-    - excluded  => don't include : fase
-    - otherwise => include       : null
+## boost\_coroutine
+The package depends on **boost\_context**.
+
+- **boost\_coroutine** (source)
+- **boost\_coroutine-vc110** (static/shared)
+
+## boost\_date\_time
+- **boost\_date\_time** (source)
+- **boost\_date\_time-vc110** (static/shared)
+
+## boost\_exception
+- **boost\_exception** (source)
+- **boost\_exception-vc110** (static)
+
+## boost\_filesystem
+The package depends on **boost\_system**.
+
+- **boost\_filesystem** (source)
+- **boost\_filesystem-vc110** (static/shared)
+
+## boost\_graph
+The package depends on **boost\_regex**.
+
+- **boost\_graph** (source)
+- **boost\_graph-vc110** (static/shared)
+  
+## boost\_graph\_parallel
+The package depends on **boost\_mpi**, **boost\_serialization**, **MPI**.
+
+- **boost\_graph** (source)
+
+## boost\_iostreams
+- **boost\_iostreams** (source)
+- **boost\_iostreams-vc110** (static/shared)
+
+## boost\_iostreams\_bzip2
+The package depends on **bzip2**.
+
+- **boost\_iostreams\_bzip2** (source).
+
+## boost\_iostreams\_zlib
+The package depends on **zlib**.
+
+- **boost\_iostreams\_zlib** (source).
+
+## boost\_locale
+
+The package dpends on **boost\_thread**, **boost\_date\_time**, **boost\_system**, **boost\_chrono**.
+
+- **boost\_locale** (source).
+- **boost\_locale-vc110** (static/shared).
+
+## boost\_locale\_icu
+
+The package depends on **ICU**, **boost\_locale**, **boost\_thread**, **boost\_date\_time**, **boost\_system**, **boost\_chrono**.
+
+- **boost\_locale\_icu** (source).
+ 
+## boost\_log
+
+The package depends on **boost\_system**, **boost\_filesystem**, **boost\_date\_time**, **boost\_thread**, **boost\_chrono**.
+
+- **boost\_log** (source)
+- **boost\_log-vc110** (static/shared)
+
+## boost\_log\_setup
+
+The package depends on **boost\_log\_event**, **boost\_log**, **boost\_system**, **boost\_filesystem**, **boost\_date\_time**, **boost\_thread**, **boost\_chrono**.
+
+- source library needs a resource builder
+- **boost\_log\_setup-vc110** (static/shared)
+
+## boost\_math
+
+- **boost\_math** (source).
+- **boost\_math\_c99-vc110** (static/shared)
+- **boost\_math\_c99f-vc110** (static/shared)
+- **boost\_math\_c99l-vc110** (static/shared)
+- **boost\_math\_tr1-vc110** (static/shared)
+- **boost\_math\_tr1f-vc110** (static/shared)
+- **boost\_math\_tr1l-vc110** (static/shared)
+
+## boost\_mpi
+
+The package depends on **MPI**, **boost\_serialization**.
+
+- **boost\_mpi** (source).
+
+## boost\_mpi\_python
+
+The package depends on **MPI**, **Python**, **boost\_mpi**, **boost\_pyhton**, **boost\_serialization**.
+
+- **boost\_mpi\_python** (source).
+
+## boost\_program\_options
+- **boost\_program\_options** (source)
+- **boost\_program\_options-vc110** (static/shared)
+
+## boost\_python
+
+The package depends on **Python**.
+- **boost\_python** (source)
+  
+## boost\_random
+- **boost\_random** (source)
+- **boost\_random-vc110** (static/shared)
+
+## boost\_regex
+- **boost\_regex** (source)
+- **boost\_regex-vc110** (static/shared)
+
+## boost\_serialization
+- **boost\_serialization** (source)
+- **boost\_serialization-vc110** (static/shared)
+- **boost\_wserialization-vc110** (static/shared)
+
+## boost\_signals
+- **boost\_signals** (source)
+- **boost\_signals-vc110** (static/shared)
+
+## boost\_smart\_ptr
+- **boost\_smart\_ptr** (source)
+
+## boost\_system
+- **boost\_system** (source)
+- **boost\_system-vc110** (static/shared)
+
+## boost\_test.
+  
+- **boost\_test** (source)
+- **boost\_test\_cpp\_main** (source)
+- **boost\_test\_test\_main** (source)
+- **boost\_test\_unit\_test\_main** (source)
+- **boost\_prg\_exec\_monitor-vc110**
+- **boost\_unit\_test\_framework-vc110**
+- **boost\_test\_exec\_monitor-vc110**
+
+## boost\_thread 
+
+The package depends on **boost\_date\_time**, **boost\_system**, **boost\_chrono**.
+
+- **boost\_thread** (source)
+- **boost\_thread-vc110** (static/shared)
+
+## boost\_timer
+
+The package depends on **boost\_system**, **boost\_chrono**.
+
+- **boost\_timer** (source)
+- **boost\_timer-vc110** (static/shared)
+
+## boost\_wave
+
+The package depends on **boost\_chrono**, **boost\_date\_time**, **boost\_system**, **boost\_thread**, **boost\_wave**.
+
+- **boost\_wave** (source)
+- **boost\_wave-vc110** (static/shared)
+
+# Recommendations to Boost library authors
+
+1. Split C++ file set to libraries and sub-libraries. 
+2. **.cpp** files should provide functionality (method bodies on any platform). **.ipp** files can be responsible for platform specific implementations.

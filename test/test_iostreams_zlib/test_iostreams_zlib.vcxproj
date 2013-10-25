@@ -94,9 +94,9 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost.1.54.0.131\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.131\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_iostreams_zlib.1.54.0.133\build\native\boost_iostreams_zlib.targets" Condition="Exists('..\packages\boost_iostreams_zlib.1.54.0.133\build\native\boost_iostreams_zlib.targets')" />
     <Import Project="..\packages\zlib.redist.1.2.8.6\build\native\zlib.redist.targets" Condition="Exists('..\packages\zlib.redist.1.2.8.6\build\native\zlib.redist.targets')" />
     <Import Project="..\packages\zlib.1.2.8.6\build\native\zlib.targets" Condition="Exists('..\packages\zlib.1.2.8.6\build\native\zlib.targets')" />
+    <Import Project="..\packages\boost_iostreams_zlib.1.54.0.154\build\native\boost_iostreams_zlib.targets" Condition="Exists('..\packages\boost_iostreams_zlib.1.54.0.154\build\native\boost_iostreams_zlib.targets')" />
+    <Import Project="..\packages\boost.1.54.0.154\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.154\build\native\boost.targets')" />
   </ImportGroup>
 </Project>

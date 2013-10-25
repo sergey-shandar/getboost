@@ -8,7 +8,7 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 54, 0, 143);
+        public static readonly Version Version = new Version(1, 54, 0, 156);
 
         public const string Authors = "Sergey Shandar, Boost";
 
@@ -163,6 +163,19 @@ namespace builder
                             "python"
                         }),
                 }),
+            // python
+            new Library(
+                name: "python",
+                packageList: new[]
+                {
+                    new Package(
+                        name: null,
+                        preprocessorDefinitions: 
+                            new[] { "BOOST_PYTHON_STATIC_LIB" },
+                        lineList: 
+                            new[] { "#define BOOST_PYTHON_SOURCE" }
+                    )
+                }),
             // regex.
             // serialization.
             // test
@@ -216,5 +229,6 @@ namespace builder
                         }),
                 }),
         };
+
     }
 }
