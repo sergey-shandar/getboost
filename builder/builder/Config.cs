@@ -8,9 +8,11 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 54, 0, 156);
+        public static readonly Version Version = new Version(1, 54, 0, 157);
 
         public const string Authors = "Sergey Shandar, Boost";
+
+        public const string Owners = "sergey_shandar";
 
         public const string BoostDir = @"..\..\..\..\..\boost_1_54_0\";
 
@@ -24,6 +26,16 @@ namespace builder
         {
             // chrono depends on system
             // context needs ASM.
+            new Library(
+                name: "context",
+                packageList: new[]
+                {
+                    new Package(
+                        name: null,
+                        skip: true
+                    )
+                }
+            ),
             // coroutine
             new Library(
                 name: "coroutine",
@@ -37,14 +49,18 @@ namespace builder
                         fileList: new[] 
                         {
                             @"detail\segmented_stack_allocator.cpp" 
-                        }),
+                        },
+                        skip: true
+                    ),
                     // coroutine_posix (need Posix library).
                     new Package(
                         name: "posix",
                         fileList: new[]
                         {
                             @"detail\standard_stack_allocator_posix.cpp",
-                        }),
+                        },
+                        skip: true
+                    ),
                 }),
             // filesystem depends on system.
             // graph depens on regex.
@@ -89,7 +105,8 @@ namespace builder
                         fileList: new[]
                         {
                             "posix",
-                        }
+                        },
+                        skip: true
                     ),
                     // locale_icu
                     new Package(
@@ -125,7 +142,9 @@ namespace builder
                         fileList: new[]
                         {
                             "event_log_backend.cpp"
-                        }),
+                        },
+                        skip: true
+                    ),
                     // need log_event
                     new Package(
                         name: "setup",
@@ -146,7 +165,9 @@ namespace builder
                             "filter_parser.cpp",
                             "formatter_parser.cpp",
                             "default_filter_factory.cpp",
-                        }),
+                        },
+                        skip: true
+                    ),
                 }),
             // mpi depends on serialization and MPI (3rd party).
             new Library(
@@ -175,7 +196,8 @@ namespace builder
                         lineList: 
                             new[] { "#define BOOST_PYTHON_SOURCE" }
                     )
-                }),
+                }
+            ),
             // regex.
             // serialization.
             // test
@@ -184,29 +206,39 @@ namespace builder
                 packageList: new[]
                 {
                     // test
-                    new Package(),
+                    new Package(
+                        name: null,
+                        skip: true
+                    ),
                     // test_cpp_main
                     new Package(
                         name: "cpp_main",
                         fileList: new[]
                         {
                             "cpp_main.cpp"
-                        }),
+                        },
+                        skip: true
+                    ),
                     // test_test_main
                     new Package(
                         name: "test_main",
                         fileList: new[]
                         {
                             "test_main.cpp"
-                        }),
+                        },
+                        skip: true
+                    ),
                     // test_unit_test_main
                     new Package(
                         name: "unit_test_main",
                         fileList: new[]
                         {
                             "unit_test_main.cpp"
-                        })
-                }),
+                        },
+                        skip: true
+                    )
+                }
+            ),
             // thread.
             new Library(
                 name: "thread",
@@ -219,15 +251,19 @@ namespace builder
                         {
                             "#define BOOST_HAS_WINTHREADS",
                             "#define BOOST_THREAD_BUILD_LIB",
-                        }),
+                        }
+                    ),
                     // thread_pthread
                     new Package(
                         name: "pthread",
                         fileList: new[]
                         {
                             "pthread"
-                        }),
-                }),
+                        },
+                        skip: true
+                    ),
+                }
+            ),
         };
 
     }

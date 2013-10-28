@@ -74,37 +74,42 @@ namespace builder
 
         public void Create(string directory)
         {
-            var nuspecId = Name;
-            var srcFiles =
-                FileList.Select(
-                    f =>
-                        new Nuspec.File(
-                            Path.Combine(directory, f),
-                            Path.Combine(Targets.SrcPath, f)
-                        )
-                );
-            //
-            foreach (var u in CompilationUnitList)
+            if (!Skip)
             {
-                u.Make(this);
-            }
-            //
-            var clCompile =
-                new Targets.ClCompile(
-                    preprocessorDefinitions:
-                        PreprocessorDefinitions.
-                            Concat(new[] { Name.ToUpper() + "_NO_LIB"})
+                var nuspecId = Name;
+                var srcFiles =
+                    FileList.Select(
+                        f =>
+                            new Nuspec.File(
+                                Path.Combine(directory, f),
+                                Path.Combine(Targets.SrcPath, f)
+                            )
+                    );
+                //
+                foreach (var u in CompilationUnitList)
+                {
+                    u.Make(this);
+                }
+                //
+                var clCompile =
+                    new Targets.ClCompile(
+                        preprocessorDefinitions:
+                            PreprocessorDefinitions.
+                                Concat(new[] { Name.ToUpper() + "_NO_LIB" })
+                    );
+
+                Nuspec.Create(
+                    nuspecId,
+                    Name,
+                    new[] 
+                    {
+                        new Targets.ItemDefinitionGroup(clCompile: clCompile)
+                    },
+                    srcFiles,
+                    CompilationUnitList,
+                    BoostDependency
                 );
-
-            Nuspec.Create(
-                nuspecId,
-                Name,
-                new[] { new Targets.ItemDefinitionGroup(clCompile: clCompile) },
-                srcFiles,
-                CompilationUnitList,
-                BoostDependency
-            );
-
+            }
         }
     }
 }

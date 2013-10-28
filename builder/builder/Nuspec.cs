@@ -72,9 +72,9 @@ namespace builder
                         N("id", id),
                         N("version", Config.Version.ToString()),
                         N("authors", Config.Authors),
-                        N("owners", Config.Authors),
-                        N("licenseUrl", "http://www.boost.org/LICENSE_1_0.txt"),
-                        N("projectUrl", "http://boost.org/"),
+                        N("owners", Config.Owners),
+                        N("licenseUrl", "http://getboost.codeplex.com/license"),
+                        N("projectUrl", "http://getboost.codeplex.com/"),
                         N("requireLicenseAcceptance", "false"),
                         N("description", id),
                         N("dependencies").Append(

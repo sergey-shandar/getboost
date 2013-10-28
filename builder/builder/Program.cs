@@ -121,7 +121,6 @@ namespace builder
 
         static void Main(string[] args)
         {
-            /*
             // headers only library.
             {
                 var path = Path.Combine(Config.BoostDir, "boost");
@@ -176,7 +175,6 @@ namespace builder
                     MakeLibrary(libraryConfig, src);
                 }
             }
-             * */
             // compiler specific libraries
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
             foreach (var platform in Config.PlatformList)
