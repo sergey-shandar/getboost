@@ -98,12 +98,12 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost.1.54.0.154\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.154\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_chrono.1.54.0.154\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.54.0.154\build\native\boost_chrono.targets')" />
-    <Import Project="..\packages\boost_system.1.54.0.154\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.54.0.154\build\native\boost_system.targets')" />
-    <Import Project="..\packages\boost_date_time.1.54.0.154\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.54.0.154\build\native\boost_date_time.targets')" />
-    <Import Project="..\packages\boost_thread.1.54.0.154\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.54.0.154\build\native\boost_thread.targets')" />
-    <Import Project="..\packages\boost_locale.1.54.0.154\build\native\boost_locale.targets" Condition="Exists('..\packages\boost_locale.1.54.0.154\build\native\boost_locale.targets')" />
-    <Import Project="..\packages\boost_locale_icu.1.54.0.154\build\native\boost_locale_icu.targets" Condition="Exists('..\packages\boost_locale_icu.1.54.0.154\build\native\boost_locale_icu.targets')" />
+    <Import Project="..\packages\boost_chrono.1.55.0.0\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.55.0.0\build\native\boost_chrono.targets')" />
+    <Import Project="..\packages\boost_date_time.1.55.0.0\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.55.0.0\build\native\boost_date_time.targets')" />
+    <Import Project="..\packages\boost_locale.1.55.0.0\build\native\boost_locale.targets" Condition="Exists('..\packages\boost_locale.1.55.0.0\build\native\boost_locale.targets')" />
+    <Import Project="..\packages\boost_locale_icu.1.55.0.0\build\native\boost_locale_icu.targets" Condition="Exists('..\packages\boost_locale_icu.1.55.0.0\build\native\boost_locale_icu.targets')" />
+    <Import Project="..\packages\boost_thread.1.55.0.0\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.55.0.0\build\native\boost_thread.targets')" />
+    <Import Project="..\packages\boost.1.55.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.0\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_system.1.55.0.0\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.55.0.0\build\native\boost_system.targets')" />
   </ImportGroup>
 </Project>

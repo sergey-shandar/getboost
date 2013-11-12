@@ -8,13 +8,13 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 54, 0, 157);
+        public static readonly Version Version = new Version(1, 55, 0, 6);
 
         public const string Authors = "Sergey Shandar, Boost";
 
         public const string Owners = "sergey_shandar";
 
-        public const string BoostDir = @"..\..\..\..\..\boost_1_54_0\";
+        public const string BoostDir = @"..\..\..\..\..\boost_1_55_0\";
 
         public static readonly Platform[] PlatformList = new[]
         {
@@ -42,7 +42,13 @@ namespace builder
                 packageList: new[]
                 {
                     // coroutine
-                    new Package(),
+                    new Package(
+                        name: null,
+                        preprocessorDefinitions: new[] 
+                        {
+                            "BOOST_COROUTINES_NO_LIB"
+                        }
+                    ),
                     // coroutine_segmented (GCC only)
                     new Package(
                         name: "segmented",
@@ -165,6 +171,8 @@ namespace builder
                             "filter_parser.cpp",
                             "formatter_parser.cpp",
                             "default_filter_factory.cpp",
+                            "matches_relation_factory.cpp",
+                            "default_formatter_factory.cpp"
                         },
                         skip: true
                     ),

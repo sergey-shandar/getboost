@@ -38,6 +38,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\detail\boost_coroutine.detail.standard_stack_allocator_windows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_coroutine.exceptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

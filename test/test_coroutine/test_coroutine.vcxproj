@@ -73,6 +73,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -94,8 +95,9 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost.1.54.0.154\build\native\boost.targets" Condition="Exists('..\packages\boost.1.54.0.154\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_coroutine.1.54.0.154\build\native\boost_coroutine.targets" Condition="Exists('..\packages\boost_coroutine.1.54.0.154\build\native\boost_coroutine.targets')" />
-    <Import Project="..\packages\boost_context-vc110.1.54.0.154\build\native\boost_context-vc110.targets" Condition="Exists('..\packages\boost_context-vc110.1.54.0.154\build\native\boost_context-vc110.targets')" />
+    <Import Project="..\packages\boost.1.55.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.0\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_context-vc110.1.55.0.0\build\native\boost_context-vc110.targets" Condition="Exists('..\packages\boost_context-vc110.1.55.0.0\build\native\boost_context-vc110.targets')" />
+    <Import Project="..\packages\boost_coroutine.1.55.0.1\build\native\boost_coroutine.targets" Condition="Exists('..\packages\boost_coroutine.1.55.0.1\build\native\boost_coroutine.targets')" />
+    <Import Project="..\packages\boost_system.1.55.0.0\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.55.0.0\build\native\boost_system.targets')" />
   </ImportGroup>
 </Project>

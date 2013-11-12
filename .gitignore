@@ -40,3 +40,4 @@ test/test_smart_ptr/Debug/
 *.nupkg
 test_vc110/packages/
 *.unsuccessfulbuild
+test/Release/
