@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio Express 2013 for Windows Desktop
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_atomic", "test_atomic\test_atomic.vcxproj", "{66D19598-71CE-4B50-BE2E-2E1BDEDEE0ED}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_chrono", "test_chrono\test_chrono.vcxproj", "{62162F4C-C5AE-4F85-9200-71BFFEDB063F}"
@@ -58,6 +60,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_timer", "test_timer\test_timer.vcxproj", "{93CC05BC-C9F1-4E9C-BFCE-4DAB8FB0CA81}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_wave", "test_wave\test_wave.vcxproj", "{C2BA893C-4E9C-402B-BE49-A084310D3DBA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{0D5175BF-AE5D-4C0A-ABDC-76487D4D9FB3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -239,6 +243,10 @@ Global
 		{C2BA893C-4E9C-402B-BE49-A084310D3DBA}.Release|Win32.ActiveCfg = Release|Win32
 		{C2BA893C-4E9C-402B-BE49-A084310D3DBA}.Release|Win32.Build.0 = Release|Win32
 		{C2BA893C-4E9C-402B-BE49-A084310D3DBA}.Release|Win32.Deploy.0 = Release|Win32
+		{0D5175BF-AE5D-4C0A-ABDC-76487D4D9FB3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0D5175BF-AE5D-4C0A-ABDC-76487D4D9FB3}.Debug|Win32.Build.0 = Debug|Win32
+		{0D5175BF-AE5D-4C0A-ABDC-76487D4D9FB3}.Release|Win32.ActiveCfg = Release|Win32
+		{0D5175BF-AE5D-4C0A-ABDC-76487D4D9FB3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

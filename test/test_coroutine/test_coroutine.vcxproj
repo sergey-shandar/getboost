@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v110</PlatformToolset>
+    <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -96,8 +96,8 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.55.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.0\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_context-vc110.1.55.0.0\build\native\boost_context-vc110.targets" Condition="Exists('..\packages\boost_context-vc110.1.55.0.0\build\native\boost_context-vc110.targets')" />
-    <Import Project="..\packages\boost_coroutine.1.55.0.1\build\native\boost_coroutine.targets" Condition="Exists('..\packages\boost_coroutine.1.55.0.1\build\native\boost_coroutine.targets')" />
     <Import Project="..\packages\boost_system.1.55.0.0\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.55.0.0\build\native\boost_system.targets')" />
+    <Import Project="..\packages\boost_context-vc120.1.55.0.0\build\native\boost_context-vc120.targets" Condition="Exists('..\packages\boost_context-vc120.1.55.0.0\build\native\boost_context-vc120.targets')" />
+    <Import Project="..\packages\boost_coroutine.1.55.0.9\build\native\boost_coroutine.targets" Condition="Exists('..\packages\boost_coroutine.1.55.0.9\build\native\boost_coroutine.targets')" />
   </ImportGroup>
 </Project>
