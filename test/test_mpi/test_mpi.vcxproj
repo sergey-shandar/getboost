@@ -98,8 +98,8 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost_mpi.1.55.0.0\build\native\boost_mpi.targets" Condition="Exists('..\packages\boost_mpi.1.55.0.0\build\native\boost_mpi.targets')" />
-    <Import Project="..\packages\boost.1.55.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.0\build\native\boost.targets')" />
-    <Import Project="..\packages\boost_serialization.1.55.0.9\build\native\boost_serialization.targets" Condition="Exists('..\packages\boost_serialization.1.55.0.9\build\native\boost_serialization.targets')" />
+    <Import Project="..\packages\boost.1.55.0.10\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_mpi.1.55.0.10\build\native\boost_mpi.targets" Condition="Exists('..\packages\boost_mpi.1.55.0.10\build\native\boost_mpi.targets')" />
+    <Import Project="..\packages\boost_serialization.1.55.0.10\build\native\boost_serialization.targets" Condition="Exists('..\packages\boost_serialization.1.55.0.10\build\native\boost_serialization.targets')" />
   </ImportGroup>
 </Project>

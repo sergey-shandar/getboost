@@ -94,8 +94,8 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\boost_graph.1.55.0.0\build\native\boost_graph.targets" Condition="Exists('..\packages\boost_graph.1.55.0.0\build\native\boost_graph.targets')" />
-    <Import Project="..\packages\boost_regex.1.55.0.0\build\native\boost_regex.targets" Condition="Exists('..\packages\boost_regex.1.55.0.0\build\native\boost_regex.targets')" />
-    <Import Project="..\packages\boost.1.55.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.0\build\native\boost.targets')" />
+    <Import Project="..\packages\boost.1.55.0.10\build\native\boost.targets" Condition="Exists('..\packages\boost.1.55.0.10\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_regex.1.55.0.10\build\native\boost_regex.targets" Condition="Exists('..\packages\boost_regex.1.55.0.10\build\native\boost_regex.targets')" />
+    <Import Project="..\packages\boost_graph.1.55.0.10\build\native\boost_graph.targets" Condition="Exists('..\packages\boost_graph.1.55.0.10\build\native\boost_graph.targets')" />
   </ImportGroup>
 </Project>
