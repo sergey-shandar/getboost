@@ -8,7 +8,7 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 55, 0, 10);
+        public static readonly Version Version = new Version(1, 55, 0, 15);
 
         public const string Authors = "Sergey Shandar, Boost";
 
@@ -18,8 +18,8 @@ namespace builder
 
         public static readonly Platform[] PlatformList = new[]
         {
-            new Platform("Win32", @"stage_x86\lib"),
-            new Platform("x64", @"stage_x86_64\lib")
+            new Platform("Win32", @"address-model-32\lib"),
+            new Platform("x64", @"address-model-64\lib")
         };
 
         public static readonly Library[] LibraryList = new[]

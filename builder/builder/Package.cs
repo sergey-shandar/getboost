@@ -50,7 +50,8 @@ namespace builder
                 name: name,
                 preprocessorDefinitions: package.PreprocessorDefinitions,
                 lineList: package.LineList,
-                fileList: fileList)
+                fileList: fileList,
+                skip: package.Skip)
         {
         }
 

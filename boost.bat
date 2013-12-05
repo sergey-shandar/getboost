@@ -1,19 +1,54 @@
 cd ..\boost_1_55_0\
 
-call bootstrap.bat
+rem call bootstrap.bat
+
+rem call :link msvc-12.0
+rem call :link msvc-11.0
 
 setlocal
-bjam msvc architecture=x86 link=static,shared stage --stagedir=stage_x86
-rem bjam msvc architecture=x86 link=static,shared stage --stagedir=stage_x86 --toolset=msvc-11.0 
+call "c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd"
+call :link msvc-10.0
 endlocal
 
-setlocal
-bjam msvc architecture=x86 link=static,shared address-model=64 stage --stagedir=stage_x86_64
-rem bjam msvc architecture=x86 link=static,shared address-model=64 stage --stagedir=stage_x86_64 --toolset=msvc-11.0 
-endlocal
+goto :eof
 
-setlocal
-rem bjam msvc architecture=arm --without-context stage --stagedir=stage_arm
-endlocal
+:link
+echo link {
+echo toolset=%1
+echo }
+call :threading %1 shared shared
+call :threading %1 static shared
+call :threading %1 static static
+goto :eof
 
-endlocal
+:threading
+echo threading {
+echo toolset=%1
+echo link=%2
+echo runtime-link=%3
+echo }
+call :address_model %1 %2 %3 single
+call :address_model %1 %2 %3 multiple
+goto :eof
+
+:address_model
+echo address_model {
+echo toolset=%1
+echo link=%2
+echo runtime-link=%3
+echo threading=%4
+echo }
+call :build %1 %2 %3 %4 32
+call :build %1 %2 %3 %4 64
+goto :eof
+
+:build
+echo build {
+echo toolset=%1
+echo link=%2
+echo runtime-link=%3
+echo threading=%4
+echo address-model=%5
+echo }
+bjam msvc architecture=x86 link=%2 runtime-link=%3 threading=%4 address-model=%5 stage --stagedir=address-model-%4 --toolset=%1 --without-python
+goto :eof

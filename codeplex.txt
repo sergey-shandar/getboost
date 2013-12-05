@@ -1,0 +1,123 @@
+﻿# *[url:boost|https://www.nuget.org/packages/boost/1.55.0.10]*, headers only.
+# *{"boost_{library_name}"}*, C++ files. For example, *{"boost_mpi_python.1.55.0.0.nupkg"}*.
+# *{"boost_{library_name}-{compiler}"}*, DLL/lib files. For example, *boost_atomic-vc120.1.55.nupkg*.
+
+! Libraries
+
+!! boost_atomic
+* *[url:boost_atomic|https://www.nuget.org/packages/boost_atomic/1.55.0.10]*
+* *[url:boost_atomic-vc110|https://www.nuget.org/packages/boost_atomic-vc110/1.55.0.10]*, *[url:boost_atomic-vc120|https://www.nuget.org/packages/boost_atomic-vc120/1.55.0.10]*
+
+!! boost_chrono
+* *[url:boost_chrono|https://www.nuget.org/packages/boost_chrono/1.55.0.10]*
+* *[url:boost_chrono-vc110|https://www.nuget.org/packages/boost_chrono-vc110/1.55.0.10]*, *[url:boost_chrono-vc120|https://www.nuget.org/packages/boost_chrono-vc120/1.55.0.10]*
+
+!! boost_context
+* *[url:boost_context-vc110|https://www.nuget.org/packages/boost_context-vc110/1.55.0.10]*, *[url:boost_context-vc120|https://www.nuget.org/packages/boost_context-vc120/1.55.0.10]*
+
+!! boost_coroutine
+* *[url:boost_coroutine|https://www.nuget.org/packages/boost_coroutine/1.55.0.10]*
+* *[url:boost_coroutine-vc110|https://www.nuget.org/packages/boost_coroutine-vc110/1.55.0.10]*, *[url:boost_coroutine-vc120|https://www.nuget.org/packages/boost_coroutine-vc120/1.55.0.10]*
+
+!! {"boost_date_time"}
+* *[url:boost_date_time|https://www.nuget.org/packages/boost_date_time/1.55.0.10]*
+* *[url:boost_date_time-vc110|https://www.nuget.org/packages/boost_date_time-vc110/1.55.0.10]*, *[url:boost_date_time-vc120|https://www.nuget.org/packages/boost_date_time-vc120/1.55.0.10]*
+
+!! boost_exception
+* *[url:boost_exception|https://www.nuget.org/packages/boost_exception/1.55.0.10]*
+* *[url:boost_exception-vc110|https://www.nuget.org/packages/boost_exception-vc110/1.55.0.10]*, *[url:boost_exception-vc120|https://www.nuget.org/packages/boost_exception-vc120/1.55.0.10]*
+
+!! boost_filesystem
+* *[url:boost_filesystem|https://www.nuget.org/packages/boost_filesystem/1.55.0.10]*
+* *[url:boost_filesystem-vc110|https://www.nuget.org/packages/boost_filesystem-vc110/1.55.0.10]*, *[url:boost_filesystem-vc120|https://www.nuget.org/packages/boost_filesystem-vc120/1.55.0.10]*
+
+!! boost_graph
+* *[url:boost_graph|https://www.nuget.org/packages/boost_graph/1.55.0.10]* (source)
+* *[url:boost_graph-vc110|https://www.nuget.org/packages/boost_graph-vc110/1.55.0.10]*, *[url:boost_graph-vc120|https://www.nuget.org/packages/boost_graph-vc120/1.55.0.10]*
+  
+!! {"boost_graph_parallel"}
+* *[url:boost_graph_parallel|https://www.nuget.org/packages/boost_graph_parallel/1.55.0.10]*
+
+!! boost_iostreams
+* *[url:boost_iostreams|https://www.nuget.org/packages/boost_iostreams/1.55.0.10]*
+* *[url:boost_iostreams-vc110|https://www.nuget.org/packages/boost_iostreams-vc110/1.55.0.10]*, *[url:boost_iostreams-vc120|https://www.nuget.org/packages/boost_iostreams-vc120/1.55.0.10]*
+
+!! {"boost_iostreams_bzip2"}
+* *[url:boost_iostreams_bzip2|https://www.nuget.org/packages/boost_iostreams_bzip2/1.55.0.10]*
+
+!! {"boost_iostreams_zlib"}
+* *[url:boost_iostreams_zlib|https://www.nuget.org/packages/boost_iostreams_zlib/1.55.0.10]*
+
+!! boost_locale
+* *[url:boost_locale|https://www.nuget.org/packages/boost_locale/1.55.0.10]*
+* *[url:boost_locale-vc110|https://www.nuget.org/packages/boost_locale-vc110/1.54.0.10]*, *[url:boost_locale-vc120|https://www.nuget.org/packages/boost_locale-vc120/1.55.0.10]*
+
+!! {"boost_locale_icu"}
+* *[url:boost_locale_icu|https://www.nuget.org/packages/boost_locale_icu/1.55.0.10]*
+ 
+!! boost_log
+* *[url:boost_log|https://www.nuget.org/packages/boost_log/1.55.0.10]* (source)
+* *[url:boost_log-vc110|https://www.nuget.org/packages/boost_log-vc110/1.55.0.10]*, *[url:boost_log-vc120|https://www.nuget.org/packages/boost_log-vc120/1.55.0.10]*
+
+!! {"boost_log_setup"}
+* *[url:boost_log_setup-vc110|https://www.nuget.org/packages/boost_log_setup-vc110/1.55.0.10]*, *[url:boost_log_setup-vc120|https://www.nuget.org/packages/boost_log_setup-vc120/1.55.0.10]*
+
+!! boost_math
+* *[url:boost_math|https://www.nuget.org/packages/boost_math/1.55.0.10]*
+* *[url:boost_math_c99-vc110|https://www.nuget.org/packages/boost_math_c99-vc110/1.55.0.10]*, *[url:boost_math_c99-vc120|https://www.nuget.org/packages/boost_math_c99-vc120/1.55.0.10]* 
+* *[url:boost_math_c99f-vc110|https://www.nuget.org/packages/boost_math_c99f-vc110/1.55.0.10]*, *[url:boost_math_c99f-vc120|https://www.nuget.org/packages/boost_math_c99f-vc120/1.55.0.10]*
+* *[url:boost_math_c99l-vc110|https://www.nuget.org/packages/boost_math_c99l-vc110/1.55.0.10]*, *[url:boost_math_c99l-vc120|https://www.nuget.org/packages/boost_math_c99l-vc120/1.55.0.10]*
+* *[url:boost_math_tr1-vc110|https://www.nuget.org/packages/boost_math_tr1-vc110/1.55.0.10]*, *[url:boost_math_tr1-vc120|https://www.nuget.org/packages/boost_math_tr1-vc120/1.55.0.10]*
+* *[url:boost_math_tr1f-vc110|https://www.nuget.org/packages/boost_math_tr1f-vc110/1.55.0.10]*, *[url:boost_math_tr1f-vc120|https://www.nuget.org/packages/boost_math_tr1f-vc120/1.55.0.10]*
+* *[url:boost_math_tr1l-vc110|https://www.nuget.org/packages/boost_math_tr1l-vc110/1.55.0.10]*, *[url:boost_math_tr1l-vc120|https://www.nuget.org/packages/boost_math_tr1l-vc120/1.55.0.10]*
+
+!! boost_mpi
+* *[url:boost_mpi|https://www.nuget.org/packages/boost_mpi/1.55.0.10]*
+
+!! {"boost_mpi_python"}
+* *[url:boost_mpi_python|https://www.nuget.org/packages/boost_mpi_python/1.55.0.10]*
+
+!! {"boost_program_options"}
+* *[url:boost_program_options|https://www.nuget.org/packages/boost_program_options/1.55.0.10]*
+* *[url:boost_program_options-vc110|https://www.nuget.org/packages/boost_program_options-vc110/1.55.0.10]*, *[url:boost_program_options-vc120|https://www.nuget.org/packages/boost_program_options-vc120/1.55.0.10]*
+
+!! boost_python
+* *[url:boost_python|https://www.nuget.org/packages/boost_python/1.55.0.10]*
+  
+!! boost_random
+* *[url:boost_random|https://www.nuget.org/packages/boost_random/1.55.0.10]*
+* *[url:boost_random-vc110|https://www.nuget.org/packages/boost_random-vc110/1.55.0.10]*, *[url:boost_random-vc120|https://www.nuget.org/packages/boost_random-vc120/1.55.0.10]*
+
+!! boost_regex
+* *[url:boost_regex|https://www.nuget.org/packages/boost_regex/1.55.0.10]*
+* *[url:boost_regex-vc110|https://www.nuget.org/packages/boost_regex-vc110/1.55.0.10]*, *[url:boost_regex-vc120|https://www.nuget.org/packages/boost_regex-vc120/1.55.0.10]*
+
+!! boost_serialization
+* *[url:boost_serialization|https://www.nuget.org/packages/boost_serialization/1.55.0.10]*
+* *[url:boost_serialization-vc110|https://www.nuget.org/packages/boost_serialization-vc110/1.55.0.10]*, *[url:boost_serialization-vc120|https://www.nuget.org/packages/boost_serialization-vc120/1.55.0.10]*
+* *[url:boost_wserialization-vc110|https://www.nuget.org/packages/boost_wserialization-vc110/1.55.0.10]*, *[url:boost_wserialization-vc120|https://www.nuget.org/packages/boost_wserialization-vc120/1.55.0.10]*
+
+!! boost_signals
+* *[url:boost_signals|https://www.nuget.org/packages/boost_signals/1.55.0.10]*
+* *[url:boost_signals-vc110|https://www.nuget.org/packages/boost_signals-vc110/1.55.0.10]*, *[url:boost_signals-vc120|https://www.nuget.org/packages/boost_signals-vc120/1.55.0.10]*
+
+!! boost_system
+* *[url:boost_system|https://www.nuget.org/packages/boost_system/1.55.0.10]*
+* *[url:boost_system-vc110|https://www.nuget.org/packages/boost_system-vc110/1.55.0.10]*, *[url:boost_system-vc120|https://www.nuget.org/packages/boost_system-vc120/1.55.0.10]*
+
+!! boost_test.
+* *[url:boost_prg_exec_monitor-vc110|https://www.nuget.org/packages/boost_prg_exec_monitor-vc110/1.55.0.10]*, *[url:boost_prg_exec_monitor-vc120|https://www.nuget.org/packages/boost_prg_exec_monitor-vc120/1.55.0.10]*
+* *[url:boost_unit_test_framework-vc110|https://www.nuget.org/packages/boost_unit_test_framework-vc110/1.55.0.10]*, *[url:boost_unit_test_framework-vc120|https://www.nuget.org/packages/boost_unit_test_framework-vc120/1.55.0.10]*
+* *[url:boost_test_exec_monitor-vc110|https://www.nuget.org/packages/boost_test_exec_monitor-vc110/1.55.0.10]*, *[url:boost_test_exec_monitor-vc120|https://www.nuget.org/packages/boost_test_exec_monitor-vc120/1.55.0.10]*
+
+!! boost_thread 
+* *[url:boost_thread|https://www.nuget.org/packages/boost_thread/1.55.0.10]*
+* *[url:boost_thread-vc110|https://www.nuget.org/packages/boost_thread-vc110/1.55.0.10]*, *[url:boost_thread-vc120|https://www.nuget.org/packages/boost_thread-vc120/1.55.0.10]*
+
+!! boost_timer
+* *[url:boost_timer|https://www.nuget.org/packages/boost_timer/1.54.0.157]*
+* *[url:boost_timer-vc110|https://www.nuget.org/packages/boost_timer-vc110/1.55.0.10]*, *[url:boost_timer-vc120|https://www.nuget.org/packages/boost_timer-vc120/1.55.0.10]*
+
+!! boost_wave
+* *[url:boost_wave|https://www.nuget.org/packages/boost_wave/1.55.0.10]*
+* *[url:boost_wave-vc110|https://www.nuget.org/packages/boost_wave-vc110/1.55.0.10]*, *[url:boost_wave-vc120|https://www.nuget.org/packages/boost_wave-vc120/1.55.0.10]*
