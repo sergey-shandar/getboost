@@ -6,20 +6,36 @@
 
 # Parameters
 
-* Compiler (toolset):
-  * Visual C++ 2010 (vc100), 
-  * Visual C++ 2012 (vc110), 
-  * Visual C++ 2013 (vc120).
-* Configuration:
-  * Release,
-  * Debug (gd).
-* Address Model (address-model):
-  * 32,
-  * 64.
-* Link: 
+* Library:
+  * atomic (boost_atomic\*)
+  * ...
+  * wave
+* Sublibraries. About 20 sublibraries. For example, math:
+  * math_c99 (boost_math_c99\*)
+  * math_c99f
+  * math_c99l
+  * math_tr1
+  * math_tr1f
+  * math_tr1l
+* Compiler (toolset), 3 compilers:
+  * Visual C++ 2010 (-vc100), 
+  * Visual C++ 2012 (-vc110), 
+  * Visual C++ 2013 (-vc120).
+* Link (link, runtime-link), 3 configurations: 
   * static (link=static, libboost\*.lib),
   * runtime-static (link=static runtime-link=static, libboost\*-s\*.lib),
-  * shared (link=shared, boost\*.dll boost\*.lib), 
+  * shared (link=shared, boost\*.dll boost\*.lib),
+* Threading (threading), 2 configurations:
+  * single
+  * multiple (-mt)
+* Address Model (address-model), 2 configurations:
+  * 32 (address-model-32/\*)
+  * 64 (address-model-64/\*)
+* Configuration, 2 configurations:
+  * Release
+  * Debug (gd)
+
+About 20 * 3 * 3 * 2 * 2 * 2 files.
 
 # New Version
 
@@ -32,53 +48,54 @@
 # Using Official Binaries
 
 1. DLL. For example,
-  boost-atomic-vc100.1.55.0.14.nupkg 
-    address-model-32\boost-atomic-vc100-mt-1_55.lib 
-    address-model-32\boost-atomic-vc100-mt-1_55.dll 
-    address-model-32\boost-atomic-vc100-mt-gd-1_55.lib 
-    address-model-32\boost-atomic-vc100-mt-gd-1_55.dll 
-    address-model-64\boost-atomic-vc100-mt-1_55.lib
-    address-model-64\boost-atomic-vc100-mt-1_55.dll 
-    address-model-64\boost-atomic-vc100-mt-gd-1_55.lib 
-    address-model-64\boost-atomic-vc100-mt-gd-1_55.dll 
-  boost-wserialization-vc100.1.55.0.14.nupkg
-    address-model-32\boost-wserialization-vc100-1_55.lib 
-    address-model-32\boost-wserialization-vc100-1_55.dll 
-    address-model-32\boost-wserialization-vc100-gd-1_55.lib 
-    address-model-32\boost-wserialization-vc100-gd-1_55.dll 
-    address-model-32\boost-wserialization-vc100-mt-1_55.lib 
-    address-model-32\boost-wserialization-vc100-mt-1_55.dll 
-    address-model-32\boost-wserialization-vc100-mt-gd-1_55.lib 
-    address-model-32\boost-wserialization-vc100-mt-gd-1_55.dll
-    address-model-64\boost-wserialization-vc100-1_55.lib
-    address-model-64\boost-wserialization-vc100-1_55.dll 
-    address-model-64\boost-wserialization-vc100-gd-1_55.lib 
-    address-model-64\boost-wserialization-vc100-gd-1_55.dll 
-    address-model-64\boost-wserialization-vc100-mt-1_55.lib
-    address-model-64\boost-wserialization-vc100-mt-1_55.dll 
-    address-model-64\boost-wserialization-vc100-mt-gd-1_55.lib 
-    address-model-64\boost-wserialization-vc100-mt-gd-1_55.dll
+  * boost-atomic-vc100.1.55.0.14.nupkg 
+    * address-model-32\boost-atomic-vc100-mt-1_55.lib 
+    * address-model-32\boost-atomic-vc100-mt-1_55.dll 
+    * address-model-32\boost-atomic-vc100-mt-gd-1_55.lib 
+    * address-model-32\boost-atomic-vc100-mt-gd-1_55.dll 
+    * address-model-64\boost-atomic-vc100-mt-1_55.lib
+    * address-model-64\boost-atomic-vc100-mt-1_55.dll 
+    * address-model-64\boost-atomic-vc100-mt-gd-1_55.lib 
+    * address-model-64\boost-atomic-vc100-mt-gd-1_55.dll 
+  * boost-wserialization-vc100.1.55.0.14.nupkg
+    * address-model-32\boost-wserialization-vc100-1_55.lib 
+    * address-model-32\boost-wserialization-vc100-1_55.dll 
+    * address-model-32\boost-wserialization-vc100-gd-1_55.lib 
+    * address-model-32\boost-wserialization-vc100-gd-1_55.dll 
+    * address-model-32\boost-wserialization-vc100-mt-1_55.lib 
+    * address-model-32\boost-wserialization-vc100-mt-1_55.dll 
+    * address-model-32\boost-wserialization-vc100-mt-gd-1_55.lib 
+    * address-model-32\boost-wserialization-vc100-mt-gd-1_55.dll
+    * address-model-64\boost-wserialization-vc100-1_55.lib
+    * address-model-64\boost-wserialization-vc100-1_55.dll 
+    * address-model-64\boost-wserialization-vc100-gd-1_55.lib 
+    * address-model-64\boost-wserialization-vc100-gd-1_55.dll 
+    * address-model-64\boost-wserialization-vc100-mt-1_55.lib
+    * address-model-64\boost-wserialization-vc100-mt-1_55.dll 
+    * address-model-64\boost-wserialization-vc100-mt-gd-1_55.lib 
+    * address-model-64\boost-wserialization-vc100-mt-gd-1_55.dll
 2. LIB (thread=single?, runtime-link=shared). For example,
-  libboost-wserialization-vc100.1.55.0.14.nupkg
-    address-model-32\libboost-wserialization-vc100-1_55.lib
-    address-model-32\libboost-wserialization-vc100-gd-1_55.lib
-    address-model-64\libboost-wserialization-vc100-1_55.lib
-    address-model-64\libboost-wserialization-vc100-gd-1_55.lib
+  * libboost-wserialization-vc100.1.55.0.14.nupkg
+    * address-model-32\libboost-wserialization-vc100-1_55.lib
+    * address-model-32\libboost-wserialization-vc100-gd-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-gd-1_55.lib
 3. LIB. (thread=single?, runtime-link=static). For example,
-  libboost-wserialization-vc100-s.1.55.0.14.nupkg
-    address-model-32\libboost-wserialization-vc100-s-1_55.lib
-    address-model-32\libboost-wserialization-vc100-sgd-1_55.lib
-    address-model-64\libboost-wserialization-vc100-s-1_55.lib
-    address-model-64\libboost-wserialization-vc100-sgd-1_55.lib
+  * libboost-wserialization-vc100-s.1.55.0.14.nupkg
+    * address-model-32\libboost-wserialization-vc100-s-1_55.lib
+    * address-model-32\libboost-wserialization-vc100-sgd-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-s-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-sgd-1_55.lib
 4. LIB. (thread=multi?, runtime-link=shared). For example,
-  libboost-wserialization-vc100-mt.1.55.0.14.nupkg
-    address-model-32\libboost-wserialization-vc100-mt-1_55.lib
-    address-model-32\libboost-wserialization-vc100-mt-gd-1_55.lib
-    address-model-64\libboost-wserialization-vc100-mt-1_55.lib
-    address-model-64\libboost-wserialization-vc100-mt-gd-1_55.lib
+  * libboost-wserialization-vc100-mt.1.55.0.14.nupkg
+    * address-model-32\libboost-wserialization-vc100-mt-1_55.lib
+    * address-model-32\libboost-wserialization-vc100-mt-gd-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-mt-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-mt-gd-1_55.lib
 5. LIB. (thread=multi?, runtime-link=static). For example,
-  libboost-wserialization-vc100-mt-s.1.55.0.14.nupkg
-    address-model-32\libboost-wserialization-vc100-mt-s-1_55.lib
-    address-model-32\libboost-wserialization-vc100-mt-sgd-1_55.lib
-    address-model-64\libboost-wserialization-vc100-mt-s-1_55.lib
-    address-model-64\libboost-wserialization-vc100-mt-sgd-1_55.lib
+  * libboost-wserialization-vc100-mt-s.1.55.0.14.nupkg
+    * address-model-32\libboost-wserialization-vc100-mt-s-1_55.lib
+    * address-model-32\libboost-wserialization-vc100-mt-sgd-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-mt-s-1_55.lib
+    * address-model-64\libboost-wserialization-vc100-mt-sgd-1_55.lib
+
