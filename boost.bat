@@ -5,11 +5,11 @@ call bootstrap.bat
 b2 headers
 
 call :link msvc-12.0
-rem call :link msvc-11.0
+call :link msvc-11.0
 
 setlocal
-rem call "c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd"
-rem call :link msvc-10.0
+call "c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd"
+call :link msvc-10.0
 endlocal
 
 goto :eof
@@ -30,7 +30,7 @@ echo link=%2
 echo runtime-link=%3
 echo }
 call :address_model %1 %2 %3 single
-call :address_model %1 %2 %3 multiple
+call :address_model %1 %2 %3 multi
 goto :eof
 
 :address_model
