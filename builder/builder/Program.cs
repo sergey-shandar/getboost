@@ -152,7 +152,6 @@ namespace builder
                 doc = doc
                     [T.H1("Headers Only Libraries")]
                     [T.List[A("boost")]];
-                /*
                 var path = Path.Combine(Config.BoostDir, "boost");
                 var fileList =
                     new Dir(new DirectoryInfo(path), "boost").
@@ -184,7 +183,6 @@ namespace builder
                     new CompilationUnit[0],
                     new Nuspec.Dependency[0]
                 );
-                 * */
             }
             // libraries.
             doc = doc[T.H1("Source Libraries")];
@@ -245,7 +243,6 @@ namespace builder
                 foreach (var package in library.Value.PackageDictionary)
                 {
                     var nuspecId = libraryId + "-" + package.Key;
-                    /*
                     Nuspec.Create(
                         nuspecId,
                         nuspecId,
@@ -260,7 +257,6 @@ namespace builder
                         new CompilationUnit[0],
                         Package.BoostDependency
                     );
-                     * */
                     list = list[T.Text(" ")][A(package.Key, nuspecId)];
                 }
                 doc = doc[list];
