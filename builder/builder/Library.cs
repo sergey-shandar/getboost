@@ -31,11 +31,15 @@ namespace builder
         {
         }
 
-        public void Create()
+        public IEnumerable<string> Create()
         {
             foreach (var package in PackageList)
             {
-                package.Create(Directory);
+                var name = package.Create(Directory);
+                if(name != null)
+                {
+                    yield return name;
+                }
             }
         }
 

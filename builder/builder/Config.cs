@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using builder.Codeplex;
 
 namespace builder
 {
@@ -10,11 +11,38 @@ namespace builder
     {
         public static readonly Version Version = new Version(1, 55, 0, 16);
 
+        public static Codeplex.List Fix(string text, int issue)
+        {
+            var s = issue.ToString();
+            return T.List
+                [T.Text(text)]
+                [T.A(s, "https://svn.boost.org/trac/boost/ticket/" + s)];
+        }
+
+        public static A GitHub(string id)
+        {
+            return T.A(
+                id, "https://github.com/sergey-shandar/boost/commit/" + id);
+        }
+
+        public static readonly Codeplex.List[] Release = new Codeplex.List[]
+        {
+            T.List
+                [T.Text("build from Git ")]
+                [GitHub("487b8a11d25b13582460c955ab024f260a282c8a")],
+            T.List[T.Text("Boost.Build fix to work with Git")],
+            Fix("Boost.Thread fix for ", 9333),
+            Fix("Boost.Intrusive fix for ", 9332),
+            T.List[T.Text("Boost.Log fix for dump manipulator on AVX2 CPUs")],
+            Fix("Boost.Mpi fix for ", 9395),
+            Fix("Boost.Serialization fix for ", 9196),
+        };
+
         public const string Authors = "Sergey Shandar, Boost";
 
         public const string Owners = "sergey_shandar";
 
-        public const string BoostDir = @"..\..\..\..\..\boost_1_55_0\";
+        public const string BoostDir = @"..\..\..\..\..\boost\";
 
         public static readonly Platform[] PlatformList = new[]
         {

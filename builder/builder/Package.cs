@@ -73,7 +73,7 @@ namespace builder
             }
         }
 
-        public void Create(string directory)
+        public string Create(string directory)
         {
             if (!Skip)
             {
@@ -110,6 +110,11 @@ namespace builder
                     CompilationUnitList,
                     BoostDependency
                 );
+                return Name;
+            }
+            else
+            {
+                return null;
             }
         }
     }
