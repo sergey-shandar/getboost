@@ -9,7 +9,31 @@ namespace builder
 {
     static class Config
     {
-        public static readonly Version Version = new Version(1, 55, 0, 16);
+        public sealed class NuGetVersion
+        {
+            public readonly Version Version;
+
+            public readonly string Extension;
+
+            public NuGetVersion(Version version, string extension = null)
+            {
+                Version = version;
+                Extension = extension;
+            }
+
+            public override string ToString()
+            {
+                return Extension == null ? 
+                    Version.ToString(): 
+                    Version.Major + "." + 
+                    Version.Minor + "." + 
+                    Version.MajorRevision + "-" + 
+                    Extension;
+            }
+        }
+
+        public static readonly NuGetVersion Version = 
+            new NuGetVersion(new Version(1, 56, 0, 0), "b1");
 
         public static Codeplex.List Fix(string text, int issue)
         {
@@ -27,6 +51,7 @@ namespace builder
 
         public static readonly Codeplex.List[] Release = new Codeplex.List[]
         {
+            /*
             T.List
                 [T.Text("build from Git ")]
                 [GitHub("487b8a11d25b13582460c955ab024f260a282c8a")],
@@ -36,6 +61,7 @@ namespace builder
             T.List[T.Text("Boost.Log fix for dump manipulator on AVX2 CPUs")],
             Fix("Boost.Mpi fix for ", 9395),
             Fix("Boost.Serialization fix for ", 9196),
+             * */
         };
 
         public const string Authors = "Sergey Shandar, Boost";

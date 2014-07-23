@@ -4,8 +4,8 @@ call bootstrap.bat
 
 b2 headers
 
-call :link msvc-12.0
-call :link msvc-11.0
+rem call :link msvc-12.0
+rem call :link msvc-11.0
 
 setlocal
 call "c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd"
