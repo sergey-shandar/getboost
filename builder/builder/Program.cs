@@ -204,7 +204,8 @@ namespace builder
 
                     foreach(var libName in MakeLibrary(libraryConfig, src))
                     {
-                        doc = doc[T.List[A(libName.SplitFirst('_').After)]];
+                        doc = doc[T.List[
+                            A("boost_" + libName.SplitFirst('_').After)]];
                     }
                 }
             }
