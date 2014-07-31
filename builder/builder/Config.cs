@@ -33,7 +33,7 @@ namespace builder
         }
 
         public static readonly NuGetVersion Version = 
-            new NuGetVersion(new Version(1, 56, 0, 0), "b1");
+            new NuGetVersion(new Version(1, 56, 0, 0), "rc1");
 
         public static Codeplex.List Fix(string text, int issue)
         {
