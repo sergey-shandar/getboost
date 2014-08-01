@@ -11,14 +11,28 @@ namespace builder
     {
         public sealed class NuGetVersion
         {
-            public readonly Version Version;
+            private readonly Version Version;
 
             public readonly string Extension;
 
-            public NuGetVersion(Version version, string extension = null)
+            public int Major { get { return Version.Major; } }
+
+            public int Minor { get { return Version.Minor; } }
+
+            private NuGetVersion(Version version, string extension = null)
             {
                 Version = version;
                 Extension = extension;
+            }
+
+            public NuGetVersion(int major, int minor, int majorRevision, int minorRevision): 
+                this(new Version(major, minor, majorRevision, minorRevision))
+            {                
+            }
+
+            public NuGetVersion(int major, int minor, int majorRevision, string minorRevision): 
+                this(new Version(major, minor, majorRevision, 0), minorRevision)
+            {                
             }
 
             public override string ToString()
@@ -33,7 +47,7 @@ namespace builder
         }
 
         public static readonly NuGetVersion Version = 
-            new NuGetVersion(new Version(1, 56, 0, 0), "rc1");
+            new NuGetVersion(1, 56, 0, "rc1");
 
         public static Codeplex.List Fix(string text, int issue)
         {

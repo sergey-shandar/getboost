@@ -63,9 +63,9 @@ namespace builder
         {
             get
             {
-                var version = Config.Version.Version;
+                var version = Config.Version;
                 var versionRange =
-                    Config.Version.Extension == null
+                    version.Extension == null
                         ? "[" +
                           new Version(version.Major, version.Minor) +
                           "," +
