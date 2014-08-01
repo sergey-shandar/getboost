@@ -50,6 +50,8 @@
     <Compile Include="CompiledPackage.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Library.cs" />
+    <Compile Include="Optional.cs" />
+    <Compile Include="Version.cs" />
     <Compile Include="Nuspec.cs" />
     <Compile Include="Package.cs" />
     <Compile Include="Platform.cs" />

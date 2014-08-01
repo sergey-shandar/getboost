@@ -63,16 +63,10 @@ namespace builder
         {
             get
             {
-                var version = Config.Version;
-                var versionRange =
-                    version.Extension == null
-                        ? "[" +
-                          new Version(version.Major, version.Minor) +
-                          "," +
-                          new Version(version.Major, version.Minor + 1) +
-                          ")"
-                        : "[" + Config.Version.ToString() + "]";
-                return new[] {new Nuspec.Dependency("boost", versionRange)};
+                return new[]
+                {
+                    new Nuspec.Dependency("boost", "[" + Config.Version.ToString() + "]")
+                };
             }
         }
 

@@ -1,7 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "builder", "builder\builder.csproj", "{AB135E17-4305-4C65-B50F-66B0821F604A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "builderTest", "builderTest\builderTest.csproj", "{4E4A840F-0922-49DC-ABC9-84BA6EEAFA7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +17,10 @@ Global
 		{AB135E17-4305-4C65-B50F-66B0821F604A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB135E17-4305-4C65-B50F-66B0821F604A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB135E17-4305-4C65-B50F-66B0821F604A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E4A840F-0922-49DC-ABC9-84BA6EEAFA7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E4A840F-0922-49DC-ABC9-84BA6EEAFA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E4A840F-0922-49DC-ABC9-84BA6EEAFA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E4A840F-0922-49DC-ABC9-84BA6EEAFA7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

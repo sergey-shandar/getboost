@@ -1,53 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using builder.Codeplex;
+﻿using builder.Codeplex;
 
 namespace builder
 {
     static class Config
     {
-        public sealed class NuGetVersion
-        {
-            private readonly Version Version;
-
-            public readonly string Extension;
-
-            public int Major { get { return Version.Major; } }
-
-            public int Minor { get { return Version.Minor; } }
-
-            private NuGetVersion(Version version, string extension = null)
-            {
-                Version = version;
-                Extension = extension;
-            }
-
-            public NuGetVersion(int major, int minor, int majorRevision, int minorRevision): 
-                this(new Version(major, minor, majorRevision, minorRevision))
-            {                
-            }
-
-            public NuGetVersion(int major, int minor, int majorRevision, string minorRevision): 
-                this(new Version(major, minor, majorRevision, 0), minorRevision)
-            {                
-            }
-
-            public override string ToString()
-            {
-                return Extension == null ? 
-                    Version.ToString(): 
-                    Version.Major + "." + 
-                    Version.Minor + "." + 
-                    Version.MajorRevision + "-" + 
-                    Extension;
-            }
-        }
-
-        public static readonly NuGetVersion Version = 
-            new NuGetVersion(1, 56, 0, "rc1");
+        public static readonly Version Version = 
+            new UnstableVersion(1, 56, 0, "rc1");
 
         public static Codeplex.List Fix(string text, int issue)
         {
