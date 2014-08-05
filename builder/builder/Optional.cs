@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using builder.Codeplex;
 
 namespace builder
@@ -34,6 +36,11 @@ namespace builder
             {
                 return else_();
             }
+        }
+
+        public IEnumerable<T> ToEnum()
+        {
+            return Select(v => new[] { v }, Enumerable.Empty<T>);
         }
 
         Optional()

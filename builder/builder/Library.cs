@@ -33,14 +33,7 @@ namespace builder
 
         public IEnumerable<string> Create()
         {
-            foreach (var package in PackageList)
-            {
-                var name = package.Create(Directory);
-                if(name != null)
-                {
-                    yield return name;
-                }
-            }
+            return PackageList.SelectMany(p => p.Create(Directory).ToEnum());
         }
 
     }

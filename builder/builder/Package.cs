@@ -70,7 +70,7 @@ namespace builder
             }
         }
 
-        public string Create(string directory)
+        public Optional<string> Create(string directory)
         {
             if (!Skip)
             {
@@ -107,11 +107,11 @@ namespace builder
                     CompilationUnitList,
                     BoostDependency
                 );
-                return Name;
+                return Name.OptionalOf();
             }
             else
             {
-                return null;
+                return new Optional<string>.NoValue();
             }
         }
     }

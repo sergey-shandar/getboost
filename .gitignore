@@ -43,3 +43,4 @@ test_vc110/packages/
 test/Release/
 1
 test_python/packages/
+builder/builderTest/obj/
