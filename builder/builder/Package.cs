@@ -10,7 +10,7 @@ namespace builder
 {
     sealed class Package
     {
-        public readonly string Name;
+        public readonly Optional<string> Name;
 
         public readonly IEnumerable<string> PreprocessorDefinitions;
 
@@ -32,17 +32,21 @@ namespace builder
         }
 
         public Package(
-            string name,
+            string name = null,
             IEnumerable<string> preprocessorDefinitions = null,
             IEnumerable<string> lineList = null,
             IEnumerable<string> fileList = null,
             bool skip = false)
         {
-            Name = name;
+            Name = name.FromNullable();
             PreprocessorDefinitions = preprocessorDefinitions.EmptyIfNull();
             LineList = lineList.EmptyIfNull();
             FileList = fileList.EmptyIfNull();
             Skip = skip;
+        }
+
+        public Package() : this(null)
+        {
         }
 
         public Package(string name, Package package, IEnumerable<string> fileList):
@@ -52,10 +56,6 @@ namespace builder
                 lineList: package.LineList,
                 fileList: fileList,
                 skip: package.Skip)
-        {
-        }
-
-        public Package(): this(null)
         {
         }
 
@@ -74,7 +74,8 @@ namespace builder
         {
             if (!Skip)
             {
-                var nuspecId = Name;
+                var name = Name.Select(n => n, () => "");
+                var nuspecId = name;
                 var srcFiles =
                     FileList.Select(
                         f =>
@@ -93,12 +94,12 @@ namespace builder
                     new Targets.ClCompile(
                         preprocessorDefinitions:
                             PreprocessorDefinitions.
-                                Concat(new[] { Name.ToUpper() + "_NO_LIB" })
+                                Concat(new[] { name.ToUpper() + "_NO_LIB" })
                     );
 
                 Nuspec.Create(
                     nuspecId,
-                    Name,
+                    name,
                     new[] 
                     {
                         new Targets.ItemDefinitionGroup(clCompile: clCompile)
@@ -107,11 +108,11 @@ namespace builder
                     CompilationUnitList,
                     BoostDependency
                 );
-                return Name.OptionalOf();
+                return Name;
             }
             else
             {
-                return new Optional<string>.NoValue();
+                return Optional.Absent;
             }
         }
     }

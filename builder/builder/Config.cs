@@ -57,7 +57,6 @@ namespace builder
                 packageList: new[]
                 {
                     new Package(
-                        name: null,
                         skip: true
                     )
                 }
@@ -69,7 +68,6 @@ namespace builder
                 {
                     // coroutine
                     new Package(
-                        name: null,
                         preprocessorDefinitions: new[] 
                         {
                             "BOOST_COROUTINES_NO_LIB"
@@ -119,7 +117,6 @@ namespace builder
                 {
                     // locale, depends on thread, system, date_time, chrono.
                     new Package(
-                        name: null,
                         lineList: new[] 
                         { 
                             "#define BOOST_LOCALE_NO_POSIX_BACKEND" 
@@ -159,7 +156,6 @@ namespace builder
                 {
                     // log depends on system, file_system, date_time, thread, chrono.
                     new Package(
-                        name: null,
                         lineList: new[] 
                         {
                             "#define BOOST_SPIRIT_USE_PHOENIX_V3"
@@ -224,7 +220,6 @@ namespace builder
                 packageList: new[]
                 {
                     new Package(
-                        name: null,
                         preprocessorDefinitions: 
                             new[] { "BOOST_PYTHON_STATIC_LIB" },
                         lineList: 
@@ -241,7 +236,6 @@ namespace builder
                 {
                     // test
                     new Package(
-                        name: null,
                         skip: true
                     ),
                     // test_cpp_main
@@ -280,7 +274,6 @@ namespace builder
                 {
                     // thread, depends on date_time, system, chrono.
                     new Package(
-                        name: null,
                         lineList: new[]
                         {
                             "#define BOOST_HAS_WINTHREADS",

@@ -6,6 +6,15 @@ namespace builderTest
     [TestClass]
     public class UnitTest
     {
+        class X
+        {
+            /*
+            public X(Optional<int> x = Optional.Absent)
+            {                
+            }
+             * */
+        }
+
         [TestMethod]
         public void VersionTestMethod()
         {
