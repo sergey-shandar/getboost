@@ -70,7 +70,10 @@ namespace builder
                 var fileList = dir.FileList(p.FileList);
                 remainder.ExceptWith(fileList);
                 yield return new Package(
-                    name: libraryName + "_" + p.Name,
+                    name: 
+                        libraryName + 
+                        "_" + 
+                        p.Name.Select(n => n, () => string.Empty),
                     package: p,
                     fileList: fileList
                 );
