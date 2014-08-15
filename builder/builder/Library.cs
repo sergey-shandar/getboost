@@ -9,26 +9,22 @@ using System.Diagnostics;
 
 namespace builder
 {
-    sealed class Library
+    public sealed class Library
     {
         public readonly string Name;
 
-        public readonly string Directory;
+        public readonly Optional<string> Directory;
 
         public readonly IEnumerable<Package> PackageList;
 
         public Library(
             string name,
-            string directory = null,
-            IEnumerable<Package> packageList = null)
+            Optional.Class<string> directory = new Optional.Class<string>(),
+            Optional.Class<IEnumerable<Package>> packageList = new Optional.Class<IEnumerable<Package>>())
         {
             Name = name;
-            Directory = directory;
-            PackageList = packageList.OneIfNull();
-        }
-
-        public Library(): this(null)
-        {
+            Directory = directory.Cast();
+            PackageList = packageList.OneIfAbsent();
         }
 
         public IEnumerable<string> Create()

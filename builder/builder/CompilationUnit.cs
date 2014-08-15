@@ -7,22 +7,16 @@ using System.IO;
 
 namespace builder
 {
-    sealed class CompilationUnit
+    public sealed class CompilationUnit
     {
-        public readonly string LocalFile;
-
         public CompilationUnit(string localFile)
         {
-            LocalFile = localFile;
-        }
-
-        public CompilationUnit(): this(null)
-        {
+            _localFile = localFile;
         }
 
         public string LocalPath
         {
-            get { return Path.GetDirectoryName(LocalFile); }
+            get { return Path.GetDirectoryName(_localFile); }
         }
 
         public string FileName(string packageId)
@@ -30,7 +24,7 @@ namespace builder
             return
                 packageId + 
                 "." +
-                LocalFile.Replace('\\', '.');
+                _localFile.Replace('\\', '.');
         }
 
         public Targets.ClCompile ClCompile(string packageId, string srcPath)
@@ -68,10 +62,13 @@ namespace builder
                     Concat(
                         new[]
                         { 
-                            "#include \"" + Path.GetFileName(LocalFile) + "\""
+                            "#include \"" + Path.GetFileName(_localFile) + "\""
                         }
                     )
             );
         }
+
+        private readonly string _localFile;
+
     }
 }

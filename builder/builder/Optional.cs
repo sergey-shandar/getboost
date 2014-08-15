@@ -42,12 +42,7 @@ namespace builder
         {
             return Select(v => new[] { v }, Enumerable.Empty<T>);
         }
-
-        public static implicit operator Optional<T>(T v)
-        {
-            return v.OptionalOf();
-        }
-
+         
         public static implicit operator Optional<T>(Optional.AbsentT _)
         {
             return new AbsentT();
@@ -66,15 +61,59 @@ namespace builder
 
         public static readonly AbsentT Absent = new AbsentT();
 
+        struct Struct<T>
+            where T : struct
+        {
+            public Optional<T> Cast()
+            {
+                return _value == null ? ((T)_value).OptionalOf() : Absent;
+            }
+
+            public static implicit operator Struct<T>(T value)
+            {
+                return new Struct<T>(value);
+            }
+
+            private readonly T? _value;
+
+            private Struct(T value)
+            {
+                _value = value;
+            }
+        }
+
+        public struct Class<T>
+            where T : class
+        {
+            public static implicit operator Class<T>(T value)
+            {
+                return new Class<T>(value);
+            }
+
+            public Optional<T> Cast()
+            {
+                return _value == null ? _value.OptionalOf() : Absent;
+            }
+
+            private readonly T _value;
+
+            public Class(T value)
+            {
+                _value = value;
+            }
+        }
+
         public static Optional<T> OptionalOf<T>(this T value)
         {
             return new Optional<T>.Value(value);
         }
 
+        /*
         public static Optional<T> FromNullable<T>(this T value)
             where T: class
         {
             return value == null ? Optional.Absent : value.OptionalOf();
         }
+         * */
     }
 }

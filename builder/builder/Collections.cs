@@ -29,10 +29,19 @@ namespace builder
             return value ?? Enumerable.Empty<T>();
         }
 
+        /*
         public static IEnumerable<T> OneIfNull<T>(this IEnumerable<T> value)
             where T: new()
         {
             return value ?? new[] { new T() };
+        }
+         * */
+
+        public static IEnumerable<T> OneIfAbsent<T>(
+            this Optional.Class<IEnumerable<T>> value)
+            where T: new()
+        {
+            return value.Cast().Select(v => v, () => new[] { new T()});
         }
 
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> values)

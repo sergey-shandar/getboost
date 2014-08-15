@@ -8,7 +8,7 @@ using System.IO;
 
 namespace builder
 {
-    sealed class Package
+    public sealed class Package
     {
         public readonly Optional<string> Name;
 
@@ -32,13 +32,13 @@ namespace builder
         }
 
         public Package(
-            string name = null,
+            Optional.Class<string> name = default(Optional.Class<string>),
             IEnumerable<string> preprocessorDefinitions = null,
             IEnumerable<string> lineList = null,
             IEnumerable<string> fileList = null,
             bool skip = false)
         {
-            Name = name.FromNullable();
+            Name = name.Cast();
             PreprocessorDefinitions = preprocessorDefinitions.EmptyIfNull();
             LineList = lineList.EmptyIfNull();
             FileList = fileList.EmptyIfNull();
@@ -70,7 +70,7 @@ namespace builder
             }
         }
 
-        public Optional<string> Create(string directory)
+        public Optional<string> Create(Optional<string> directory)
         {
             if (!Skip)
             {
@@ -80,7 +80,7 @@ namespace builder
                     FileList.Select(
                         f =>
                             new Nuspec.File(
-                                Path.Combine(directory, f),
+                                directory.Select(d => Path.Combine(d, f), () => f),
                                 Path.Combine(Targets.SrcPath, f)
                             )
                     );

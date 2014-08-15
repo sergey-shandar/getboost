@@ -9,7 +9,7 @@ using System.IO;
 
 namespace builder
 {
-    static class Nuspec
+    public static class Nuspec
     {
         private static readonly XNamespace n = XNamespace.Get(
             "http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd");

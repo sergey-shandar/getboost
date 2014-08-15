@@ -8,7 +8,7 @@ using System.IO;
 
 namespace builder
 {
-    static class Targets
+    public static class Targets
     {
         public const string LibNativePath = @"lib\native\";
 
@@ -36,10 +36,11 @@ namespace builder
         private static void Append(
             XElement x, string name, IEnumerable<string> value)
         {
-            if (value != null)
+            if (value == null)
             {
-                x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
+                throw new NullReferenceException();
             }
+            x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
         }
 
         public sealed class Link
