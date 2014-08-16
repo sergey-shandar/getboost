@@ -32,16 +32,19 @@ namespace builder
         }
 
         public Package(
-            Optional.Class<string> name = default(Optional.Class<string>),
-            IEnumerable<string> preprocessorDefinitions = null,
-            IEnumerable<string> lineList = null,
-            IEnumerable<string> fileList = null,
+            Optional.Class<string> name = new Optional.Class<string>(),
+            Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
+                new Optional.Class<IEnumerable<string>>(),
+            Optional.Class<IEnumerable<string>> lineList = 
+                new Optional.Class<IEnumerable<string>>(),
+            Optional.Class<IEnumerable<string>> fileList = 
+                new Optional.Class<IEnumerable<string>>(),
             bool skip = false)
         {
             Name = name.Cast();
-            PreprocessorDefinitions = preprocessorDefinitions.EmptyIfNull();
-            LineList = lineList.EmptyIfNull();
-            FileList = fileList.EmptyIfNull();
+            PreprocessorDefinitions = preprocessorDefinitions.EmptyIfAbsent();
+            LineList = lineList.EmptyIfAbsent();
+            FileList = fileList.EmptyIfAbsent();
             Skip = skip;
         }
 
@@ -52,9 +55,9 @@ namespace builder
         public Package(string name, Package package, IEnumerable<string> fileList):
             this(
                 name: name,
-                preprocessorDefinitions: package.PreprocessorDefinitions,
-                lineList: package.LineList,
-                fileList: fileList,
+                preprocessorDefinitions: package.PreprocessorDefinitions.ToOptionalClass(),
+                lineList: package.LineList.ToOptionalClass(),
+                fileList: fileList.ToOptionalClass(),
                 skip: package.Skip)
         {
         }
@@ -94,7 +97,8 @@ namespace builder
                     new Targets.ClCompile(
                         preprocessorDefinitions:
                             PreprocessorDefinitions.
-                                Concat(new[] { name.ToUpper() + "_NO_LIB" })
+                                Concat(new[] { name.ToUpper() + "_NO_LIB" }).
+                                ToOptionalClass()
                     );
 
                 Nuspec.Create(

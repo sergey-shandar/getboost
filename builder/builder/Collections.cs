@@ -24,18 +24,18 @@ namespace builder
             return value ?? string.Empty;
         }
 
+        /*
         public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> value)
         {
             return value ?? Enumerable.Empty<T>();
         }
-
-        /*
-        public static IEnumerable<T> OneIfNull<T>(this IEnumerable<T> value)
-            where T: new()
-        {
-            return value ?? new[] { new T() };
-        }
          * */
+
+        public static IEnumerable<T> EmptyIfAbsent<T>(
+            this Optional.Class<IEnumerable<T>> value)
+        {
+            return value.Cast().Select(v => v, () => Enumerable.Empty<T>());
+        }
 
         public static IEnumerable<T> OneIfAbsent<T>(
             this Optional.Class<IEnumerable<T>> value)

@@ -108,12 +108,10 @@ namespace builder
             return new Optional<T>.Value(value);
         }
 
-        /*
-        public static Optional<T> FromNullable<T>(this T value)
+        public static Class<T> ToOptionalClass<T>(this T value)
             where T: class
         {
-            return value == null ? Optional.Absent : value.OptionalOf();
+            return new Class<T>(value);
         }
-         * */
     }
 }

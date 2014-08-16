@@ -47,10 +47,10 @@ namespace builder
         {
             public readonly IEnumerable<string> AdditionalLibraryDirectories;
 
-            public Link(IEnumerable<string> additionalLibraryDirectories)
+            public Link(Optional.Class<IEnumerable<string>> additionalLibraryDirectories)
             {
                 AdditionalLibraryDirectories =
-                    additionalLibraryDirectories.EmptyIfNull();
+                    additionalLibraryDirectories.EmptyIfAbsent();
             }
 
             public XElement X
@@ -85,16 +85,18 @@ namespace builder
             public ClCompile(
                 string include = null,
                 PrecompiledHeader? precompiledHeader = null,
-                IEnumerable<string> preprocessorDefinitions = null,
-                IEnumerable<string> additionalIncludeDirectories = null,
+                Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
+                    new Optional.Class<IEnumerable<string>>(),
+                Optional.Class<IEnumerable<string>> additionalIncludeDirectories = 
+                    new Optional.Class<IEnumerable<string>>(),
                 bool? sDLCheck = null,
                 ExceptionHandling? exceptionHandling = null)
             {
                 Include = include;
                 PrecompiledHeader = precompiledHeader;
-                PreprocessorDefinitions = preprocessorDefinitions.EmptyIfNull();
+                PreprocessorDefinitions = preprocessorDefinitions.EmptyIfAbsent();
                 AdditionalIncludeDirectories =
-                    additionalIncludeDirectories.EmptyIfNull();
+                    additionalIncludeDirectories.EmptyIfAbsent();
                 SDLCheck = sDLCheck;
                 ExceptionHandling = exceptionHandling;
             }

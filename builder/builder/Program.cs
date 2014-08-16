@@ -94,10 +94,9 @@ namespace builder
             return new Library(
                 name,
                 src,
-                // TODO: use implicit operator
-                new Optional.Class<IEnumerable<Package>>(CreatePackageList(
+                CreatePackageList(
                     name, src, libraryConfig.PackageList
-                ))
+                ).ToOptionalClass()
             ).
             Create();
         }
