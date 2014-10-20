@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using builder.Codeplex;
 
 namespace builder
@@ -48,6 +49,26 @@ namespace builder
             return new AbsentT();
         }
 
+        public void ForEach(Action<T> then, Action else_)
+        {
+            Select(
+                i => 
+                { 
+                    then(i);
+                    return new Void();
+                },
+                () =>
+                {
+                    else_();
+                    return new Void();
+                });
+        }
+
+        public void ForEach(Action<T> then)
+        {
+            ForEach(then, () => { });
+        }
+
         Optional()
         {
         }
@@ -61,12 +82,12 @@ namespace builder
 
         public static readonly AbsentT Absent = new AbsentT();
 
-        struct Struct<T>
+        public struct Struct<T>
             where T : struct
         {
             public Optional<T> Cast()
             {
-                return _value == null ? ((T)_value).OptionalOf() : Absent;
+                return _hasValue ? _value.OptionalOf() : Absent;
             }
 
             public static implicit operator Struct<T>(T value)
@@ -74,10 +95,17 @@ namespace builder
                 return new Struct<T>(value);
             }
 
-            private readonly T? _value;
+            public static implicit operator Struct<T>(AbsentT _)
+            {
+                return new Struct<T>();
+            }
+
+            private readonly bool _hasValue;
+            private readonly T _value;
 
             private Struct(T value)
             {
+                _hasValue = true;
                 _value = value;
             }
         }
@@ -90,9 +118,14 @@ namespace builder
                 return new Class<T>(value);
             }
 
+            public static implicit operator Class<T>(AbsentT _)
+            {
+                return new Class<T>();
+            }
+
             public Optional<T> Cast()
             {
-                return _value == null ? _value.OptionalOf() : Absent;
+                return _value == null ? Absent: _value.OptionalOf();
             }
 
             private readonly T _value;

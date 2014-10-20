@@ -48,7 +48,7 @@ namespace builder
             Skip = skip;
         }
 
-        public Package() : this(null)
+        public Package() : this(Optional.Absent)
         {
         }
 
@@ -62,14 +62,21 @@ namespace builder
         {
         }
 
+        private static Nuspec.Dependency Dependency(string id)
+        {
+            return new Nuspec.Dependency(id, "[" + Config.Version.ToString() + "]");
+        }
+
+        public static Nuspec.Dependency Dependency(string library, string compiler)
+        {
+            return Dependency("boost_" + library + "-" + compiler);
+        }
+
         public static IEnumerable<Nuspec.Dependency> BoostDependency
         {
             get
             {
-                return new[]
-                {
-                    new Nuspec.Dependency("boost", "[" + Config.Version.ToString() + "]")
-                };
+                return new[] { Dependency("boost") };
             }
         }
 

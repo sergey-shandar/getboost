@@ -5,7 +5,7 @@ namespace builder
     static class Config
     {
         public static readonly Version Version = 
-            new StableVersion(1, 56, 0, 0);
+            new UnstableVersion(1, 57, 0, "b1rc1");
 
         public static Codeplex.List Fix(string text, int issue)
         {
@@ -48,7 +48,7 @@ namespace builder
             new Platform("x64", @"address-model-64\lib")
         };
 
-        public static readonly Library[] LibraryList = new[]
+        public static readonly Library[] LibraryList = new Library[]
         {
             // chrono depends on system
             // context needs ASM.

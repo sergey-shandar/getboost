@@ -36,10 +36,6 @@ namespace builder
         private static void Append(
             XElement x, string name, IEnumerable<string> value)
         {
-            if (value == null)
-            {
-                throw new NullReferenceException();
-            }
             x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
         }
 
@@ -70,35 +66,39 @@ namespace builder
 
         public sealed class ClCompile
         {
-            public readonly string Include;
+            public readonly Optional<string> Include;
 
-            public readonly PrecompiledHeader? PrecompiledHeader;
+            public readonly Optional<PrecompiledHeader> PrecompiledHeader;
 
             public readonly IEnumerable<string> PreprocessorDefinitions;
 
             public readonly IEnumerable<string> AdditionalIncludeDirectories;
 
-            public readonly bool? SDLCheck;
+            public readonly Optional<bool> SDLCheck;
 
-            public readonly ExceptionHandling? ExceptionHandling; 
+            public readonly Optional<ExceptionHandling> ExceptionHandling; 
 
             public ClCompile(
-                string include = null,
-                PrecompiledHeader? precompiledHeader = null,
+                Optional.Class<string> include = 
+                    new Optional.Class<string>(),
+                Optional.Struct<PrecompiledHeader> precompiledHeader = 
+                    new Optional.Struct<PrecompiledHeader>(),
                 Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
                     new Optional.Class<IEnumerable<string>>(),
                 Optional.Class<IEnumerable<string>> additionalIncludeDirectories = 
                     new Optional.Class<IEnumerable<string>>(),
-                bool? sDLCheck = null,
-                ExceptionHandling? exceptionHandling = null)
+                Optional.Struct<bool> sDLCheck = 
+                    new Optional.Struct<bool>(),
+                Optional.Struct<ExceptionHandling> exceptionHandling =
+                    new Optional.Struct<ExceptionHandling>())
             {
-                Include = include;
-                PrecompiledHeader = precompiledHeader;
+                Include = include.Cast();
+                PrecompiledHeader = precompiledHeader.Cast();
                 PreprocessorDefinitions = preprocessorDefinitions.EmptyIfAbsent();
                 AdditionalIncludeDirectories =
                     additionalIncludeDirectories.EmptyIfAbsent();
-                SDLCheck = sDLCheck;
-                ExceptionHandling = exceptionHandling;
+                SDLCheck = sDLCheck.Cast();
+                ExceptionHandling = exceptionHandling.Cast();
             }
 
             public XElement X
@@ -106,28 +106,22 @@ namespace builder
                 get
                 {
                     var clCompile = M("ClCompile");
-                    if (Include != null)
-                    {
-                        clCompile.Append(Xml.A("Include", Include));
-                    }
-                    if (PrecompiledHeader != null)
-                    {
-                        clCompile.Append(
-                            M("PrecompiledHeader", PrecompiledHeader.ToString())
-                        );
-                    }
-                    if (SDLCheck != null)
-                    {
-                        clCompile.Append(
-                            M("SDLCheck", SDLCheck.ToString())
-                        );
-                    }
-                    if (ExceptionHandling != null)
-                    {
-                        clCompile.Append(
-                            M("ExceptionHandling", ExceptionHandling.ToString())
-                        );
-                    }
+                    Include.ForEach(i => clCompile.Append(Xml.A("Include", i)));
+                    PrecompiledHeader.ForEach(
+                        ph => 
+                            clCompile.Append(
+                                M("PrecompiledHeader", ph.ToString())
+                            )
+                    );
+                    SDLCheck.ForEach(
+                        c => clCompile.Append(M("SDLCheck", c.ToString()))
+                    );
+                    ExceptionHandling.ForEach(
+                        eh => 
+                            clCompile.Append(
+                                M("ExceptionHandling", eh.ToString())
+                            )
+                    );
                     Append(
                         clCompile,
                         "PreprocessorDefinitions",
@@ -143,20 +137,23 @@ namespace builder
 
         public sealed class ItemDefinitionGroup
         {
-            public readonly string Condition;
+            public readonly Optional<string> Condition;
 
-            public readonly ClCompile ClCompile;
+            public readonly Optional<ClCompile> ClCompile;
 
-            public readonly Link Link;
+            public readonly Optional<Link> Link;
 
             public ItemDefinitionGroup(
-                string condition = null,
-                ClCompile clCompile = null,
-                Link link = null)
+                Optional.Class<string> condition = 
+                    new Optional.Class<string>(),
+                Optional.Class<ClCompile> clCompile = 
+                    new Optional.Class<ClCompile>(),
+                Optional.Class<Link> link =
+                    new Optional.Class<Link>())
             {
-                Condition = condition;
-                ClCompile = clCompile;
-                Link = link;
+                Condition = condition.Cast();
+                ClCompile = clCompile.Cast();
+                Link = link.Cast();
             }
 
             public XElement X
@@ -164,18 +161,9 @@ namespace builder
                 get
                 {
                     var result = M("ItemDefinitionGroup");
-                    if (Condition != null)
-                    {
-                        result.Append(Xml.A("Condition", Condition));
-                    }
-                    if (ClCompile != null)
-                    {
-                        result.Append(ClCompile.X);
-                    }
-                    if (Link != null)
-                    {
-                        result.Append(Link.X);
-                    }
+                    Condition.ForEach(c => result.Append(Xml.A("Condition", c)));
+                    ClCompile.ForEach(c => result.Append(c.X));
+                    Link.ForEach(link => result.Append(link.X));
                     return result;
                 }
             }

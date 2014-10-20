@@ -32,7 +32,7 @@ namespace builderTest
 
         public static IEnumerable<Package> GetPackages()
         {
-            return null;
+            return Enumerable.Empty<Package>();
         }
 
         public static void Lib(Optional.Class<IEnumerable<Package>> p)
