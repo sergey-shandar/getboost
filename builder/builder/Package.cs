@@ -85,7 +85,7 @@ namespace builder
             if (!Skip)
             {
                 var name = Name.Select(n => n, () => "");
-                var nuspecId = name;
+                var nuspecId = "boost_" + name;
                 var srcFiles =
                     FileList.Select(
                         f =>
@@ -104,20 +104,21 @@ namespace builder
                     new Targets.ClCompile(
                         preprocessorDefinitions:
                             PreprocessorDefinitions.
-                                Concat(new[] { name.ToUpper() + "_NO_LIB" }).
+                                Concat(new[] { nuspecId.ToUpper() + "_NO_LIB" }).
                                 ToOptionalClass()
                     );
 
                 Nuspec.Create(
                     nuspecId,
-                    name,
+                    nuspecId,
                     new[] 
                     {
                         new Targets.ItemDefinitionGroup(clCompile: clCompile)
                     },
                     srcFiles,
                     CompilationUnitList,
-                    BoostDependency
+                    BoostDependency,
+                    new[] { "sources", name }
                 );
                 return Name;
             }

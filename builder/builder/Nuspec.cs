@@ -64,7 +64,8 @@ namespace builder
         private static void CreateNuspec(
             string id,
             IEnumerable<File> fileList,
-            IEnumerable<Dependency> dependencyList)
+            IEnumerable<Dependency> dependencyList,
+            IEnumerable<string> tags)
         {
             var nuspec =
                 N("package").Append(
@@ -86,7 +87,8 @@ namespace builder
                                         Xml.A("version", d.Version)
                                     )
                             )
-                        )
+                        ),
+                        N("tags", string.Join(" ", tags))
                     ),
                     N("files").Append(fileList.Select(f => f.N))
                 );
@@ -106,7 +108,8 @@ namespace builder
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,
-            IEnumerable<Nuspec.Dependency> dependencyList)
+            IEnumerable<Nuspec.Dependency> dependencyList,
+            IEnumerable<string> tags)
         {
             var unitFiles =
                 compilationUnitList.
@@ -128,8 +131,8 @@ namespace builder
                 fileList.
                     Concat(unitFiles).
                     Concat(new[] { new File(targetsFile, Targets.BuildPath) }),
-                dependencyList
-            );
+                dependencyList,
+                new[] { "native", "nativepackage", "C++", "Boost" }.Concat(tags));
         }
     }
 }

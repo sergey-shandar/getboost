@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-using System.IO;
-using System.Diagnostics;
 
 namespace builder
 {
@@ -19,8 +13,10 @@ namespace builder
 
         public Library(
             string name,
-            Optional.Class<string> directory = new Optional.Class<string>(),
-            Optional.Class<IEnumerable<Package>> packageList = new Optional.Class<IEnumerable<Package>>())
+            Optional.Class<string> directory = 
+                new Optional.Class<string>(),
+            Optional.Class<IEnumerable<Package>> packageList = 
+                new Optional.Class<IEnumerable<Package>>())
         {
             Name = name;
             Directory = directory.Cast();

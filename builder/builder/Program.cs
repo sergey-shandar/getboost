@@ -58,7 +58,7 @@ namespace builder
         }
 
         static IEnumerable<Package> CreatePackageList(
-            string libraryName,
+            string name,
             string path,
             IEnumerable<Package> packageListConfig)
         {
@@ -71,7 +71,7 @@ namespace builder
                 remainder.ExceptWith(fileList);
                 yield return new Package(
                     name: 
-                        libraryName + 
+                        name + 
                         "_" + 
                         p.Name.Select(n => n, () => string.Empty),
                     package: p,
@@ -81,7 +81,7 @@ namespace builder
             //
             remainder.UnionWith(dir.FileList(firstPackage.FileList));
             yield return new Package(
-                name: libraryName,
+                name: name,
                 package: firstPackage,
                 fileList: remainder
             );
@@ -90,9 +90,10 @@ namespace builder
         static IEnumerable<string> MakeLibrary(
             Library libraryConfig, string src)
         {
-            var name = "boost_" + libraryConfig.Name;
+            var name = libraryConfig.Name;
+            var id = "boost_" + name;
             return new Library(
-                name,
+                id,
                 src,
                 CreatePackageList(
                     name, src, libraryConfig.PackageList
@@ -188,10 +189,11 @@ namespace builder
                             )
                     ),
                     new CompilationUnit[0],
-                    new Nuspec.Dependency[0]
+                    new Nuspec.Dependency[0],
+                    new[] { "headers" } 
                 );
             }
-            // libraries.
+            // source libraries.
             doc = doc[T.H1("Source Libraries")];
             foreach (
                 var directory in
@@ -211,8 +213,7 @@ namespace builder
 
                     foreach(var libName in MakeLibrary(libraryConfig, src))
                     {
-                        doc = doc[T.List[
-                            A("boost_" + libName.SplitFirst('_').After)]];
+                        doc = doc[T.List[A(libName, "boost_" + libName)]];
                     }
                 }
             }
@@ -238,7 +239,9 @@ namespace builder
                         Enumerable.Empty<Nuspec.File>(),
                         Enumerable.Empty<CompilationUnit>(),
                         compilerDictionary[compiler].
-                            Select(lib => Package.Dependency(lib, compiler)));
+                            Select(lib => Package.Dependency(lib, compiler)),
+                        new[] { "binaries", compiler }
+                    );
                     list = list[T.Text(" ")][A(compiler, id)];
                 }
                 doc = doc[list];
@@ -268,8 +271,9 @@ namespace builder
             // 
             foreach (var library in libraryDictionary)
             {
-                var libraryId = "boost_" + library.Key;
-                var list = T.List[T.Text(library.Key)];
+                var name = library.Key;
+                var libraryId = "boost_" + name;
+                var list = T.List[T.Text(name)];
                 foreach (var package in library.Value.PackageDictionary)
                 {
                     var nuspecId = libraryId + "-" + package.Key;
@@ -285,7 +289,8 @@ namespace builder
                                 )
                         ),
                         new CompilationUnit[0],
-                        Package.BoostDependency);
+                        Package.BoostDependency,
+                        new[] { "binaries", name });
                     list = list[T.Text(" ")][A(package.Key, nuspecId)];
                 }
                 doc = doc[list];
