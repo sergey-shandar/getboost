@@ -51,7 +51,7 @@ namespace builder
         public void Make(Package package)
         {
             File.WriteAllLines(
-                FileName(package.Name.Select(n => n, () => "")),
+                FileName("boost_" + package.Name.Select(n => n, () => "")),
                 new[]
                     {
                         "#define _SCL_SECURE_NO_WARNINGS",
