@@ -1,16 +1,13 @@
+echo on
 cd ..\boost\
 
 call bootstrap.bat
 
 b2 headers
 
-call :link msvc-12.0
-call :link msvc-11.0
-
-setlocal
-call "c:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd"
-call :link msvc-10.0
-endlocal
+call :link 12.0
+call :link 11.0
+call :link 10.0
 
 goto :eof
 
@@ -52,5 +49,5 @@ echo runtime-link=%3
 echo threading=%4
 echo address-model=%5
 echo }
-b2 msvc architecture=x86 link=%2 runtime-link=%3 threading=%4 address-model=%5 stage --stagedir=address-model-%5 --toolset=%1 --without-python
+b2 architecture=x86 link=%2 runtime-link=%3 threading=%4 address-model=%5 stage --stagedir=address-model-%5 --toolset=msvc-%1 --without-python
 goto :eof
