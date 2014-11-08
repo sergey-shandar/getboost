@@ -276,7 +276,8 @@ namespace builder
                 var list = T.List[T.Text(name)];
                 foreach (var package in library.Value.PackageDictionary)
                 {
-                    var nuspecId = libraryId + "-" + package.Key;
+                    var compiler = package.Key;
+                    var nuspecId = libraryId + "-" + compiler;
                     Nuspec.Create(
                         nuspecId,
                         nuspecId,
@@ -290,7 +291,7 @@ namespace builder
                         ),
                         new CompilationUnit[0],
                         Package.BoostDependency,
-                        new[] { "binaries", name });
+                        new[] { "binaries", compiler, name });
                     list = list[T.Text(" ")][A(package.Key, nuspecId)];
                 }
                 doc = doc[list];
