@@ -21,7 +21,7 @@ namespace builder
                 id, "https://github.com/sergey-shandar/boost/commit/" + id);
         }
 
-        public static readonly Codeplex.List[] Release = new Codeplex.List[]
+        public static readonly Codeplex.List[] Release =
         {
             /*
             T.List
@@ -42,13 +42,13 @@ namespace builder
 
         public const string BoostDir = @"..\..\..\..\..\boost\";
 
-        public static readonly Platform[] PlatformList = new[]
+        public static readonly Platform[] PlatformList =
         {
             new Platform("Win32", @"address-model-32\lib"),
             new Platform("x64", @"address-model-64\lib")
         };
 
-        public static readonly Library[] LibraryList = new Library[]
+        public static readonly Library[] LibraryList =
         {
             // chrono depends on system
             // context needs ASM.
