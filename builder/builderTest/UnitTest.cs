@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Framework.G1;
 
 namespace builderTest
 {

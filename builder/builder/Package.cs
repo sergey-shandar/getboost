@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.IO;
+using Framework.G1;
 
 namespace builder
 {
@@ -42,13 +40,13 @@ namespace builder
             bool skip = false)
         {
             Name = name.Cast();
-            PreprocessorDefinitions = preprocessorDefinitions.EmptyIfAbsent();
-            LineList = lineList.EmptyIfAbsent();
-            FileList = fileList.EmptyIfAbsent();
+            PreprocessorDefinitions = preprocessorDefinitions.SelectMany();
+            LineList = lineList.SelectMany();
+            FileList = fileList.SelectMany();
             Skip = skip;
         }
 
-        public Package() : this(Optional.Absent)
+        public Package() : this(new Optional.Class<string>())
         {
         }
 
@@ -124,7 +122,7 @@ namespace builder
             }
             else
             {
-                return Optional.Absent;
+                return new Optional<string>.Absent();
             }
         }
     }

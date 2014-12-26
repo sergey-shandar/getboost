@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
+using Framework.G1;
 
 namespace builder
 {
@@ -46,7 +47,7 @@ namespace builder
             public Link(Optional.Class<IEnumerable<string>> additionalLibraryDirectories)
             {
                 AdditionalLibraryDirectories =
-                    additionalLibraryDirectories.EmptyIfAbsent();
+                    additionalLibraryDirectories.SelectMany();
             }
 
             public XElement X
@@ -94,9 +95,9 @@ namespace builder
             {
                 Include = include.Cast();
                 PrecompiledHeader = precompiledHeader.Cast();
-                PreprocessorDefinitions = preprocessorDefinitions.EmptyIfAbsent();
+                PreprocessorDefinitions = preprocessorDefinitions.SelectMany();
                 AdditionalIncludeDirectories =
-                    additionalIncludeDirectories.EmptyIfAbsent();
+                    additionalIncludeDirectories.SelectMany();
                 SDLCheck = sDLCheck.Cast();
                 ExceptionHandling = exceptionHandling.Cast();
             }

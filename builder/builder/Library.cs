@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Framework.G1;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace builder
@@ -25,7 +26,7 @@ namespace builder
 
         public IEnumerable<string> Create()
         {
-            return PackageList.SelectMany(p => p.Create(Directory).ToEnum());
+            return PackageList.SelectMany(p => p.Create(Directory).ToEnumerable());
         }
 
     }

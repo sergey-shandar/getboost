@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml.Linq;
 using System.Diagnostics;
 using builder.Codeplex;
+using Framework.G1;
 
 namespace builder
 {

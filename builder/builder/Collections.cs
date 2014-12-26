@@ -1,47 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Framework.G1;
 
 namespace builder
 {
     static class Collections
     {
-        public static IEnumerable<T> New<T>(params T[] values)
-        {
-            return values;
-        }
-
-        public static T NewIfNull<T>(this T value)
-            where T: class, new()
-        {
-            return value ?? new T();
-        }
-
-        public static string EmptyIfNull(this string value)
-        {
-            return value ?? string.Empty;
-        }
-
-        /*
-        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> value)
-        {
-            return value ?? Enumerable.Empty<T>();
-        }
-         * */
-
-        public static IEnumerable<T> EmptyIfAbsent<T>(
-            this Optional.Class<IEnumerable<T>> value)
-        {
-            return value.Cast().Select(v => v, () => Enumerable.Empty<T>());
-        }
-
         public static IEnumerable<T> OneIfAbsent<T>(
             this Optional.Class<IEnumerable<T>> value)
             where T: new()
         {
-            return value.Cast().Select(v => v, () => new[] { new T()});
+            return value.Cast().Select(v => v, () => new[] { new T() });
         }
 
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> values)
