@@ -122,7 +122,7 @@ namespace builder
             }
             else
             {
-                return new Optional<string>.Absent();
+                return Optional<string>.Absent.Value;
             }
         }
     }
