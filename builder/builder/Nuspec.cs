@@ -96,7 +96,7 @@ namespace builder
             nuspec.CreateDocument().Save(nuspecFile);
             Process.Start(
                 new ProcessStartInfo(
-                    @"C:\programs\nuget.exe", "pack " + nuspecFile)
+                    @"..\..\..\..\..\programs\nuget.exe", "pack " + nuspecFile)
                 {
                     UseShellExecute = false,
                 }).WaitForExit();
