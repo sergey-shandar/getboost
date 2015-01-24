@@ -126,11 +126,13 @@ namespace builder
                     packageId,
                     itemDefinitionGroupList,
                     compilationUnitList);
+            var fileList2 = fileList.Concat(unitFiles);
+            var fileList3 = compilationUnitList.Any()
+                ? fileList2.Concat(new[] {new File(targetsFile, Targets.BuildPath)})
+                : fileList2;
             CreateNuspec(
                 nuspecId,
-                fileList.
-                    Concat(unitFiles).
-                    Concat(new[] { new File(targetsFile, Targets.BuildPath) }),
+                fileList3,
                 dependencyList,
                 new[] { "native", "nativepackage", "C++", "Boost" }.Concat(tags));
         }
