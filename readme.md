@@ -43,4 +43,9 @@ About 20 * 3 * 3 * 2 * 2 * 2 files.
 
 1. Unpack Boost library in the parent folder of getboost. 
 2. Rename it to `boost`.
-3. Run [`boost.bat`](boost.bat).
+3. Run [boost.bat](boost.bat). It make take several hours to complete.
+
+## Building NuGet Packages
+
+1. Open [builder\builder.sln](builder/builder.sln) in Visual Studio 2013 or higher.
+2. Build and run the [builder](builder/builder/builder.csproj) project.
