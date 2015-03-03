@@ -41,10 +41,10 @@ About 20 * 3 * 3 * 2 * 2 * 2 files.
 
 ## Building Boost
 
-1. Download `boost` library from [boost.org](http://boost.org/).
-2. Unpack Boost library in the parent folder of getboost. 
+1. Download Boost library from [boost.org](http://boost.org/).
+2. Unpack the Boost library in the parent folder of getboost. 
 3. Rename it to `boost`.
-4. Run [boost.bat](boost.bat). It make take several hours to complete.
+4. Run [boost.bat](boost.bat). It may take several hours to complete.
 
 ## Building NuGet Packages
 
