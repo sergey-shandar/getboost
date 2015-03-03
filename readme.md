@@ -36,3 +36,11 @@
   * Debug (gd)
 
 About 20 * 3 * 3 * 2 * 2 * 2 files.
+
+# For Developers
+
+## Building Boost
+
+1. Unpack Boost library in the parent folder of getboost. 
+2. Rename it to `boost`.
+3. Run [`boost.bat`](boost.bat).
