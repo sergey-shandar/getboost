@@ -50,5 +50,6 @@ echo runtime-link=%3
 echo threading=%4
 echo address-model=%5
 echo }
+rem change this line if you need to specify additional options to compiler.
 b2 architecture=x86 link=%2 runtime-link=%3 threading=%4 address-model=%5 stage --stagedir=address-model-%5 --toolset=msvc-%1 --without-python
 goto :eof
