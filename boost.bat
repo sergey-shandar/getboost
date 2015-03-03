@@ -5,6 +5,7 @@ call bootstrap.bat
 
 b2 headers
 
+rem add 'call :link XX.X' if you need to run for specific version of Visual C++ compiler.
 call :link 12.0
 call :link 11.0
 call :link 10.0
