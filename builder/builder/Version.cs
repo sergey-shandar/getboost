@@ -17,9 +17,17 @@ namespace builder
             MajorRevision = majorRevision;
         }
 
+        public string BaseString
+        {
+            get
+            {
+                return Major + "." + Minor + "." + MajorRevision;
+            }
+        }
+
         public override string ToString()
         {
-            return Major + "." + Minor + "." + MajorRevision;
+            return BaseString;
         }
     }
 

@@ -62,7 +62,14 @@ namespace builder
 
         private static Nuspec.Dependency Dependency(string id)
         {
-            return new Nuspec.Dependency(id, "[" + Config.Version.ToString() + "]");
+            var next = new StableVersion(
+                Config.Version.Major, 
+                Config.Version.Minor, 
+                Config.Version.MajorRevision + 1,
+                0);
+            return new Nuspec.Dependency(
+                id, 
+                "[" + Config.Version.BaseString + "," + next.BaseString + ")");
         }
 
         public static Nuspec.Dependency Dependency(string library, string compiler)
