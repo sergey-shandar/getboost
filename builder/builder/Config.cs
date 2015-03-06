@@ -5,7 +5,7 @@ namespace builder
     static class Config
     {
         public static readonly Version Version = 
-            new UnstableVersion(1, 57, 0, "vc140ctp6");
+            new UnstableVersion(1, 57, 0, "vc140ctp60");
 
         public static Codeplex.List Fix(string text, int issue)
         {
