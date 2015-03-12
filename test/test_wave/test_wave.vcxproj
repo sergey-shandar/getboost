@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,13 +19,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -38,7 +38,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <NuGetPackageImportStamp>6265525b</NuGetPackageImportStamp>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
@@ -100,5 +102,14 @@
     <Import Project="..\packages\boost_thread.1.55.0.10\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.55.0.10\build\native\boost_thread.targets')" />
     <Import Project="..\packages\boost_date_time.1.55.0.10\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.55.0.10\build\native\boost_date_time.targets')" />
     <Import Project="..\packages\boost_wave.1.55.0.10\build\native\boost_wave.targets" Condition="Exists('..\packages\boost_wave.1.55.0.10\build\native\boost_wave.targets')" />
+    <Import Project="..\packages\boost_thread.1.57.0\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.57.0\build\native\boost_thread.targets')" />
+    <Import Project="..\packages\boost_wave.1.57.0\build\native\boost_wave.targets" Condition="Exists('..\packages\boost_wave.1.57.0\build\native\boost_wave.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\boost_thread.1.57.0\build\native\boost_thread.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_thread.1.57.0\build\native\boost_thread.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_wave.1.57.0\build\native\boost_wave.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_wave.1.57.0\build\native\boost_wave.targets'))" />
+  </Target>
 </Project>

@@ -5,9 +5,9 @@ namespace builder
     static class Config
     {
         public static readonly Version Version = 
-            new UnstableVersion(1, 57, 0, "vc140ctp60");
+            new UnstableVersion(1, 57, 0, "vc140ctp61");
 
-        public static Codeplex.List Fix(string text, int issue)
+        public static List Fix(string text, int issue)
         {
             var s = issue.ToString();
             return T.List
@@ -21,7 +21,7 @@ namespace builder
                 id, "https://github.com/sergey-shandar/boost/commit/" + id);
         }
 
-        public static readonly Codeplex.List[] Release =
+        public static readonly List[] Release =
         {
             /*
             T.List
