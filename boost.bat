@@ -5,13 +5,20 @@ call bootstrap.bat
 
 b2 headers
 
-call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
-
 rem add 'call :link XX.X' if you need to run for specific version of Visual C++ compiler.
+
+setlocal
+call "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd"               
+call :link 10.0
+endlocal
+
+setlocal
+call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
 call :link 14.0
+endlocal
+
 call :link 12.0
 call :link 11.0
-call :link 10.0
 
 goto :eof
 
