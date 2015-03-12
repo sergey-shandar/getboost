@@ -1,17 +1,17 @@
 echo on
 cd ..\boost\
 
-call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
-
 call bootstrap.bat
 
 b2 headers
 
+call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
+
 rem add 'call :link XX.X' if you need to run for specific version of Visual C++ compiler.
 call :link 14.0
-rem call :link 12.0
-rem call :link 11.0
-rem call :link 10.0
+call :link 12.0
+call :link 11.0
+call :link 10.0
 
 goto :eof
 

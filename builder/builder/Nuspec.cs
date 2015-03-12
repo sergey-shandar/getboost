@@ -105,14 +105,14 @@ namespace builder
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,
-            IEnumerable<Nuspec.Dependency> dependencyList,
+            IEnumerable<Dependency> dependencyList,
             IEnumerable<string> tags)
         {
             var unitFiles =
                 compilationUnitList.
                 Select(
                     u =>
-                        new Nuspec.File(
+                        new File(
                             u.FileName(packageId),
                             Path.Combine(Targets.SrcPath, u.LocalPath)
                         )
