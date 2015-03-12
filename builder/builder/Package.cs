@@ -85,7 +85,7 @@ namespace builder
         {
             get
             {
-                return new[] { DependencyRange("boost") };
+                return new[] { DependencyOne("boost") };
             }
         }
 
