@@ -46,3 +46,4 @@ test_python/packages/
 builder/builderTest/obj/
 builder/packages/repositories.config
 *.suo
+/log.txt
