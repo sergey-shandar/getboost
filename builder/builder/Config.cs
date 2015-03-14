@@ -5,7 +5,7 @@ namespace builder
     static class Config
     {
         public static readonly Version Version = 
-            new UnstableVersion(1, 58, 0, "b1rc1");
+            new UnstableVersion(1, 58, 0, "b1rc2");
 
         public static List Fix(string text, int issue)
         {
