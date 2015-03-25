@@ -152,7 +152,7 @@ namespace builder
             Nuspec.Create(
                 id,
                 id,
-                id + ", compiler " + Config.CompilerMap[compiler],
+                id + ", " + Config.CompilerMap[compiler],
                 itemDefinitionGroupList,
                 fileList,
                 Enumerable.Empty<CompilationUnit>(),
