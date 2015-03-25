@@ -1,4 +1,5 @@
 ﻿using builder.Codeplex;
+using System.Collections.Generic;
 
 namespace builder
 {
@@ -7,33 +8,8 @@ namespace builder
         public static readonly Version Version = 
             new UnstableVersion(1, 58, 0, "b1rc2");
 
-        public static List Fix(string text, int issue)
-        {
-            var s = issue.ToString();
-            return T.List
-                [T.Text(text)]
-                [T.A(s, "https://svn.boost.org/trac/boost/ticket/" + s)];
-        }
-
-        public static A GitHub(string id)
-        {
-            return T.A(
-                id, "https://github.com/sergey-shandar/boost/commit/" + id);
-        }
-
         public static readonly List[] Release =
         {
-            /*
-            T.List
-                [T.Text("build from Git ")]
-                [GitHub("487b8a11d25b13582460c955ab024f260a282c8a")],
-            T.List[T.Text("Boost.Build fix to work with Git")],
-            Fix("Boost.Thread fix for ", 9333),
-            Fix("Boost.Intrusive fix for ", 9332),
-            T.List[T.Text("Boost.Log fix for dump manipulator on AVX2 CPUs")],
-            Fix("Boost.Mpi fix for ", 9395),
-            Fix("Boost.Serialization fix for ", 9196),
-             * */
         };
 
         public const string Authors = "Sergey Shandar, Boost";
@@ -46,6 +22,13 @@ namespace builder
         {
             new Platform("Win32", @"address-model-32\lib"),
             new Platform("x64", @"address-model-64\lib")
+        };
+
+        public static readonly Dictionary<string, string> CompilerMap = new Dictionary<string, string>
+        {
+            { "vc110", "Visual Studio 2012 Update 4" },
+            { "vc120", "Visual Studio 2013 Update 4" },
+            { "vc140", "Visual Studio 2015 CTP 6" },
         };
 
         public static readonly Library[] LibraryList =

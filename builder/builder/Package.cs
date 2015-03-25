@@ -120,6 +120,7 @@ namespace builder
                 Nuspec.Create(
                     nuspecId,
                     nuspecId,
+                    nuspecId,
                     new[] 
                     {
                         new Targets.ItemDefinitionGroup(clCompile: clCompile)

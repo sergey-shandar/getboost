@@ -60,6 +60,7 @@ namespace builder
 
         private static void CreateNuspec(
             string id,
+            string description,
             IEnumerable<File> fileList,
             IEnumerable<Dependency> dependencyList,
             IEnumerable<string> tags)
@@ -74,7 +75,7 @@ namespace builder
                         N("licenseUrl", "http://getboost.codeplex.com/license"),
                         N("projectUrl", "http://getboost.codeplex.com/"),
                         N("requireLicenseAcceptance", "false"),
-                        N("description", id),
+                        N("description", description),
                         N("dependencies").Append(
                             dependencyList.Select(
                                 d => 
@@ -93,7 +94,8 @@ namespace builder
             nuspec.CreateDocument().Save(nuspecFile);
             Process.Start(
                 new ProcessStartInfo(
-                    @"..\..\..\..\..\programs\nuget.exe", "pack " + nuspecFile)
+                    @"..\..\..\packages\NuGet.CommandLine.2.8.3\tools\nuget.exe", 
+                    "pack " + nuspecFile)
                 {
                     UseShellExecute = false,
                 }).WaitForExit();
@@ -101,7 +103,8 @@ namespace builder
 
         public static void Create(
             string nuspecId,
-            string packageId, 
+            string packageId,
+            string description, 
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,
@@ -125,6 +128,7 @@ namespace builder
                     compilationUnitList);
             CreateNuspec(
                 nuspecId,
+                description,
                 fileList.
                     Concat(unitFiles).
                     Concat(new[] { new File(targetsFile, Targets.BuildPath) }),

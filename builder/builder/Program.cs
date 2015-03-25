@@ -141,6 +141,25 @@ namespace builder
             return A(url, url);
         }
 
+        static void CreateBinaryNuspec(
+            string id, 
+            string compiler, 
+            IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
+            IEnumerable<Nuspec.File> fileList,
+            IEnumerable<Nuspec.Dependency> dependencyList,
+            Optional<string> name)
+        {
+            Nuspec.Create(
+                id,
+                id,
+                id + ", compiler " + Config.CompilerMap[compiler],
+                itemDefinitionGroupList,
+                fileList,
+                Enumerable.Empty<CompilationUnit>(),
+                dependencyList,
+                new[] { "binaries", compiler }.Concat(name.ToEnumerable()));
+        }
+
         static void Main(string[] args)
         {
             var doc = new Codeplex.Doc();
@@ -162,6 +181,7 @@ namespace builder
                     new Dir(new DirectoryInfo(path), "boost").
                     FileList(f => true);
                 Nuspec.Create(
+                    "boost",
                     "boost",
                     "boost",
                     new[]
@@ -229,16 +249,14 @@ namespace builder
                 foreach (var compiler in compilerDictionary.Keys)
                 {
                     var id = "boost-" + compiler;
-                    Nuspec.Create(
+                    CreateBinaryNuspec(
                         id,
-                        id,
+                        compiler,
                         Enumerable.Empty<Targets.ItemDefinitionGroup>(),
                         Enumerable.Empty<Nuspec.File>(),
-                        Enumerable.Empty<CompilationUnit>(),
                         compilerDictionary[compiler].
                             Select(lib => Package.Dependency(lib, compiler)),
-                        new[] { "binaries", compiler }
-                    );
+                        Optional<string>.Absent.Value);
                     list = list[T.Text(" ")][A(compiler, id)];
                 }
                 doc = doc[list];
@@ -275,9 +293,9 @@ namespace builder
                 {
                     var compiler = package.Key;
                     var nuspecId = libraryId + "-" + compiler;
-                    Nuspec.Create(
+                    CreateBinaryNuspec(
                         nuspecId,
-                        nuspecId,
+                        compiler,
                         itemDefinitionGroupList,
                         package.Value.FileList.Select(
                             f =>
@@ -286,9 +304,8 @@ namespace builder
                                     Path.Combine(Targets.LibNativePath, f)
                                 )
                         ),
-                        new CompilationUnit[0],
                         Package.BoostDependency,
-                        new[] { "binaries", compiler, name });
+                        name.ToOptional());
                     list = list[T.Text(" ")][A(package.Key, nuspecId)];
                 }
                 doc = doc[list];
