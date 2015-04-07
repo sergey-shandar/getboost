@@ -162,7 +162,7 @@ namespace builder
 
         static void Main(string[] args)
         {
-            var doc = new Codeplex.Doc();
+            var doc = new Doc();
             // Changes
             {
                 doc = doc[T.H1("Release Notes")];
