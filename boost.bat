@@ -14,6 +14,7 @@ endlocal
 
 call :link 12.0
 call :link 11.0
+call :link 10.0
 
 goto :eof
 

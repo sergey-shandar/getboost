@@ -100,28 +100,30 @@ namespace builder
         }
 
         static void ScanCompiledFileSet(
-            Dictionary<string, HashSet<string>> compilerDictionary,
+            Dictionary<string, Dictionary<string, CompiledPackage>> 
+                compilerDictionary,
             Dictionary<string, CompiledLibrary> libraryDictionary,
-            string stage)
+            Platform platform)
         {
             foreach (
                 var file in
-                    new DirectoryInfo(
-                        Path.Combine(Config.BoostDir, stage)
-                    ).
-                    GetFiles()
-            )
+                    new DirectoryInfo(Path.Combine(
+                        Config.BoostDir, platform.Directory))
+                    .GetFiles())
             {
                 var split = file.Name.SplitFirst('-');
                 var library = split.Before.SplitFirst('_').After;
                 var compiler = split.After.SplitFirst('-').Before;
+                
                 //
                 var compiledLibrary = libraryDictionary.GetOrAddNew(library);
                 var compiledPackage =
                     compiledLibrary.PackageDictionary.GetOrAddNew(compiler);
-                compiledPackage.FileList.Add(Path.Combine(stage, file.Name));
+                compiledPackage.AddFile(platform, file.Name);
+
                 // add the compiler and add the library to the compiler.
-                compilerDictionary.GetOrAddNew(compiler).Add(library);
+                compilerDictionary.GetOrAddNew(compiler)[library] = 
+                    compiledPackage;
             }
 
         }
@@ -147,22 +149,33 @@ namespace builder
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<Nuspec.File> fileList,
             IEnumerable<Nuspec.Dependency> dependencyList,
-            Optional<string> name)
+            Optional<string> name,
+            IEnumerable<string> platformList)
         {
+            var description =
+                id +
+                ". Compiler: " + 
+                Config.CompilerMap[compiler] +
+                ". Platforms: " + 
+                string.Join(", ", platformList) + 
+                ".";
             Nuspec.Create(
                 id,
                 id,
-                id + ", " + Config.CompilerMap[compiler],
+                description,
                 itemDefinitionGroupList,
                 fileList,
                 Enumerable.Empty<CompilationUnit>(),
                 dependencyList,
-                new[] { "binaries", compiler }.Concat(name.ToEnumerable()));
+                new[] { "binaries", compiler }.
+                    Concat(name.ToEnumerable()).
+                    Concat(platformList));
         }
 
         static void Main(string[] args)
         {
             var doc = new Doc();
+
             // Changes
             {
                 doc = doc[T.H1("Release Notes")];
@@ -171,6 +184,7 @@ namespace builder
                     doc = doc[change];
                 }
             }
+
             // headers only library.
             {
                 doc = doc
@@ -210,23 +224,22 @@ namespace builder
                     new[] { "headers" } 
                 );
             }
+
             // source libraries.
             doc = doc[T.H1("Source Libraries")];
-            foreach (
-                var directory in
-                    Directory.GetDirectories(
-                        Path.Combine(Config.BoostDir, "libs")))
+            foreach (var directory in Directory
+                .GetDirectories(Path.Combine(Config.BoostDir, "libs")))
             {
                 var src = Path.Combine(directory, "src");
                 if (Directory.Exists(src))
                 {
                     var name = Path.GetFileName(directory);
 
-                    var libraryConfig =
-                        Config.LibraryList.
-                        Where(l => l.Name == name).
-                        FirstOrDefault() ??
-                        new Library(name);
+                    var libraryConfig = Config
+                        .LibraryList
+                        .Where(l => l.Name == name)
+                        .FirstOrDefault() 
+                        ?? new Library(name);
 
                     foreach(var libName in MakeLibrary(libraryConfig, src))
                     {
@@ -234,33 +247,48 @@ namespace builder
                     }
                 }
             }
-            // compiler specific libraries
+
+            // create dictionaries for binary NuGet packages.
             doc = doc[T.H1("Precompiled Libraries")];
-            var compilerDictionary = new Dictionary<string, HashSet<string>>(); 
+            
+            // compiler -> (library name -> pacakge)
+            var compilerDictionary = 
+                new Dictionary<string, Dictionary<string, CompiledPackage>>();
+            
+            // library name -> library.
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
+
             foreach (var platform in Config.PlatformList)
             {
                 ScanCompiledFileSet(
-                    compilerDictionary, libraryDictionary, platform.Directory);
+                    compilerDictionary, libraryDictionary, platform);
             }
-            //
+
+            // all libraries for specific compiler.
             {
                 var list = T.List[T.Text("all libraries")];
                 foreach (var compiler in compilerDictionary.Keys)
                 {
                     var id = "boost-" + compiler;
+                    var compilerLibraries = compilerDictionary[compiler];
                     CreateBinaryNuspec(
                         id,
                         compiler,
                         Enumerable.Empty<Targets.ItemDefinitionGroup>(),
                         Enumerable.Empty<Nuspec.File>(),
-                        compilerDictionary[compiler].
-                            Select(lib => Package.Dependency(lib, compiler)),
-                        Optional<string>.Absent.Value);
+                        compilerLibraries
+                            .Keys
+                            .Select(lib => Package.Dependency(lib, compiler)),
+                        Optional<string>.Absent.Value,
+                        compilerLibraries
+                            .Values
+                            .SelectMany(package => package.PlatformList)
+                            .Distinct());
                     list = list[T.Text(" ")][A(compiler, id)];
                 }
                 doc = doc[list];
             }
+
             //
             var itemDefinitionGroupList = 
                 Config.
@@ -283,7 +311,8 @@ namespace builder
                                 )
                         )
                 );
-            // 
+
+            // NuGet packages for each library. 
             foreach (var library in libraryDictionary)
             {
                 var name = library.Key;
@@ -292,12 +321,13 @@ namespace builder
                 foreach (var package in library.Value.PackageDictionary)
                 {
                     var compiler = package.Key;
+                    var packageValue = package.Value;
                     var nuspecId = libraryId + "-" + compiler;
                     CreateBinaryNuspec(
                         nuspecId,
                         compiler,
                         itemDefinitionGroupList,
-                        package.Value.FileList.Select(
+                        packageValue.FileList.Select(
                             f =>
                                 new Nuspec.File(
                                     Path.Combine(Config.BoostDir, f),
@@ -305,11 +335,13 @@ namespace builder
                                 )
                         ),
                         Package.BoostDependency,
-                        name.ToOptional());
+                        name.ToOptional(),
+                        packageValue.PlatformList);
                     list = list[T.Text(" ")][A(package.Key, nuspecId)];
                 }
                 doc = doc[list];
             }
+
             // codeplex.txt
             using (var file = new StreamWriter("codeplex.txt"))
             {

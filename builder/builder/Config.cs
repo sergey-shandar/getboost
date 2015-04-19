@@ -6,7 +6,7 @@ namespace builder
     static class Config
     {
         public static readonly Version Version = 
-            new UnstableVersion(1, 58, 0, "rc2");
+            new StableVersion(1, 58, 0, 0);
 
         public static readonly List[] Release =
         {
@@ -24,8 +24,10 @@ namespace builder
             new Platform("x64", @"address-model-64\lib")
         };
 
-        public static readonly Dictionary<string, string> CompilerMap = new Dictionary<string, string>
+        public static readonly Dictionary<string, string> CompilerMap = 
+            new Dictionary<string, string>
         {
+            { "vc100", "Visual Studio 2010 SP1" },
             { "vc110", "Visual Studio 2012 Update 4" },
             { "vc120", "Visual Studio 2013 Update 4" },
             { "vc140", "Visual Studio 2015 CTP 6" },
