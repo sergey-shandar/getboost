@@ -78,14 +78,14 @@ namespace builder
 
         public static Nuspec.Dependency Dependency(string library, string compiler)
         {
-            return DependencyRange("boost_" + library + "-" + compiler);
+            return DependencyOne("boost_" + library + "-" + compiler);
         }
 
         public static IEnumerable<Nuspec.Dependency> BoostDependency
         {
             get
             {
-                return new[] { DependencyOne("boost") };
+                return new[] { DependencyRange("boost") };
             }
         }
 
