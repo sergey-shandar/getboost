@@ -155,7 +155,7 @@ namespace builder
             var description =
                 id +
                 ". Compiler: " + 
-                Config.CompilerMap[compiler] +
+                Config.CompilerMap[compiler].Name +
                 ". Platforms: " + 
                 string.Join(", ", platformList) + 
                 ".";

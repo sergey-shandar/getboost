@@ -24,13 +24,26 @@ namespace builder
             new Platform("x64", @"address-model-64\lib")
         };
 
-        public static readonly Dictionary<string, string> CompilerMap = 
-            new Dictionary<string, string>
+        public sealed class CompilerInfo
         {
-            { "vc100", "Visual Studio 2010 SP1" },
-            { "vc110", "Visual Studio 2012 Update 4" },
-            { "vc120", "Visual Studio 2013 Update 4" },
-            { "vc140", "Visual Studio 2015 CTP 6" },
+            public readonly string Name;
+
+            public readonly string PreRelease;
+
+            public CompilerInfo(string name, string preRelease = "")
+            {
+                Name = name;
+                PreRelease = preRelease;
+            }
+        }
+
+        public static readonly Dictionary<string, CompilerInfo> CompilerMap = 
+            new Dictionary<string, CompilerInfo>
+        {
+            { "vc100", new CompilerInfo("Visual Studio 2010 SP1") },
+            { "vc110", new CompilerInfo("Visual Studio 2012 Update 4") },
+            { "vc120", new CompilerInfo("Visual Studio 2013 Update 4") },
+            { "vc140", new CompilerInfo("Visual Studio 2015 CTP 6", "vs140ctp60") },
         };
 
         public static readonly Library[] LibraryList =
