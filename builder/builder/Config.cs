@@ -6,7 +6,7 @@ namespace builder
     static class Config
     {
         public static readonly Version Version = 
-            new UnstableVersion(1, 58, 0, "vs140ctp6");
+            new UnstableVersion(1, 58, 0, "vs140ctp60");
 
         public static readonly List[] Release =
         {
