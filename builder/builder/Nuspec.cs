@@ -60,6 +60,7 @@ namespace builder
 
         private static void CreateNuspec(
             string id,
+            Version version,
             string description,
             IEnumerable<File> fileList,
             IEnumerable<Dependency> dependencyList,
@@ -69,7 +70,7 @@ namespace builder
                 N("package").Append(
                     N("metadata").Append(
                         N("id", id),
-                        N("version", Config.Version.ToString()),
+                        N("version", version.ToString()),
                         N("authors", Config.Authors),
                         N("owners", Config.Owners),
                         N("licenseUrl", "http://getboost.codeplex.com/license"),
@@ -104,6 +105,7 @@ namespace builder
         public static void Create(
             string nuspecId,
             string packageId,
+            Version version,
             string description, 
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
@@ -128,6 +130,7 @@ namespace builder
                     compilationUnitList);
             CreateNuspec(
                 nuspecId,
+                version,
                 description,
                 fileList.
                     Concat(unitFiles).

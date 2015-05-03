@@ -12,9 +12,9 @@ call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat"
 call :link 14.0
 endlocal
 
-call :link 12.0
-call :link 11.0
-call :link 10.0
+rem call :link 12.0
+rem call :link 11.0
+rem call :link 10.0
 
 goto :eof
 

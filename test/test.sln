@@ -121,6 +121,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_timer-vc", "test_timer
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_wave-vc", "test_wave-vc\test_wave-vc.vcxproj", "{DBA67D9D-D5B8-4706-AA70-A577764EF0E6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_vs140", "test_vs140\test_vs140.vcxproj", "{FB37063F-86AD-49BA-B2C5-299800EC50E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -419,6 +421,10 @@ Global
 		{DBA67D9D-D5B8-4706-AA70-A577764EF0E6}.Debug|Win32.Build.0 = Debug|Win32
 		{DBA67D9D-D5B8-4706-AA70-A577764EF0E6}.Release|Win32.ActiveCfg = Release|Win32
 		{DBA67D9D-D5B8-4706-AA70-A577764EF0E6}.Release|Win32.Build.0 = Release|Win32
+		{FB37063F-86AD-49BA-B2C5-299800EC50E4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FB37063F-86AD-49BA-B2C5-299800EC50E4}.Debug|Win32.Build.0 = Debug|Win32
+		{FB37063F-86AD-49BA-B2C5-299800EC50E4}.Release|Win32.ActiveCfg = Release|Win32
+		{FB37063F-86AD-49BA-B2C5-299800EC50E4}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

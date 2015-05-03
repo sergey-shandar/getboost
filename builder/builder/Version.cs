@@ -1,3 +1,5 @@
+using System;
+
 namespace builder
 {
     public abstract class Version
@@ -7,6 +9,9 @@ namespace builder
         public readonly int Minor;
 
         public readonly int MajorRevision;
+
+        public abstract T Switch<T>(
+            Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable);
 
         protected Version(int major, int minor, int majorRevision)
         {
@@ -40,6 +45,11 @@ namespace builder
             MinorRevision = minorRevision;
         }
 
+        public override T Switch<T>(Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable)
+        {
+            return unstable(this);
+        }
+
         public override string ToString()
         {
             return base.ToString() + "-" + MinorRevision;
@@ -55,6 +65,12 @@ namespace builder
             base(major, minor, majorRevision)
         {
             MinorRevision = minorRevision;
+        }
+
+        public override T Switch<T>(
+            Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable)
+        {
+            return stable(this);
         }
 
         public override string ToString()

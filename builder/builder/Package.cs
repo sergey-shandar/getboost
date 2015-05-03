@@ -120,6 +120,7 @@ namespace builder
                 Nuspec.Create(
                     nuspecId,
                     nuspecId,
+                    Config.Version,
                     nuspecId,
                     new[] 
                     {

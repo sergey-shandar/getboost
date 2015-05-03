@@ -162,6 +162,7 @@ namespace builder
             Nuspec.Create(
                 id,
                 id,
+                Config.Version.Switch(stable => )
                 description,
                 itemDefinitionGroupList,
                 fileList,
