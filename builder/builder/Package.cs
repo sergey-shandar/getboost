@@ -64,6 +64,7 @@ namespace builder
             return new Nuspec.Dependency(id, "[" + Config.Version.ToString() + "]");
         }
 
+        /*
         private static Nuspec.Dependency DependencyRange(string id)
         {
             var next = new StableVersion(
@@ -75,6 +76,7 @@ namespace builder
                 id, 
                 "[" + Config.Version.BaseString + "," + next.BaseString + ")");
         }
+        */
 
         public static Nuspec.Dependency Dependency(string library, string compiler)
         {
@@ -85,7 +87,7 @@ namespace builder
         {
             get
             {
-                return new[] { DependencyRange("boost") };
+                return new[] { DependencyOne("boost") };
             }
         }
 

@@ -152,17 +152,27 @@ namespace builder
             Optional<string> name,
             IEnumerable<string> platformList)
         {
+            var info = Config.CompilerMap[compiler];
             var description =
                 id +
                 ". Compiler: " + 
-                Config.CompilerMap[compiler].Name +
+                info.Name +
                 ". Platforms: " + 
                 string.Join(", ", platformList) + 
                 ".";
+            var version = Config.Version.Switch(
+                stable => info.PreRelease == "" ? 
+                    stable as Version : 
+                    new UnstableVersion(
+                        stable.Major, 
+                        stable.Minor, 
+                        stable.MajorRevision, 
+                        info.PreRelease),
+                unstable => unstable);
             Nuspec.Create(
                 id,
                 id,
-                Config.Version.Switch(stable => )
+                version,
                 description,
                 itemDefinitionGroupList,
                 fileList,
@@ -198,6 +208,7 @@ namespace builder
                 Nuspec.Create(
                     "boost",
                     "boost",
+                    Config.Version,
                     "boost",
                     new[]
                     {
