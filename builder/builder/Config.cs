@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace builder
 {
-    static class Config
+    public static class Config
     {
         public static readonly Version Version = 
             new StableVersion(1, 58, 0, 0);

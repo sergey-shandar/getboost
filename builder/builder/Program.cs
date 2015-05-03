@@ -128,19 +128,19 @@ namespace builder
 
         }
 
-        static A A(string name, string library)
+        static A A(string name, string library, Version version)
         {
             return T.A(
                 name,
                 "http://nuget.org/packages/" + 
                     library + 
                     "/" + 
-                    Config.Version);
+                    version);
         }
 
-        static A A(string url)
+        static A A(string url, Version version)
         {
-            return A(url, url);
+            return A(url, url, version);
         }
 
         static void CreateBinaryNuspec(
@@ -160,19 +160,10 @@ namespace builder
                 ". Platforms: " + 
                 string.Join(", ", platformList) + 
                 ".";
-            var version = Config.Version.Switch(
-                stable => info.PreRelease == "" ? 
-                    stable as Version : 
-                    new UnstableVersion(
-                        stable.Major, 
-                        stable.Minor, 
-                        stable.MajorRevision, 
-                        info.PreRelease),
-                unstable => unstable);
             Nuspec.Create(
                 id,
                 id,
-                version,
+                Package.CompilerVersion(info),
                 description,
                 itemDefinitionGroupList,
                 fileList,
@@ -200,7 +191,7 @@ namespace builder
             {
                 doc = doc
                     [T.H1("Headers Only Libraries")]
-                    [T.List[A("boost")]];
+                    [T.List[A("boost", Config.Version)]];
                 var path = Path.Combine(Config.BoostDir, "boost");
                 var fileList =
                     new Dir(new DirectoryInfo(path), "boost").
@@ -255,7 +246,8 @@ namespace builder
 
                     foreach(var libName in MakeLibrary(libraryConfig, src))
                     {
-                        doc = doc[T.List[A(libName, "boost_" + libName)]];
+                        doc = doc[T.List[A(
+                            libName, "boost_" + libName, Config.Version)]];
                     }
                 }
             }
@@ -296,7 +288,12 @@ namespace builder
                             .Values
                             .SelectMany(package => package.PlatformList)
                             .Distinct());
-                    list = list[T.Text(" ")][A(compiler, id)];
+                    list = list
+                        [T.Text(" ")]
+                        [A(
+                            compiler,
+                            id,
+                            Package.CompilerVersion(Config.CompilerMap[compiler]))];
                 }
                 doc = doc[list];
             }
@@ -349,7 +346,12 @@ namespace builder
                         Package.BoostDependency,
                         name.ToOptional(),
                         packageValue.PlatformList);
-                    list = list[T.Text(" ")][A(package.Key, nuspecId)];
+                    list = list
+                        [T.Text(" ")]
+                        [A(
+                            package.Key, 
+                            nuspecId, 
+                            Package.CompilerVersion(Config.CompilerMap[compiler]))];
                 }
                 doc = doc[list];
             }

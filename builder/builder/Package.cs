@@ -59,35 +59,37 @@ namespace builder
         {
         }
 
-        private static Nuspec.Dependency DependencyOne(string id)
+        private static Nuspec.Dependency DependencyOne(string id, Version version)
         {
-            return new Nuspec.Dependency(id, "[" + Config.Version.ToString() + "]");
+            return new Nuspec.Dependency(id, "[" + version + "]");
         }
 
-        /*
-        private static Nuspec.Dependency DependencyRange(string id)
+        public static Version CompilerVersion(Config.CompilerInfo info)
         {
-            var next = new StableVersion(
-                Config.Version.Major, 
-                Config.Version.Minor, 
-                Config.Version.MajorRevision + 1,
-                0);
-            return new Nuspec.Dependency(
-                id, 
-                "[" + Config.Version.BaseString + "," + next.BaseString + ")");
+            return Config.Version.Switch(
+                stable => info.PreRelease == "" ?
+                    stable as Version :
+                    new UnstableVersion(
+                        stable.Major,
+                        stable.Minor,
+                        stable.MajorRevision,
+                        info.PreRelease),
+                unstable => unstable);
         }
-        */
 
-        public static Nuspec.Dependency Dependency(string library, string compiler)
+        public static Nuspec.Dependency Dependency(
+            string library, string compiler)
         {
-            return DependencyOne("boost_" + library + "-" + compiler);
+            return DependencyOne(
+                "boost_" + library + "-" + compiler,
+                CompilerVersion(Config.CompilerMap[compiler]));
         }
 
         public static IEnumerable<Nuspec.Dependency> BoostDependency
         {
             get
             {
-                return new[] { DependencyOne("boost") };
+                return new[] { DependencyOne("boost", Config.Version) };
             }
         }
 
