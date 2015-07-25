@@ -42,8 +42,8 @@ namespace builder
         {
             { "vc100", new CompilerInfo("Visual Studio 2010 SP1") },
             { "vc110", new CompilerInfo("Visual Studio 2012 Update 4") },
-            { "vc120", new CompilerInfo("Visual Studio 2013 Update 4") },
-            { "vc140", new CompilerInfo("Visual Studio 2015 RC", "vs140rc") },
+            { "vc120", new CompilerInfo("Visual Studio 2013 Update 5") },
+            { "vc140", new CompilerInfo("Visual Studio 2015") },
         };
 
         public static readonly Library[] LibraryList =
