@@ -12,6 +12,11 @@ call :link 12.0
 call :link 11.0
 call :link 10.0
 
+setlocal
+call "C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat"
+call :link 9.0
+endlocal
+
 goto :eof
 
 :link

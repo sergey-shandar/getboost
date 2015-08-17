@@ -40,6 +40,7 @@ namespace builder
         public static readonly Dictionary<string, CompilerInfo> CompilerMap = 
             new Dictionary<string, CompilerInfo>
         {
+            { "vc90", new CompilerInfo("Visual Studio 2008 SP1") },
             { "vc100", new CompilerInfo("Visual Studio 2010 SP1") },
             { "vc110", new CompilerInfo("Visual Studio 2012 Update 4") },
             { "vc120", new CompilerInfo("Visual Studio 2013 Update 5") },
