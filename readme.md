@@ -18,6 +18,6 @@ NuGet Packages for [Boost](http://boost.org).
 
 ## Building NuGet Packages
 
-1. Open [builder\builder.sln](builder/builder.sln) in Visual Studio 2013 or higher.
+1. Open [builder\builder.sln](builder/builder.sln) in Visual Studio 2015 or higher.
 2. Build and run the [builder](builder/builder/builder.csproj) project. It may take about half an hour to complete.
 3. Find NuGet packages in the `builder\builder\bin\Debug\` folder.
