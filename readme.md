@@ -1,6 +1,6 @@
 NuGet Packages for [Boost](http://boost.org).
 
-[![NuGet package](https://img.shields.io/nuget/dt/boost.svg)](https://nuget.org/packages/boost)
+[![NuGet package](https://img.shields.io/nuget/v/boost.svg?label=boost)](https://nuget.org/packages/boost)
 
 # For Developers
 
