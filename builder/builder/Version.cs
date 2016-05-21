@@ -21,17 +21,10 @@ namespace builder
         }
 
         public string BaseString
-        {
-            get
-            {
-                return Major + "." + Minor + "." + MajorRevision;
-            }
-        }
+            => Major + "." + Minor + "." + MajorRevision;
 
         public override string ToString()
-        {
-            return BaseString;
-        }
+            => BaseString;
     }
 
     public sealed class UnstableVersion : Version
@@ -46,14 +39,10 @@ namespace builder
         }
 
         public override T Switch<T>(Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable)
-        {
-            return unstable(this);
-        }
+            => unstable(this);
 
         public override string ToString()
-        {
-            return base.ToString() + "-" + MinorRevision;
-        }
+            => base.ToString() + "-" + MinorRevision;
     }
 
     public sealed class StableVersion : Version
@@ -69,13 +58,9 @@ namespace builder
 
         public override T Switch<T>(
             Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable)
-        {
-            return stable(this);
-        }
+            => stable(this);
 
         public override string ToString()
-        {
-            return base.ToString() + "." + MinorRevision;
-        }
+            => base.ToString() + "." + MinorRevision;
     }
 }

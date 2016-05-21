@@ -8,9 +8,7 @@ namespace builder
         public static IEnumerable<T> OneIfAbsent<T>(
             this Optional.Class<IEnumerable<T>> value)
             where T: new()
-        {
-            return value.Cast().Select(v => v, () => new[] { new T() });
-        }
+            => value.Cast().Select(v => v, () => new[] { new T() });
 
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> values)
         {
@@ -23,9 +21,7 @@ namespace builder
         }
 
         public static Split SplitFirst(this string value, char c)
-        {
-            return new Split(value, value.IndexOf(c));
-        }
+            => new Split(value, value.IndexOf(c));
 
         public static Value GetOrAddNew<Key, Value>(
             this IDictionary<Key, Value> dictionary, Key key)

@@ -18,15 +18,9 @@ namespace builder
         public readonly bool Skip;
 
         public IEnumerable<CompilationUnit> CompilationUnitList
-        {
-            get
-            {
-                return
-                    FileList.
-                    Where(f => Path.GetExtension(f) == ".cpp").
-                    Select(f => new CompilationUnit(f));
-            }
-        }
+            => FileList
+                .Where(f => Path.GetExtension(f) == ".cpp")
+                .Select(f => new CompilationUnit(f));
 
         public Package(
             Optional.Class<string> name = new Optional.Class<string>(),
@@ -60,13 +54,10 @@ namespace builder
         }
 
         private static Nuspec.Dependency DependencyOne(string id, Version version)
-        {
-            return new Nuspec.Dependency(id, "[" + version + "]");
-        }
+            => new Nuspec.Dependency(id, "[" + version + "]");
 
         public static Version CompilerVersion(Config.CompilerInfo info)
-        {
-            return Config.Version.Switch(
+            => Config.Version.Switch(
                 stable => info.PreRelease == "" ?
                     stable as Version :
                     new UnstableVersion(
@@ -75,23 +66,15 @@ namespace builder
                         stable.MajorRevision,
                         info.PreRelease),
                 unstable => unstable);
-        }
 
         public static Nuspec.Dependency Dependency(
             string library, string compiler)
-        {
-            return DependencyOne(
+            => DependencyOne(
                 "boost_" + library + "-" + compiler,
                 CompilerVersion(Config.CompilerMap[compiler]));
-        }
 
         public static IEnumerable<Nuspec.Dependency> BoostDependency
-        {
-            get
-            {
-                return new[] { DependencyOne("boost", Config.Version) };
-            }
-        }
+            => new[] { DependencyOne("boost", Config.Version) };
 
         public Optional<string> Create(Optional<string> directory)
         {

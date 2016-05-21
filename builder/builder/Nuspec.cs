@@ -13,14 +13,10 @@ namespace builder
 
         private static XElement N(
             string elementName, params XAttribute[] attributeList)
-        {
-            return n.Element(elementName, attributeList);
-        }
+            => n.Element(elementName, attributeList);
 
         private static XElement N(string elementName, string content)
-        {
-            return N(elementName).Append(content);
-        }
+            => N(elementName).Append(content);
 
         public sealed class File
         {
@@ -35,14 +31,7 @@ namespace builder
             }
 
             public XElement N
-            {
-                get 
-                { 
-                    return 
-                        Nuspec.N(
-                            "file", Xml.A("src", Src), Xml.A("target", Target));
-                }
-            }
+                => Nuspec.N("file", Xml.A("src", Src), Xml.A("target", Target));
         }
 
         public sealed class Dependency

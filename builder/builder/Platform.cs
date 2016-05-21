@@ -11,6 +11,5 @@
             Name = name;
             Directory = directory;
         }
-
     }
 }

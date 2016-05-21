@@ -24,9 +24,7 @@ namespace builder
 
         public static XElement Append(
             this XElement element, params XAttribute[] attributeList)
-        {
-            return element.Append((IEnumerable<XAttribute>)attributeList);
-        }
+            => element.Append((IEnumerable<XAttribute>)attributeList);
 
         public static XElement Append(
             this XElement element, IEnumerable<XElement> childList)
@@ -40,9 +38,7 @@ namespace builder
 
         public static XElement Append(
             this XElement element, params XElement[] childList)
-        {
-            return element.Append((IEnumerable<XElement>)childList);
-        }
+            => element.Append((IEnumerable<XElement>)childList);
 
         public static XElement Append(this XElement element, string content)
         {
@@ -65,8 +61,6 @@ namespace builder
 
         public static XAttribute Attribute(
             this XNamespace ns, string localName, string value)
-        {
-            return new XAttribute(ns.GetName(localName), value);
-        }
+            => new XAttribute(ns.GetName(localName), value);
     }
 }

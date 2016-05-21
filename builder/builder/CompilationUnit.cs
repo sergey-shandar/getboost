@@ -11,42 +11,33 @@ namespace builder
         }
 
         public string LocalPath
-        {
-            get { return Path.GetDirectoryName(_localFile); }
-        }
+            => Path.GetDirectoryName(_localFile);
 
         public string FileName(string packageId)
-        {
-            return
-                packageId + 
+            => packageId + 
                 "." +
                 _localFile.Replace('\\', '.');
-        }
 
         public Targets.ClCompile ClCompile(string packageId, string srcPath)
-        {
-            return 
-                new Targets.ClCompile(
-                    include:
-                        Path.Combine(
-                            srcPath,
-                            LocalPath,
-                            FileName(packageId)
-                        ),
-                    precompiledHeader:
-                        Targets.PrecompiledHeader.NotUsing,
-                    additionalIncludeDirectories:
-                        new[] { Path.Combine(srcPath, LocalPath) },
-                    sDLCheck: 
-                        false,
-                    exceptionHandling:
-                        Targets.ExceptionHandling.Async
-                );
-        }
+            => new Targets.ClCompile(
+                include:
+                    Path.Combine(
+                        srcPath,
+                        LocalPath,
+                        FileName(packageId)
+                    ),
+                precompiledHeader:
+                    Targets.PrecompiledHeader.NotUsing,
+                additionalIncludeDirectories:
+                    new[] { Path.Combine(srcPath, LocalPath) },
+                sDLCheck: 
+                    false,
+                exceptionHandling:
+                    Targets.ExceptionHandling.Async
+            );
 
         public void Make(Package package)
-        {
-            File.WriteAllLines(
+            => File.WriteAllLines(
                 FileName("boost_" + package.Name.Select(n => n, () => "")),
                 new[]
                     {
@@ -62,7 +53,6 @@ namespace builder
                         }
                     )
             );
-        }
 
         private readonly string _localFile;
 

@@ -114,24 +114,16 @@ namespace builder.Codeplex
     class T
     {
         public static H1 H1(string value)
-        {
-            return new H1(value);
-        }
+            => new H1(value);
 
         public static A A(string text, string url)
-        {
-            return new A(text, url);
-        }
+            => new A(text, url);
 
         public static List List
-        {
-            get { return new List(); }
-        }
+            => new List();
 
         public static Text Text(string value)
-        {
-            return new Text(value);
-        }
+            => new Text(value);
     }
 
     sealed class Doc: DocList

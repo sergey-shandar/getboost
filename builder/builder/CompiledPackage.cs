@@ -6,14 +6,10 @@ namespace builder
     sealed class CompiledPackage
     {
         public IEnumerable<string> PlatformList
-        {
-            get { return _PlatformSet; }
-        }
+            => _PlatformSet;
 
         public IEnumerable<string> FileList
-        {
-            get { return _FileList; }
-        }
+            => _FileList;
 
         public void AddFile(Platform platform, string file)
         {

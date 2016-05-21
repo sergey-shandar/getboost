@@ -25,9 +25,6 @@ namespace builder
         }
 
         public IEnumerable<string> Create()
-        {
-            return PackageList.SelectMany(p => p.Create(Directory).ToEnumerable());
-        }
-
+            => PackageList.SelectMany(p => p.Create(Directory).ToEnumerable());
     }
 }

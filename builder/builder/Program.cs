@@ -21,9 +21,7 @@ namespace builder
             }
 
             public IEnumerable<string> FileList(Func<string, bool> filter)
-            {
-                return
-                    Info.
+                => Info.
                     GetDirectories().
                     Select(
                         i => new Dir(i, Path.Combine(Name, i.Name))
@@ -40,7 +38,6 @@ namespace builder
                         Select(f => Path.Combine(Name, f.Name)).
                         Where(f => filter(f))
                     );
-            }
 
             public IEnumerable<string> FileList(IEnumerable<string> filter)
             {
@@ -49,9 +46,7 @@ namespace builder
             }
 
             public IEnumerable<string> FileList()
-            {
-                return FileList(name => true);
-            }
+                => FileList(name => true);
         }
 
         static IEnumerable<Package> CreatePackageList(
@@ -84,7 +79,7 @@ namespace builder
             );
         }
 
-        static IEnumerable<string> MakeLibrary(
+        static IEnumerable<string> MakeSrcLibrary(
             Library libraryConfig, string src)
         {
             var name = libraryConfig.Name;
@@ -129,19 +124,15 @@ namespace builder
         }
 
         static A A(string name, string library, Version version)
-        {
-            return T.A(
+            => T.A(
                 name,
                 "http://nuget.org/packages/" + 
                     library + 
                     "/" + 
                     version);
-        }
 
         static A A(string url, Version version)
-        {
-            return A(url, url, version);
-        }
+            => A(url, url, version);
 
         static void CreateBinaryNuspec(
             string id, 
@@ -244,7 +235,7 @@ namespace builder
                         .FirstOrDefault() 
                         ?? new Library(name);
 
-                    foreach(var libName in MakeLibrary(libraryConfig, src))
+                    foreach(var libName in MakeSrcLibrary(libraryConfig, src))
                     {
                         doc = doc[T.List[A(
                             libName, "boost_" + libName, Config.Version)]];

@@ -7,9 +7,6 @@ namespace builder
         private static readonly XNamespace x = XNamespace.Get("");
 
         public static XAttribute A(string attributeName, string value)
-        {
-            return x.Attribute(attributeName, value);
-        }
-
+            => x.Attribute(attributeName, value);
     }
 }

@@ -34,9 +34,7 @@ namespace builder
 
         private static void Append(
             XElement x, string name, IEnumerable<string> value)
-        {
-            x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
-        }
+            => x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
 
         public sealed class Link
         {
@@ -169,20 +167,14 @@ namespace builder
         }
 
         public static string PathFromThis(string path)
-        {
-            return Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", path);
-        }
+            => Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", path);
 
         public static XElement M(
             string elementName, params XAttribute[] attributeList)
-        {
-            return m.Element(elementName, attributeList);
-        }
+            => m.Element(elementName, attributeList);
 
         public static XElement M(string elementName, string content)
-        {
-            return M(elementName).Append(content);
-        }
+            => M(elementName).Append(content);
 
         private static readonly XNamespace m = XNamespace.Get(
             "http://schemas.microsoft.com/developer/msbuild/2003");
