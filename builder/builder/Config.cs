@@ -55,7 +55,7 @@ namespace builder
                 name: "context",
                 packageList: new[]
                 {
-                    new Package(
+                    new SrcPackage(
                         skip: true
                     )
                 }
@@ -66,14 +66,14 @@ namespace builder
                 packageList: new[]
                 {
                     // coroutine
-                    new Package(
+                    new SrcPackage(
                         preprocessorDefinitions: new[] 
                         {
                             "BOOST_COROUTINES_NO_LIB"
                         }
                     ),
                     // coroutine_segmented (GCC only)
-                    new Package(
+                    new SrcPackage(
                         name: "segmented",
                         fileList: new[] 
                         {
@@ -82,7 +82,7 @@ namespace builder
                         skip: true
                     ),
                     // coroutine_posix (need Posix library).
-                    new Package(
+                    new SrcPackage(
                         name: "posix",
                         fileList: new[]
                         {
@@ -99,13 +99,13 @@ namespace builder
                 name: "iostreams",
                 packageList: new[]
                 {
-                    new Package(),
+                    new SrcPackage(),
                     // need bzip2 lib.
-                    new Package(
+                    new SrcPackage(
                         name: "bzip2", 
                         fileList: new[] { "bzip2.cpp" }),
                     // need zlib lib.
-                    new Package(
+                    new SrcPackage(
                         name: "zlib",
                         fileList: new[] { "zlib.cpp", "gzip.cpp" }),
                 }),
@@ -115,7 +115,7 @@ namespace builder
                 packageList: new[]
                 {
                     // locale, depends on thread, system, date_time, chrono.
-                    new Package(
+                    new SrcPackage(
                         lineList: new[] 
                         { 
                             "#define BOOST_LOCALE_NO_POSIX_BACKEND" 
@@ -128,7 +128,7 @@ namespace builder
                         }
                     ),
                     // locale_posix
-                    new Package(
+                    new SrcPackage(
                         name: "posix",
                         fileList: new[]
                         {
@@ -137,7 +137,7 @@ namespace builder
                         skip: true
                     ),
                     // locale_icu
-                    new Package(
+                    new SrcPackage(
                         name: "icu",
                         fileList: new[]
                         {
@@ -154,7 +154,7 @@ namespace builder
                 packageList: new[]
                 {
                     // log depends on system, file_system, date_time, thread, chrono.
-                    new Package(
+                    new SrcPackage(
                         lineList: new[] 
                         {
                             "#define BOOST_SPIRIT_USE_PHOENIX_V3"
@@ -164,7 +164,7 @@ namespace builder
                             "spirit_encoding.hpp",
                             "windows_version.hpp",
                         }),
-                    new Package(
+                    new SrcPackage(
                         name: "event",
                         fileList: new[]
                         {
@@ -173,7 +173,7 @@ namespace builder
                         skip: true
                     ),
                     // need log_event
-                    new Package(
+                    new SrcPackage(
                         name: "setup",
                         lineList: new[]
                         {
@@ -204,9 +204,9 @@ namespace builder
                 packageList: new[]
                 {
                     // mpi
-                    new Package(),
+                    new SrcPackage(),
                     // mpi_python
-                    new Package(
+                    new SrcPackage(
                         name: "python",
                         fileList: new[]
                         {
@@ -218,7 +218,7 @@ namespace builder
                 name: "python",
                 packageList: new[]
                 {
-                    new Package(
+                    new SrcPackage(
                         preprocessorDefinitions: 
                             new[] { "BOOST_PYTHON_STATIC_LIB" },
                         lineList: 
@@ -234,11 +234,11 @@ namespace builder
                 packageList: new[]
                 {
                     // test
-                    new Package(
+                    new SrcPackage(
                         skip: true
                     ),
                     // test_cpp_main
-                    new Package(
+                    new SrcPackage(
                         name: "cpp_main",
                         fileList: new[]
                         {
@@ -247,7 +247,7 @@ namespace builder
                         skip: true
                     ),
                     // test_test_main
-                    new Package(
+                    new SrcPackage(
                         name: "test_main",
                         fileList: new[]
                         {
@@ -256,7 +256,7 @@ namespace builder
                         skip: true
                     ),
                     // test_unit_test_main
-                    new Package(
+                    new SrcPackage(
                         name: "unit_test_main",
                         fileList: new[]
                         {
@@ -272,7 +272,7 @@ namespace builder
                 packageList: new[]
                 {
                     // thread, depends on date_time, system, chrono.
-                    new Package(
+                    new SrcPackage(
                         lineList: new[]
                         {
                             "#define BOOST_HAS_WINTHREADS",
@@ -280,7 +280,7 @@ namespace builder
                         }
                     ),
                     // thread_pthread
-                    new Package(
+                    new SrcPackage(
                         name: "pthread",
                         fileList: new[]
                         {

@@ -36,7 +36,7 @@ namespace builder
                     Targets.ExceptionHandling.Async
             );
 
-        public void Make(Package package)
+        public void Make(SrcPackage package)
             => File.WriteAllLines(
                 FileName("boost_" + package.Name.Select(n => n, () => "")),
                 new[]

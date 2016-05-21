@@ -30,12 +30,12 @@ namespace builderTest
              * */
         }
 
-        public static IEnumerable<Package> GetPackages()
+        public static IEnumerable<SrcPackage> GetPackages()
         {
-            return Enumerable.Empty<Package>();
+            return Enumerable.Empty<SrcPackage>();
         }
 
-        public static void Lib(Optional.Class<IEnumerable<Package>> p)
+        public static void Lib(Optional.Class<IEnumerable<SrcPackage>> p)
         {            
         }
 
@@ -55,7 +55,7 @@ namespace builderTest
             new X(a);
             // new Library(name: "x", packageList: GetPackages());
             var x = GetPackages();
-            Lib(new Package[5]);
+            Lib(new SrcPackage[5]);
             // Lib(x);
             R(new int[5]);
             // R(Enumerable.Empty<int>());

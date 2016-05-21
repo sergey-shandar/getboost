@@ -49,10 +49,10 @@ namespace builder
                 => FileList(name => true);
         }
 
-        static IEnumerable<Package> CreatePackageList(
+        static IEnumerable<SrcPackage> CreatePackageList(
             string name,
             string path,
-            IEnumerable<Package> packageListConfig)
+            IEnumerable<SrcPackage> packageListConfig)
         {
             var firstPackage = packageListConfig.First();
             var dir = new Dir(new DirectoryInfo(path), "");
@@ -61,7 +61,7 @@ namespace builder
             {
                 var fileList = dir.FileList(p.FileList);
                 remainder.ExceptWith(fileList);
-                yield return new Package(
+                yield return new SrcPackage(
                     name: 
                         name + 
                         "_" + 
@@ -72,7 +72,7 @@ namespace builder
             }
             //
             remainder.UnionWith(dir.FileList(firstPackage.FileList));
-            yield return new Package(
+            yield return new SrcPackage(
                 name: name,
                 package: firstPackage,
                 fileList: remainder
@@ -154,7 +154,7 @@ namespace builder
             Nuspec.Create(
                 id,
                 id,
-                Package.CompilerVersion(info),
+                SrcPackage.CompilerVersion(info),
                 description,
                 itemDefinitionGroupList,
                 fileList,
@@ -221,6 +221,7 @@ namespace builder
 
             // source libraries.
             doc = doc[T.H1("Source Libraries")];
+            var srcLibList = new List<string>(); 
             foreach (var directory in Directory
                 .GetDirectories(Path.Combine(Config.BoostDir, "libs")))
             {
@@ -237,11 +238,23 @@ namespace builder
 
                     foreach(var libName in MakeSrcLibrary(libraryConfig, src))
                     {
+                        var fullName = "boost_" + libName + "-src";
+                        srcLibList.Add(libName);
                         doc = doc[T.List[A(
-                            libName, "boost_" + libName, Config.Version)]];
+                            libName, fullName, Config.Version)]];
                     }
                 }
             }
+            Nuspec.Create(
+                    "boost-src",
+                    "boost-src",
+                    Config.Version,
+                    "boost-src",
+                    Enumerable.Empty<Targets.ItemDefinitionGroup>(),
+                    Enumerable.Empty<Nuspec.File>(),
+                    Enumerable.Empty<CompilationUnit>(),
+                    srcLibList.Select(srcLib => new Nuspec.Dependency(srcLib, Config.Version.ToString())),
+                    new[] { "sources" });
 
             // create dictionaries for binary NuGet packages.
             doc = doc[T.H1("Precompiled Libraries")];
@@ -273,7 +286,7 @@ namespace builder
                         Enumerable.Empty<Nuspec.File>(),
                         compilerLibraries
                             .Keys
-                            .Select(lib => Package.Dependency(lib, compiler)),
+                            .Select(lib => SrcPackage.Dependency(lib, compiler)),
                         Optional<string>.Absent.Value,
                         compilerLibraries
                             .Values
@@ -284,7 +297,7 @@ namespace builder
                         [A(
                             compiler,
                             id,
-                            Package.CompilerVersion(Config.CompilerMap[compiler]))];
+                            SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
                 }
                 doc = doc[list];
             }
@@ -334,7 +347,7 @@ namespace builder
                                     Path.Combine(Targets.LibNativePath, f)
                                 )
                         ),
-                        Package.BoostDependency,
+                        SrcPackage.BoostDependency,
                         name.ToOptional(),
                         packageValue.PlatformList);
                     list = list
@@ -342,7 +355,7 @@ namespace builder
                         [A(
                             package.Key, 
                             nuspecId, 
-                            Package.CompilerVersion(Config.CompilerMap[compiler]))];
+                            SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
                 }
                 doc = doc[list];
             }

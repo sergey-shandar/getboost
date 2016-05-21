@@ -10,14 +10,14 @@ namespace builder
 
         public readonly Optional<string> Directory;
 
-        public readonly IEnumerable<Package> PackageList;
+        public readonly IEnumerable<SrcPackage> PackageList;
 
         public Library(
             string name,
             Optional.Class<string> directory = 
                 new Optional.Class<string>(),
-            Optional.Class<IEnumerable<Package>> packageList = 
-                new Optional.Class<IEnumerable<Package>>())
+            Optional.Class<IEnumerable<SrcPackage>> packageList = 
+                new Optional.Class<IEnumerable<SrcPackage>>())
         {
             Name = name;
             Directory = directory.Cast();
@@ -25,6 +25,6 @@ namespace builder
         }
 
         public IEnumerable<string> Create()
-            => PackageList.SelectMany(p => p.Create(Directory).ToEnumerable());
+            => PackageList.SelectMany(package => package.Create(Directory).ToEnumerable());
     }
 }

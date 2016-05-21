@@ -5,7 +5,7 @@ using Framework.G1;
 
 namespace builder
 {
-    public sealed class Package
+    public sealed class SrcPackage
     {
         public readonly Optional<string> Name;
 
@@ -22,7 +22,7 @@ namespace builder
                 .Where(f => Path.GetExtension(f) == ".cpp")
                 .Select(f => new CompilationUnit(f));
 
-        public Package(
+        public SrcPackage(
             Optional.Class<string> name = new Optional.Class<string>(),
             Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
                 new Optional.Class<IEnumerable<string>>(),
@@ -39,11 +39,11 @@ namespace builder
             Skip = skip;
         }
 
-        public Package() : this(new Optional.Class<string>())
+        public SrcPackage() : this(new Optional.Class<string>())
         {
         }
 
-        public Package(string name, Package package, IEnumerable<string> fileList):
+        public SrcPackage(string name, SrcPackage package, IEnumerable<string> fileList):
             this(
                 name: name,
                 preprocessorDefinitions: package.PreprocessorDefinitions.ToOptionalClass(),
@@ -81,7 +81,7 @@ namespace builder
             if (!Skip)
             {
                 var name = Name.Select(n => n, () => "");
-                var nuspecId = "boost_" + name;
+                var nuspecId = "boost_" + name + "-src";
                 var srcFiles =
                     FileList.Select(
                         f =>

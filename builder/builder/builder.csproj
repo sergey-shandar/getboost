@@ -56,7 +56,7 @@
     <Compile Include="Library.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="Nuspec.cs" />
-    <Compile Include="Package.cs" />
+    <Compile Include="SrcPackage.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
