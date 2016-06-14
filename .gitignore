@@ -49,3 +49,4 @@ builder/packages/repositories.config
 /log.txt
 /builder/packages/Framework.G1.1.0.13.0
 /builder/packages/NuGet.CommandLine.2.8.3
+/builder/builderTest/bin/Debug

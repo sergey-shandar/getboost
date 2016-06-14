@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using builder.Codeplex;
+using builder.MarkDown;
 using Framework.G1;
 
 namespace builder
@@ -178,6 +178,7 @@ namespace builder
                 }
             }
 
+            /*
             // headers only library.
             {
                 doc = doc
@@ -218,6 +219,7 @@ namespace builder
                     new[] { "headers" } 
                 );
             }
+            */
 
             // source libraries.
             doc = doc[T.H1("Source Libraries")];
@@ -253,9 +255,11 @@ namespace builder
                     Enumerable.Empty<Targets.ItemDefinitionGroup>(),
                     Enumerable.Empty<Nuspec.File>(),
                     Enumerable.Empty<CompilationUnit>(),
-                    srcLibList.Select(srcLib => new Nuspec.Dependency(srcLib, Config.Version.ToString())),
+                    srcLibList.Select(srcLib => new Nuspec.Dependency(
+                        "boost_" + srcLib + "-src", Config.Version.ToString())),
                     new[] { "sources" });
 
+/*
             // create dictionaries for binary NuGet packages.
             doc = doc[T.H1("Precompiled Libraries")];
             
@@ -359,9 +363,9 @@ namespace builder
                 }
                 doc = doc[list];
             }
-
-            // codeplex.txt
-            using (var file = new StreamWriter("codeplex.txt"))
+*/
+            // release.md
+            using (var file = new StreamWriter("RELEASE.md"))
             {
                 doc.Write(file);
             }

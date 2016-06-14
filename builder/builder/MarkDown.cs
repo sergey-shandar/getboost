@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 
-namespace builder.Codeplex
+namespace builder.MarkDown
 {
     public interface IDoc
     {
@@ -20,12 +20,12 @@ namespace builder.Codeplex
 
         public void Write(TextWriter writer)
         {
-            writer.Write("! ");
+            writer.Write("# ");
             writer.WriteLine(Value);
         }
     }
 
-    public sealed class A: IDoc
+    public sealed class A : IDoc
     {
         private string Text;
         private string Url;
@@ -38,15 +38,15 @@ namespace builder.Codeplex
 
         public void Write(TextWriter writer)
         {
-            writer.Write("[url:");
+            writer.Write("[");
             writer.Write(Text);
-            writer.Write("|");
+            writer.Write("](");
             writer.Write(Url);
-            writer.Write("]");
+            writer.Write(")");
         }
     }
 
-    public abstract class DocList: IDoc
+    public abstract class DocList : IDoc
     {
         protected List<IDoc> list = new List<IDoc>();
 
@@ -59,10 +59,10 @@ namespace builder.Codeplex
         }
     }
 
-    public sealed class Text: IDoc
+    public sealed class Text : IDoc
     {
         readonly string Value;
- 
+
         public Text(string value)
         {
             Value = value;
@@ -70,24 +70,15 @@ namespace builder.Codeplex
 
         public void Write(TextWriter writer)
         {
-            if (Value.Contains('_'))
-            {
-                writer.Write("{\"");
-                writer.Write(Value);
-                writer.Write("\"}");
-            }
-            else
-            {
-                writer.Write(Value);
-            }
+            writer.Write(Value);
         }
     }
 
-    public sealed class List: DocList
+    public sealed class List : DocList
     {
         public List this[Text text]
         {
-            get 
+            get
             {
                 list.Add(text);
                 return this;
@@ -105,7 +96,7 @@ namespace builder.Codeplex
 
         public override void Write(TextWriter writer)
         {
-            writer.Write("* ");
+            writer.Write("- ");
             base.Write(writer);
             writer.WriteLine();
         }
@@ -126,7 +117,7 @@ namespace builder.Codeplex
             => new Text(value);
     }
 
-    sealed class Doc: DocList
+    sealed class Doc : DocList
     {
         public Doc this[H1 h1]
         {

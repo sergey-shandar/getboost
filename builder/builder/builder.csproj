@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Codeplex.cs" />
     <Compile Include="Collections.cs" />
     <Compile Include="CompilationUnit.cs">
       <SubType>Code</SubType>
@@ -53,6 +52,7 @@
     <Compile Include="CompiledLibrary.cs" />
     <Compile Include="CompiledPackage.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="MarkDown.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="Nuspec.cs" />
