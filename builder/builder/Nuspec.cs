@@ -62,7 +62,7 @@ namespace builder
                         N("version", version.ToString()),
                         N("authors", Config.Authors),
                         N("owners", Config.Owners),
-                        N("licenseUrl", "http://getboost.codeplex.com/license"),
+                        N("licenseUrl", "https://github.com/sergey-shandar/getboost/blob/master/LICENSE"),
                         N("projectUrl", "https://github.com/sergey-shandar/getboost"),
                         N("requireLicenseAcceptance", "false"),
                         N("description", description),
