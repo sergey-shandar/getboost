@@ -178,7 +178,6 @@ namespace builder
                 }
             }
 
-            /*
             // headers only library.
             {
                 doc = doc
@@ -219,7 +218,6 @@ namespace builder
                     new[] { "headers" } 
                 );
             }
-            */
 
             // source libraries.
             doc = doc[T.H1("Source Libraries")];

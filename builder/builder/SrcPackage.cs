@@ -54,7 +54,7 @@ namespace builder
         }
 
         private static Nuspec.Dependency DependencyOne(string id, Version version)
-            => new Nuspec.Dependency(id, "[" + version + "]");
+            => new Nuspec.Dependency(id, $"[{version}]");
 
         public static Version CompilerVersion(Config.CompilerInfo info)
             => Config.Version.Switch(
@@ -70,7 +70,7 @@ namespace builder
         public static Nuspec.Dependency Dependency(
             string library, string compiler)
             => DependencyOne(
-                "boost_" + library + "-" + compiler,
+                $"boost_{library}-{compiler}",
                 CompilerVersion(Config.CompilerMap[compiler]));
 
         public static IEnumerable<Nuspec.Dependency> BoostDependency
@@ -81,7 +81,7 @@ namespace builder
             if (!Skip)
             {
                 var name = Name.Select(n => n, () => "");
-                var nuspecId = "boost_" + name + "-src";
+                var nuspecId = $"boost_{name}-src";
                 var srcFiles =
                     FileList.Select(
                         f =>
@@ -95,12 +95,12 @@ namespace builder
                 {
                     u.Make(this);
                 }
-                //
+                // BOOST_..._NO_LIB
                 var clCompile =
                     new Targets.ClCompile(
                         preprocessorDefinitions:
                             PreprocessorDefinitions.
-                                Concat(new[] { nuspecId.ToUpper() + "_NO_LIB" }).
+                                Concat(new[] { $"BOOST_{name.ToUpper()}_NO_LIB" }).
                                 ToOptionalClass()
                     );
 
