@@ -257,7 +257,6 @@ namespace builder
                         "boost_" + srcLib + "-src", Config.Version.ToString())),
                     new[] { "sources" });
 
-/*
             // create dictionaries for binary NuGet packages.
             doc = doc[T.H1("Precompiled Libraries")];
             
@@ -361,7 +360,7 @@ namespace builder
                 }
                 doc = doc[list];
             }
-*/
+
             // release.md
             using (var file = new StreamWriter("RELEASE.md"))
             {
