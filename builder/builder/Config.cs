@@ -6,7 +6,7 @@ namespace builder
     public static class Config
     {
         public static readonly Version Version = 
-            new StableVersion(1, 61, 0, 0);
+            new StableVersion(1, 62, 0, 0);
 
         public static readonly List[] Release =
         {
@@ -40,11 +40,12 @@ namespace builder
         public static readonly Dictionary<string, CompilerInfo> CompilerMap = 
             new Dictionary<string, CompilerInfo>
         {
+            { "vc80", new CompilerInfo("Visual Studio 2005 SP1") },
             { "vc90", new CompilerInfo("Visual Studio 2008 SP1") },
             { "vc100", new CompilerInfo("Visual Studio 2010 SP1") },
-            { "vc110", new CompilerInfo("Visual Studio 2012 Update 5") },
+            { "vc110", new CompilerInfo("Visual Studio 2012 Update 4") },
             { "vc120", new CompilerInfo("Visual Studio 2013 Update 5") },
-            { "vc140", new CompilerInfo("Visual Studio 2015 Update 2") },
+            { "vc140", new CompilerInfo("Visual Studio 2015 Update 3") },
         };
 
         public static readonly Library[] LibraryList =
