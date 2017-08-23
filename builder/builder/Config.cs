@@ -49,6 +49,9 @@ namespace builder
             { "vc141", new CompilerInfo("Visual Studio 2017") }
         };
 
+        public static int CompilerNumber(string key)
+            => int.Parse(key.Substring(2));
+            
         public static readonly Library[] LibraryList =
         {
             // chrono depends on system

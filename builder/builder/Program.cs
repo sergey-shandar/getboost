@@ -187,6 +187,7 @@ namespace builder
                 var fileList =
                     new Dir(new DirectoryInfo(path), "boost").
                     FileList(f => true);
+                /*
                 Nuspec.Create(
                     "boost",
                     "boost",
@@ -217,6 +218,7 @@ namespace builder
                     new Nuspec.Dependency[0],
                     new[] { "headers" } 
                 );
+                */
             }
 
             // source libraries.
@@ -276,7 +278,7 @@ namespace builder
             // all libraries for specific compiler.
             {
                 var list = T.List[T.Text("all libraries")];
-                foreach (var compiler in compilerDictionary.Keys)
+                foreach (var compiler in compilerDictionary.Keys.OrderBy(Config.CompilerNumber))
                 {
                     var id = "boost-" + compiler;
                     var compilerLibraries = compilerDictionary[compiler];
@@ -332,7 +334,7 @@ namespace builder
                 var name = library.Key;
                 var libraryId = "boost_" + name;
                 var list = T.List[T.Text(name)];
-                foreach (var package in library.Value.PackageDictionary)
+                foreach (var package in library.Value.PackageDictionary.OrderBy(p => Config.CompilerNumber(p.Key)))
                 {
                     var compiler = package.Key;
                     var packageValue = package.Value;
