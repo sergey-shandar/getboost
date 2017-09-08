@@ -187,7 +187,6 @@ namespace builder
                 var fileList =
                     new Dir(new DirectoryInfo(path), "boost").
                     FileList(f => true);
-                /*
                 Nuspec.Create(
                     "boost",
                     "boost",
@@ -218,7 +217,6 @@ namespace builder
                     new Nuspec.Dependency[0],
                     new[] { "headers" } 
                 );
-                */
             }
 
             // source libraries.
