@@ -6,7 +6,7 @@ namespace builder
     public static class Config
     {
         public static readonly Version Version = 
-            new StableVersion(1, 65, 1, 0);
+            new StableVersion(1, 66, 0, 0);
 
         public static readonly List[] Release =
         {
@@ -17,12 +17,6 @@ namespace builder
         public const string Owners = "sergey_shandar";
 
         public const string BoostDir = @"..\..\..\..\..\boost\";
-
-        public static readonly Platform[] PlatformList =
-        {
-            new Platform("Win32", @"address-model-32\lib"),
-            new Platform("x64", @"address-model-64\lib")
-        };
 
         public sealed class CompilerInfo
         {

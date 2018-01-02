@@ -95,32 +95,28 @@ namespace builder
         }
 
         static void ScanCompiledFileSet(
-            Dictionary<string, Dictionary<string, CompiledPackage>> 
-                compilerDictionary,
-            Dictionary<string, CompiledLibrary> libraryDictionary,
-            Platform platform)
+            Dictionary<string, Dictionary<string, CompiledPackage>> compilerDictionary,
+            Dictionary<string, CompiledLibrary> libraryDictionary)
         {
-            foreach (
-                var file in
-                    new DirectoryInfo(Path.Combine(
-                        Config.BoostDir, platform.Directory))
-                    .GetFiles())
+            foreach (var dir in new DirectoryInfo(Config.BoostDir).GetDirectories("lib*-msvc-*"))
             {
-                var split = file.Name.SplitFirst('-');
-                var library = split.Before.SplitFirst('_').After;
-                var compiler = split.After.SplitFirst('-').Before;
-                
-                //
-                var compiledLibrary = libraryDictionary.GetOrAddNew(library);
-                var compiledPackage =
-                    compiledLibrary.PackageDictionary.GetOrAddNew(compiler);
-                compiledPackage.AddFile(platform, file.Name);
+                foreach (var file in dir.GetFiles("*boost*"))
+                {
+                    var split = file.Name.SplitFirst('-');
+                    var library = split.Before.SplitFirst('_').After;
+                    var compiler = split.After.SplitFirst('-').Before;
 
-                // add the compiler and add the library to the compiler.
-                compilerDictionary.GetOrAddNew(compiler)[library] = 
-                    compiledPackage;
+                    //
+                    var compiledLibrary = libraryDictionary.GetOrAddNew(library);
+                    var compiledPackage =
+                        compiledLibrary.PackageDictionary.GetOrAddNew(compiler);
+                    compiledPackage.AddFile(dir.Name, file.Name);
+
+                    // add the compiler and add the library to the compiler.
+                    compilerDictionary.GetOrAddNew(compiler)[library] =
+                        compiledPackage;
+                }
             }
-
         }
 
         static A A(string name, string library, Version version)
@@ -140,16 +136,13 @@ namespace builder
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<Nuspec.File> fileList,
             IEnumerable<Nuspec.Dependency> dependencyList,
-            Optional<string> name,
-            IEnumerable<string> platformList)
+            Optional<string> name)
         {
             var info = Config.CompilerMap[compiler];
             var description =
                 id +
                 ". Compiler: " + 
                 info.Name +
-                ". Platforms: " + 
-                string.Join(", ", platformList) + 
                 ".";
             Nuspec.Create(
                 id,
@@ -161,8 +154,7 @@ namespace builder
                 Enumerable.Empty<CompilationUnit>(),
                 dependencyList,
                 new[] { "binaries", compiler }.
-                    Concat(name.ToEnumerable()).
-                    Concat(platformList));
+                    Concat(name.ToEnumerable()));
         }
 
         static void Main(string[] args)
@@ -267,11 +259,7 @@ namespace builder
             // library name -> library.
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
 
-            foreach (var platform in Config.PlatformList)
-            {
-                ScanCompiledFileSet(
-                    compilerDictionary, libraryDictionary, platform);
-            }
+            ScanCompiledFileSet(compilerDictionary, libraryDictionary);
 
             // all libraries for specific compiler.
             {
@@ -288,11 +276,7 @@ namespace builder
                         compilerLibraries
                             .Keys
                             .Select(lib => SrcPackage.Dependency(lib, compiler)),
-                        Optional<string>.Absent.Value,
-                        compilerLibraries
-                            .Values
-                            .SelectMany(package => package.PlatformList)
-                            .Distinct());
+                        Optional<string>.Absent.Value);
                     list = list
                         [T.Text(" ")]
                         [A(
@@ -304,27 +288,17 @@ namespace builder
             }
 
             //
-            var itemDefinitionGroupList = 
-                Config.
-                PlatformList.
-                Select(
-                    p => 
-                        new Targets.ItemDefinitionGroup(
-                            condition: "'$(Platform)'=='" + p.Name + "'",
-                            link:
-                                new Targets.Link(
-                                    additionalLibraryDirectories:
-                                        new[]
-                                        {
-                                            Targets.PathFromThis(
-                                                Path.Combine(
-                                                    Targets.LibNativePath,
-                                                    p.Directory)
-                                            )
-                                        }
-                                )
-                        )
-                );
+            var itemDefinitionGroupList = new[]
+            {
+                new Targets.ItemDefinitionGroup(
+                    link: new Targets.Link(
+                        additionalLibraryDirectories:
+                            new[]
+                            {
+                                Targets.PathFromThis(Targets.LibNativePath)
+                            }
+                    ))
+            };
 
             // NuGet packages for each library. 
             foreach (var library in libraryDictionary)
@@ -332,7 +306,10 @@ namespace builder
                 var name = library.Key;
                 var libraryId = "boost_" + name;
                 var list = T.List[T.Text(name)];
-                foreach (var package in library.Value.PackageDictionary.OrderBy(p => Config.CompilerNumber(p.Key)))
+                foreach (var package in library
+                    .Value
+                    .PackageDictionary
+                    .OrderBy(p => Config.CompilerNumber(p.Key)))
                 {
                     var compiler = package.Key;
                     var packageValue = package.Value;
@@ -345,12 +322,10 @@ namespace builder
                             f =>
                                 new Nuspec.File(
                                     Path.Combine(Config.BoostDir, f),
-                                    Path.Combine(Targets.LibNativePath, f)
-                                )
+                                    Targets.LibNativePath)
                         ),
                         SrcPackage.BoostDependency,
-                        name.ToOptional(),
-                        packageValue.PlatformList);
+                        name.ToOptional());
                     list = list
                         [T.Text(" ")]
                         [A(
