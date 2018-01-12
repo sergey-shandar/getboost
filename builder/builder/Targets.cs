@@ -34,7 +34,12 @@ namespace builder
 
         private static void Append(
             XElement x, string name, IEnumerable<string> value)
-            => x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
+        {
+            if (value.Any())
+            {
+                x.Append(M(name, String.Join(";", value) + ";%(" + name + ")"));
+            }
+        }
 
         public sealed class Link
         {
