@@ -15,7 +15,7 @@ namespace builder
 
         public const string IncludePath = @"lib\native\include\";
 
-        public const string BuildPath = @"build\native\";
+        public const string BuildPath = @"build\";
 
         public enum PrecompiledHeader
         {
@@ -172,7 +172,7 @@ namespace builder
         }
 
         public static string PathFromThis(string path)
-            => Path.Combine(@"$(MSBuildThisFileDirectory)..\..\", path);
+            => Path.Combine(@"$(MSBuildThisFileDirectory)..\", path);
 
         public static XElement M(
             string elementName, params XAttribute[] attributeList)
