@@ -12,6 +12,7 @@ NuGet Packages for [Boost](http://boost.org).
 
 # Releases
 
+- [1.67](releases/1.67.md)
 - [1.66](releases/1.66.md)
 - [1.65.1](releases/1.65.1.md)
 - [1.65](releases/1.65.md)
