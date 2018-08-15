@@ -1,6 +1,7 @@
 NuGet Packages for [Boost](http://boost.org).
 
 - [![NuGet package](https://img.shields.io/nuget/v/boost.svg?label=boost)](https://nuget.org/packages/boost)
+- [![NuGet package](https://img.shields.io/nuget/v/boost-vc150.svg?label=boost-vc150)](https://nuget.org/packages/boost-vc150)
 - [![NuGet package](https://img.shields.io/nuget/v/boost-vc141.svg?label=boost-vc141)](https://nuget.org/packages/boost-vc141)
 - [![NuGet package](https://img.shields.io/nuget/v/boost-vc140.svg?label=boost-vc140)](https://nuget.org/packages/boost-vc140)
 - [![NuGet package](https://img.shields.io/nuget/v/boost-vc120.svg?label=boost-vc120)](https://nuget.org/packages/boost-vc120)
@@ -12,6 +13,7 @@ NuGet Packages for [Boost](http://boost.org).
 
 # Releases
 
+- [1.68](releases/1.68.md)
 - [1.67](releases/1.67.md)
 - [1.66](releases/1.66.md)
 - [1.65.1](releases/1.65.1.md)
