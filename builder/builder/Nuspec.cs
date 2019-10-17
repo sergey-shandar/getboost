@@ -63,20 +63,21 @@ namespace builder
                         N("version", version.ToString()),
                         N("authors", Config.Authors),
                         N("owners", Config.Owners),
-                        N("licenseUrl", "https://github.com/sergey-shandar/getboost/blob/master/LICENSE"),
+                        N("license", Xml.A("type", "expression")).Append("BSL-1.0"),
                         N("projectUrl", "https://github.com/sergey-shandar/getboost"),
                         N("requireLicenseAcceptance", "false"),
                         N("description", description),
                         N("dependencies").Append(
+                        N("group", Xml.A("targetFramework", "native")).Append(
                             dependencyList.Select(
-                                d => 
+                                d =>
                                     N(
                                         "dependency",
                                         Xml.A("id", d.Id),
                                         Xml.A("version", d.Version)
                                     )
                             )
-                        ),
+                        )),
                         N("tags", string.Join(" ", tags))
                     ),
                     N("files").Append(fileList.Select(f => f.N))
@@ -93,7 +94,7 @@ namespace builder
             var nupkgFile = id + "." + version + ".nupkg";
             Console.WriteLine("uploading: " + nupkgFile);
             {
-                var p = Process.Start(
+/*                 var p = Process.Start(
                   new ProcessStartInfo(
                       @"..\..\..\packages\NuGet.CommandLine.6.9.1\tools\nuget.exe",
                       $"push {nupkgFile} -Source https://api.nuget.org/v3/index.json -ApiKey {ApiKey.Value}")
@@ -104,14 +105,14 @@ namespace builder
                 if (p.ExitCode != 0) {
                     Environment.Exit(p.ExitCode);
                 }
-            }
+ */            }
         }
 
         public static void Create(
             string nuspecId,
             string packageId,
             Version version,
-            string description, 
+            string description,
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,
