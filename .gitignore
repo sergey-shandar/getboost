@@ -5,6 +5,7 @@ Release/
 bin/
 ipch/
 obj/
+nuget_build/
 
 #in case someone is using links
 packages

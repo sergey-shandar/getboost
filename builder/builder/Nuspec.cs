@@ -62,11 +62,12 @@ namespace builder
                         N("version", version.ToString()),
                         N("authors", Config.Authors),
                         N("owners", Config.Owners),
-                        N("licenseUrl", "https://github.com/sergey-shandar/getboost/blob/master/LICENSE"),
+                        N("license", Xml.A("type", "expression")).Append("BSL-1.0"),
                         N("projectUrl", "https://github.com/sergey-shandar/getboost"),
                         N("requireLicenseAcceptance", "false"),
                         N("description", description),
                         N("dependencies").Append(
+                        N("group", Xml.A("targetFramework", "native")).Append(
                             dependencyList.Select(
                                 d =>
                                     N(
@@ -75,7 +76,7 @@ namespace builder
                                         Xml.A("version", d.Version)
                                     )
                             )
-                        ),
+                        )),
                         N("tags", string.Join(" ", tags))
                     ),
                     N("files").Append(fileList.Select(f => f.N))
@@ -84,8 +85,8 @@ namespace builder
             nuspec.CreateDocument().Save(nuspecFile);
             Process.Start(
                 new ProcessStartInfo(
-                    @"..\..\..\packages\NuGet.CommandLine.2.8.3\tools\nuget.exe",
-                    "pack " + nuspecFile)
+                    @"..\packages\NuGet.CommandLine.5.4.0\tools\nuget.exe",
+                    "pack " + nuspecFile + " -OutputDirectory nuget_output")
                 {
                     UseShellExecute = false,
                 }).WaitForExit();
