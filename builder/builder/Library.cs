@@ -14,9 +14,9 @@ namespace builder
 
         public Library(
             string name,
-            Optional.Class<string> directory = 
+            Optional.Class<string> directory =
                 new Optional.Class<string>(),
-            Optional.Class<IEnumerable<SrcPackage>> packageList = 
+            Optional.Class<IEnumerable<SrcPackage>> packageList =
                 new Optional.Class<IEnumerable<SrcPackage>>())
         {
             Name = name;

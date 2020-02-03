@@ -68,7 +68,7 @@ namespace builder
                         N("description", description),
                         N("dependencies").Append(
                             dependencyList.Select(
-                                d => 
+                                d =>
                                     N(
                                         "dependency",
                                         Xml.A("id", d.Id),
@@ -84,7 +84,7 @@ namespace builder
             nuspec.CreateDocument().Save(nuspecFile);
             Process.Start(
                 new ProcessStartInfo(
-                    @"..\..\..\packages\NuGet.CommandLine.2.8.3\tools\nuget.exe", 
+                    @"..\..\..\packages\NuGet.CommandLine.2.8.3\tools\nuget.exe",
                     "pack " + nuspecFile)
                 {
                     UseShellExecute = false,
@@ -95,7 +95,7 @@ namespace builder
             string nuspecId,
             string packageId,
             Version version,
-            string description, 
+            string description,
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<File> fileList,
             IEnumerable<CompilationUnit> compilationUnitList,

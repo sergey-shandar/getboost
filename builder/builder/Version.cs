@@ -32,7 +32,7 @@ namespace builder
         public readonly string MinorRevision;
 
         public UnstableVersion(
-            int major, int minor, int majorRevision, string minorRevision) : 
+            int major, int minor, int majorRevision, string minorRevision) :
             base(major, minor, majorRevision)
         {
             MinorRevision = minorRevision;

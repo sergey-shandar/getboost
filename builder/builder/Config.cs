@@ -5,7 +5,7 @@ namespace builder
 {
     public static class Config
     {
-        public static readonly Version Version = 
+        public static readonly Version Version =
             new StableVersion(1, 71, 0, 0);
 
         public static readonly List[] Release =
@@ -31,7 +31,7 @@ namespace builder
             }
         }
 
-        public static readonly Dictionary<string, CompilerInfo> CompilerMap = 
+        public static readonly Dictionary<string, CompilerInfo> CompilerMap =
             new Dictionary<string, CompilerInfo>
         {
             { "vc80", new CompilerInfo("Visual Studio 2005 SP1") },
@@ -46,7 +46,7 @@ namespace builder
 
         public static int CompilerNumber(string key)
             => int.Parse(key.Substring(2));
-            
+
         public static readonly Library[] LibraryList =
         {
             // chrono depends on system
@@ -67,7 +67,7 @@ namespace builder
                 {
                     // coroutine
                     new SrcPackage(
-                        preprocessorDefinitions: new[] 
+                        preprocessorDefinitions: new[]
                         {
                             "BOOST_COROUTINES_NO_LIB"
                         }
@@ -75,9 +75,9 @@ namespace builder
                     // coroutine_segmented (GCC only)
                     new SrcPackage(
                         name: "segmented",
-                        fileList: new[] 
+                        fileList: new[]
                         {
-                            @"detail\segmented_stack_allocator.cpp" 
+                            @"detail\segmented_stack_allocator.cpp"
                         },
                         skip: true
                     ),
@@ -102,7 +102,7 @@ namespace builder
                     new SrcPackage(),
                     // need bzip2 lib.
                     new SrcPackage(
-                        name: "bzip2", 
+                        name: "bzip2",
                         fileList: new[] { "bzip2.cpp" }),
                     // need zlib lib.
                     new SrcPackage(
@@ -116,9 +116,9 @@ namespace builder
                 {
                     // locale, depends on thread, system, date_time, chrono.
                     new SrcPackage(
-                        lineList: new[] 
-                        { 
-                            "#define BOOST_LOCALE_NO_POSIX_BACKEND" 
+                        lineList: new[]
+                        {
+                            "#define BOOST_LOCALE_NO_POSIX_BACKEND"
                         },
                         fileList: new[]
                         {
@@ -155,7 +155,7 @@ namespace builder
                 {
                     // log depends on system, file_system, date_time, thread, chrono.
                     new SrcPackage(
-                        lineList: new[] 
+                        lineList: new[]
                         {
                             "#define BOOST_SPIRIT_USE_PHOENIX_V3"
                         },
@@ -219,9 +219,9 @@ namespace builder
                 packageList: new[]
                 {
                     new SrcPackage(
-                        preprocessorDefinitions: 
+                        preprocessorDefinitions:
                             new[] { "BOOST_PYTHON_STATIC_LIB" },
-                        lineList: 
+                        lineList:
                             new[] { "#define BOOST_PYTHON_SOURCE" }
                     )
                 }

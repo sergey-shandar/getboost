@@ -14,7 +14,7 @@ namespace builder
             => Path.GetDirectoryName(_localFile);
 
         public string FileName(string packageId)
-            => packageId + 
+            => packageId +
                 "." +
                 _localFile.Replace('\\', '.');
 
@@ -30,7 +30,7 @@ namespace builder
                     Targets.PrecompiledHeader.NotUsing,
                 additionalIncludeDirectories:
                     new[] { Path.Combine(srcPath, LocalPath) },
-                sDLCheck: 
+                sDLCheck:
                     false,
                 exceptionHandling:
                     Targets.ExceptionHandling.Async
@@ -48,7 +48,7 @@ namespace builder
                     Concat(package.LineList).
                     Concat(
                         new[]
-                        { 
+                        {
                             "#include \"" + Path.GetFileName(_localFile) + "\""
                         }
                     )

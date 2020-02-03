@@ -24,11 +24,11 @@ namespace builder
 
         public SrcPackage(
             Optional.Class<string> name = new Optional.Class<string>(),
-            Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
+            Optional.Class<IEnumerable<string>> preprocessorDefinitions =
                 new Optional.Class<IEnumerable<string>>(),
-            Optional.Class<IEnumerable<string>> lineList = 
+            Optional.Class<IEnumerable<string>> lineList =
                 new Optional.Class<IEnumerable<string>>(),
-            Optional.Class<IEnumerable<string>> fileList = 
+            Optional.Class<IEnumerable<string>> fileList =
                 new Optional.Class<IEnumerable<string>>(),
             bool skip = false)
         {
@@ -43,7 +43,7 @@ namespace builder
         {
         }
 
-        public SrcPackage(string name, SrcPackage package, IEnumerable<string> fileList):
+        public SrcPackage(string name, SrcPackage package, IEnumerable<string> fileList) :
             this(
                 name: name,
                 preprocessorDefinitions: package.PreprocessorDefinitions.ToOptionalClass(),
@@ -109,7 +109,7 @@ namespace builder
                     nuspecId,
                     Config.Version,
                     nuspecId,
-                    new[] 
+                    new[]
                     {
                         new Targets.ItemDefinitionGroup(clCompile: clCompile)
                     },

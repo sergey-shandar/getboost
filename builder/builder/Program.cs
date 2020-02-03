@@ -62,9 +62,9 @@ namespace builder
                 var fileList = dir.FileList(p.FileList);
                 remainder.ExceptWith(fileList);
                 yield return new SrcPackage(
-                    name: 
-                        name + 
-                        "_" + 
+                    name:
+                        name +
+                        "_" +
                         p.Name.Select(n => n, () => string.Empty),
                     package: p,
                     fileList: fileList
@@ -122,17 +122,17 @@ namespace builder
         static A A(string name, string library, Version version)
             => T.A(
                 name,
-                "http://nuget.org/packages/" + 
-                    library + 
-                    "/" + 
+                "http://nuget.org/packages/" +
+                    library +
+                    "/" +
                     version);
 
         static A A(string url, Version version)
             => A(url, url, version);
 
         static void CreateBinaryNuspec(
-            string id, 
-            string compiler, 
+            string id,
+            string compiler,
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
             IEnumerable<Nuspec.File> fileList,
             IEnumerable<Nuspec.Dependency> dependencyList,
@@ -141,7 +141,7 @@ namespace builder
             var info = Config.CompilerMap[compiler];
             var description =
                 id +
-                ". Compiler: " + 
+                ". Compiler: " +
                 info.Name +
                 ".";
             Nuspec.Create(
@@ -164,7 +164,7 @@ namespace builder
             // Changes
             {
                 doc = doc[T.H1("Release Notes")];
-                foreach(var change in Config.Release)
+                foreach (var change in Config.Release)
                 {
                     doc = doc[change];
                 }
@@ -207,13 +207,13 @@ namespace builder
                     ),
                     new CompilationUnit[0],
                     new Nuspec.Dependency[0],
-                    new[] { "headers" } 
+                    new[] { "headers" }
                 );
             }
 
             // source libraries.
             doc = doc[T.H1("Source Libraries")];
-            var srcLibList = new List<string>(); 
+            var srcLibList = new List<string>();
             foreach (var directory in Directory
                 .GetDirectories(Path.Combine(Config.BoostDir, "libs")))
             {
@@ -225,10 +225,10 @@ namespace builder
                     var libraryConfig = Config
                         .LibraryList
                         .Where(l => l.Name == name)
-                        .FirstOrDefault() 
+                        .FirstOrDefault()
                         ?? new Library(name);
 
-                    foreach(var libName in MakeSrcLibrary(libraryConfig, src))
+                    foreach (var libName in MakeSrcLibrary(libraryConfig, src))
                     {
                         var fullName = "boost_" + libName + "-src";
                         srcLibList.Add(libName);
@@ -251,11 +251,11 @@ namespace builder
 
             // create dictionaries for binary NuGet packages.
             doc = doc[T.H1("Precompiled Libraries")];
-            
+
             // compiler -> (library name -> pacakge)
-            var compilerDictionary = 
+            var compilerDictionary =
                 new Dictionary<string, Dictionary<string, CompiledPackage>>();
-            
+
             // library name -> library.
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
 
@@ -329,8 +329,8 @@ namespace builder
                     list = list
                         [T.Text(" ")]
                         [A(
-                            package.Key, 
-                            nuspecId, 
+                            package.Key,
+                            nuspecId,
                             SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
                 }
                 doc = doc[list];
@@ -342,6 +342,6 @@ namespace builder
                 doc.Write(file);
             }
         }
-           
+
     }
 }
