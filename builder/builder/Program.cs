@@ -98,9 +98,10 @@ namespace builder
             Dictionary<string, Dictionary<string, CompiledPackage>> compilerDictionary,
             Dictionary<string, CompiledLibrary> libraryDictionary)
         {
-            foreach (var dir in new DirectoryInfo(Config.BoostDir).GetDirectories("lib*-msvc-*"))
+            foreach (var dir in new DirectoryInfo(Config.BoostDir).GetDirectories("stage/msvc-14.2/*"))
             {
-                foreach (var file in dir.GetFiles("*boost*"))
+                var libDir = dir.CreateSubdirectory("lib");
+                foreach (var file in libDir.GetFiles("*boost*"))
                 {
                     var split = file.Name.SplitFirst('-');
                     var library = split.Before.SplitFirst('_').After;
@@ -110,7 +111,7 @@ namespace builder
                     var compiledLibrary = libraryDictionary.GetOrAddNew(library);
                     var compiledPackage =
                         compiledLibrary.PackageDictionary.GetOrAddNew(compiler);
-                    compiledPackage.AddFile(dir.Name, file.Name);
+                    compiledPackage.AddFile(libDir.FullName, file.Name);
 
                     // add the compiler and add the library to the compiler.
                     compilerDictionary.GetOrAddNew(compiler)[library] =
