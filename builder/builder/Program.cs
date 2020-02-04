@@ -106,19 +106,16 @@ namespace builder
             releaseNotes = releaseNotes[T.H1("Precompiled Libraries")];
 
             // compiler -> (library name -> pacakge)
-            var compilerDictionary = new Dictionary<string, Dictionary<string, CompiledPackage>>();
+            var compilers = new Dictionary<string, Dictionary<string, CompiledPackage>>();
 
             // library name -> library.
-            var libraryDictionary = new Dictionary<string, CompiledLibrary>();
+            var libraries = new Dictionary<string, CompiledLibrary>();
 
-            BinaryFetcher.FetchBinariesFromStage(
-                Config.BoostDir,
-                compilerDictionary,
-                libraryDictionary);
+            BinaryFetcher.FetchBinariesFromStage(Config.BoostDir, compilers, libraries);
 
-            MakePackages(releaseNotes, libraryDictionary);
+            MakePackages(releaseNotes, libraries);
 
-            MakeAggregatePackage(releaseNotes, compilerDictionary);
+            MakeAggregatePackage(releaseNotes, compilers);
 
             WriteReleaseFile(releaseNotes);
         }
