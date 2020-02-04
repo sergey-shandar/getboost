@@ -7,7 +7,7 @@ namespace builder
     {
         public static IEnumerable<T> OneIfAbsent<T>(
             this Optional.Class<IEnumerable<T>> value)
-            where T: new()
+            where T : new()
             => value.Cast().Select(v => v, () => new[] { new T() });
 
         public static HashSet<T> ToHashSet<T>(this IEnumerable<T> values)
@@ -25,7 +25,7 @@ namespace builder
 
         public static Value GetOrAddNew<Key, Value>(
             this IDictionary<Key, Value> dictionary, Key key)
-            where Value: new()
+            where Value : new()
         {
             Value value;
             if (!dictionary.TryGetValue(key, out value))

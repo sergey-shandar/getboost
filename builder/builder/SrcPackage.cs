@@ -24,11 +24,11 @@ namespace builder
 
         public SrcPackage(
             Optional.Class<string> name = new Optional.Class<string>(),
-            Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
+            Optional.Class<IEnumerable<string>> preprocessorDefinitions =
                 new Optional.Class<IEnumerable<string>>(),
-            Optional.Class<IEnumerable<string>> lineList = 
+            Optional.Class<IEnumerable<string>> lineList =
                 new Optional.Class<IEnumerable<string>>(),
-            Optional.Class<IEnumerable<string>> fileList = 
+            Optional.Class<IEnumerable<string>> fileList =
                 new Optional.Class<IEnumerable<string>>(),
             bool skip = false)
         {
@@ -43,7 +43,7 @@ namespace builder
         {
         }
 
-        public SrcPackage(string name, SrcPackage package, IEnumerable<string> fileList):
+        public SrcPackage(string name, SrcPackage package, IEnumerable<string> fileList) :
             this(
                 name: name,
                 preprocessorDefinitions: package.PreprocessorDefinitions.ToOptionalClass(),
@@ -63,7 +63,8 @@ namespace builder
                     new UnstableVersion(
                         stable.Major,
                         stable.Minor,
-                        stable.MajorRevision,
+                        stable.Patch,
+                        stable.PackageVersion,
                         info.PreRelease),
                 unstable => unstable);
 
@@ -71,12 +72,12 @@ namespace builder
             string library, string compiler)
             => DependencyOne(
                 $"boost_{library}-{compiler}",
-                CompilerVersion(Config.CompilerMap[compiler]));
+                CompilerVersion(Config.Compilers[compiler]));
 
         public static IEnumerable<Nuspec.Dependency> BoostDependency
             => new[] { DependencyOne("boost", Config.Version) };
 
-        public Optional<string> Create(Optional<string> directory)
+        public Optional<string> Create(Optional<DirectoryInfo> directory)
         {
             if (!Skip)
             {
@@ -86,7 +87,7 @@ namespace builder
                     FileList.Select(
                         f =>
                             new Nuspec.File(
-                                directory.Select(d => Path.Combine(d, f), () => f),
+                                directory.Select(d => Path.Combine(d.FullName, f), () => f),
                                 Path.Combine(Targets.SrcPath, f)
                             )
                     );
@@ -109,7 +110,7 @@ namespace builder
                     nuspecId,
                     Config.Version,
                     nuspecId,
-                    new[] 
+                    new[]
                     {
                         new Targets.ItemDefinitionGroup(clCompile: clCompile)
                     },

@@ -10,7 +10,7 @@ namespace builderTest
     public class UnitTest
     {
         struct A<T>
-        {            
+        {
             public static implicit operator A<T>(T value)
             {
                 return new A<T>();
@@ -20,7 +20,7 @@ namespace builderTest
         class X
         {
             public X(A<int> p = default(A<int>))
-            {               
+            {
             }
 
             /*
@@ -36,11 +36,11 @@ namespace builderTest
         }
 
         public static void Lib(Optional.Class<IEnumerable<SrcPackage>> p)
-        {            
+        {
         }
 
         public static void R(Optional.Class<IEnumerable<int>> p)
-        {            
+        {
         }
 
         public static void M(Optional.Class<IEnumerable<string>> p)
@@ -62,7 +62,7 @@ namespace builderTest
             M(new string[7]);
             // M(Enumerable.Empty<string>());
             // Lib(Enumerable.Empty<Package>());
-            Assert.AreEqual(new UnstableVersion(1, 56, 0, "rc1").ToString(), "1.56.0-rc1");
+            Assert.AreEqual(new UnstableVersion(1, 56, 0, 2, "rc1").ToString(), "1.56.0.2-rc1");
             Assert.AreEqual(new StableVersion(1, 55, 0, 16).ToString(), "1.55.0.16");
         }
     }

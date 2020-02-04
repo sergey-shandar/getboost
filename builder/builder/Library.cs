@@ -1,5 +1,6 @@
 ﻿using Framework.G1;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace builder
@@ -8,15 +9,15 @@ namespace builder
     {
         public readonly string Name;
 
-        public readonly Optional<string> Directory;
+        public readonly Optional<DirectoryInfo> Directory;
 
         public readonly IEnumerable<SrcPackage> PackageList;
 
         public Library(
             string name,
-            Optional.Class<string> directory = 
-                new Optional.Class<string>(),
-            Optional.Class<IEnumerable<SrcPackage>> packageList = 
+            Optional.Class<DirectoryInfo> directory =
+                new Optional.Class<DirectoryInfo>(),
+            Optional.Class<IEnumerable<SrcPackage>> packageList =
                 new Optional.Class<IEnumerable<SrcPackage>>())
         {
             Name = name;

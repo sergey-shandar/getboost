@@ -78,18 +78,18 @@ namespace builder
 
             public readonly Optional<bool> SDLCheck;
 
-            public readonly Optional<ExceptionHandling> ExceptionHandling; 
+            public readonly Optional<ExceptionHandling> ExceptionHandling;
 
             public ClCompile(
-                Optional.Class<string> include = 
+                Optional.Class<string> include =
                     new Optional.Class<string>(),
-                Optional.Struct<PrecompiledHeader> precompiledHeader = 
+                Optional.Struct<PrecompiledHeader> precompiledHeader =
                     new Optional.Struct<PrecompiledHeader>(),
-                Optional.Class<IEnumerable<string>> preprocessorDefinitions = 
+                Optional.Class<IEnumerable<string>> preprocessorDefinitions =
                     new Optional.Class<IEnumerable<string>>(),
-                Optional.Class<IEnumerable<string>> additionalIncludeDirectories = 
+                Optional.Class<IEnumerable<string>> additionalIncludeDirectories =
                     new Optional.Class<IEnumerable<string>>(),
-                Optional.Struct<bool> sDLCheck = 
+                Optional.Struct<bool> sDLCheck =
                     new Optional.Struct<bool>(),
                 Optional.Struct<ExceptionHandling> exceptionHandling =
                     new Optional.Struct<ExceptionHandling>())
@@ -110,7 +110,7 @@ namespace builder
                     var clCompile = M("ClCompile");
                     Include.ForEach(i => clCompile.Append(Xml.A("Include", i)));
                     PrecompiledHeader.ForEach(
-                        ph => 
+                        ph =>
                             clCompile.Append(
                                 M("PrecompiledHeader", ph.ToString())
                             )
@@ -119,7 +119,7 @@ namespace builder
                         c => clCompile.Append(M("SDLCheck", c.ToString()))
                     );
                     ExceptionHandling.ForEach(
-                        eh => 
+                        eh =>
                             clCompile.Append(
                                 M("ExceptionHandling", eh.ToString())
                             )
@@ -129,7 +129,7 @@ namespace builder
                         "PreprocessorDefinitions",
                         PreprocessorDefinitions);
                     Append(
-                        clCompile, 
+                        clCompile,
                         "AdditionalIncludeDirectories",
                         AdditionalIncludeDirectories);
                     return clCompile;
@@ -146,9 +146,9 @@ namespace builder
             public readonly Optional<Link> Link;
 
             public ItemDefinitionGroup(
-                Optional.Class<string> condition = 
+                Optional.Class<string> condition =
                     new Optional.Class<string>(),
-                Optional.Class<ClCompile> clCompile = 
+                Optional.Class<ClCompile> clCompile =
                     new Optional.Class<ClCompile>(),
                 Optional.Class<Link> link =
                     new Optional.Class<Link>())

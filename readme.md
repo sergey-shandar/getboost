@@ -31,12 +31,13 @@ NuGet Packages for [Boost](http://boost.org).
 ## Building Boost
 
 1. Download Boost library from [boost.org](http://boost.org/).
-2. Unpack the Boost library in the parent folder of getboost.
-3. Rename it to `boost`.
-4. Run [boost.bat](boost.bat). It may take several hours to complete.
+2. Unpack the Boost library in the directory you like.
+3. Run [boost.bat](boost.bat), inside the boost directory, with required toolset as an argument. It will take some time to complete.
 
 ## Building NuGet Packages
 
 1. Open [builder\builder.sln](builder/builder.sln) in Visual Studio 2017 or higher.
-2. Build and run the [builder](builder/builder/builder.csproj) project. It may take about half an hour to complete.
-3. Find NuGet packages in the `builder\builder\bin\Debug\` folder.
+2. Adjust [builder\builder\Config.cs](builder\builder\Config.cs), to match your boost version and path
+3. Build the [builder](builder/builder/builder.csproj) project.
+4. Run the [builder](builder/builder/builder.csproj) project. It may take about half an hour to complete.
+5. Find NuGet packages in the `nuget_build\nuget_output` directory.
