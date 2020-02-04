@@ -10,12 +10,13 @@ namespace builder
     {
         private static IEnumerable<SrcPackage> CreatePackageList(
             string name,
-            string path,
+            DirectoryInfo path,
             IEnumerable<SrcPackage> packageListConfig)
         {
             var firstPackage = packageListConfig.First();
-            var dir = new Dir(new DirectoryInfo(path), "");
+            var dir = new Dir(path, "");
             var remainder = dir.FileList().ToHashSet();
+
             foreach (var p in packageListConfig.Skip(1))
             {
                 var fileList = dir.FileList(p.FileList);
@@ -39,7 +40,7 @@ namespace builder
         }
 
         private static IEnumerable<string> MakeSrcLibrary(
-            Library libraryConfig, string src)
+            Library libraryConfig, DirectoryInfo src)
         {
             var name = libraryConfig.Name;
             var id = "boost_" + name;
@@ -205,8 +206,8 @@ namespace builder
             foreach (var directory in Directory
                 .GetDirectories(Path.Combine(Config.BoostDir, "libs")))
             {
-                var src = Path.Combine(directory, "src");
-                if (Directory.Exists(src))
+                var src = new DirectoryInfo(Path.Combine(directory, "src"));
+                if (src.Exists)
                 {
                     var name = Path.GetFileName(directory);
 

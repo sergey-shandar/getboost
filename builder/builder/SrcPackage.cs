@@ -76,7 +76,7 @@ namespace builder
         public static IEnumerable<Nuspec.Dependency> BoostDependency
             => new[] { DependencyOne("boost", Config.Version) };
 
-        public Optional<string> Create(Optional<string> directory)
+        public Optional<string> Create(Optional<DirectoryInfo> directory)
         {
             if (!Skip)
             {
@@ -86,7 +86,7 @@ namespace builder
                     FileList.Select(
                         f =>
                             new Nuspec.File(
-                                directory.Select(d => Path.Combine(d, f), () => f),
+                                directory.Select(d => Path.Combine(d.FullName, f), () => f),
                                 Path.Combine(Targets.SrcPath, f)
                             )
                     );
