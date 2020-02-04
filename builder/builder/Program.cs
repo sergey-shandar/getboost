@@ -73,7 +73,7 @@ namespace builder
             IEnumerable<Nuspec.Dependency> dependencyList,
             Optional<string> name)
         {
-            var info = Config.CompilerMap[compiler];
+            var info = Config.Compilers[compiler];
             var description =
                 id +
                 ". Compiler: " +
@@ -264,7 +264,7 @@ namespace builder
                         [A(
                             package.Key,
                             nuspecId,
-                            SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
+                            SrcPackage.CompilerVersion(Config.Compilers[compiler]))];
                 }
                 releaseNotes = releaseNotes[list];
             }
@@ -293,7 +293,7 @@ namespace builder
                     [A(
                         compiler,
                         id,
-                        SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
+                        SrcPackage.CompilerVersion(Config.Compilers[compiler]))];
             }
             releaseNotes = releaseNotes[list];
         }

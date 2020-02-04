@@ -31,7 +31,7 @@ namespace builder
             }
         }
 
-        public static readonly Dictionary<string, CompilerInfo> CompilerMap =
+        public static readonly Dictionary<string, CompilerInfo> Compilers =
             new Dictionary<string, CompilerInfo>
         {
             { "vc80", new CompilerInfo("Visual Studio 2005 SP1") },

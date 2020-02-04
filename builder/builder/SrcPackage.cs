@@ -72,7 +72,7 @@ namespace builder
             string library, string compiler)
             => DependencyOne(
                 $"boost_{library}-{compiler}",
-                CompilerVersion(Config.CompilerMap[compiler]));
+                CompilerVersion(Config.Compilers[compiler]));
 
         public static IEnumerable<Nuspec.Dependency> BoostDependency
             => new[] { DependencyOne("boost", Config.Version) };
