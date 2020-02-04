@@ -1,5 +1,6 @@
 ﻿using builder.MarkDown;
 using System.Collections.Generic;
+using System.IO;
 
 namespace builder
 {
@@ -15,7 +16,7 @@ namespace builder
 
         public const string Owners = "sergey_shandar";
 
-        public const string BoostDir = @"..\..\..\..\..\boost\";
+        public static readonly DirectoryInfo BoostDir = new DirectoryInfo(@"..\..\..\..\..\boost\");
 
         public sealed class CompilerInfo
         {

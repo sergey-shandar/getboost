@@ -44,40 +44,14 @@ namespace builder
         {
             var name = libraryConfig.Name;
             var id = "boost_" + name;
+
             return new Library(
                 id,
                 src,
                 CreatePackageList(
                     name, src, libraryConfig.PackageList
                 ).ToOptionalClass()
-            ).
-            Create();
-        }
-
-        private static void ScanCompiledFileSet(
-            Dictionary<string, Dictionary<string, CompiledPackage>> compilerDictionary,
-            Dictionary<string, CompiledLibrary> libraryDictionary)
-        {
-            foreach (var dir in new DirectoryInfo(Config.BoostDir).GetDirectories("stage/msvc-14.2/*"))
-            {
-                var libDir = dir.CreateSubdirectory("lib");
-                foreach (var file in libDir.GetFiles("*boost*"))
-                {
-                    var split = file.Name.SplitFirst('-');
-                    var library = split.Before.SplitFirst('_').After;
-                    var compiler = split.After.SplitFirst('-').Before;
-
-                    //
-                    var compiledLibrary = libraryDictionary.GetOrAddNew(library);
-                    var compiledPackage =
-                        compiledLibrary.PackageDictionary.GetOrAddNew(compiler);
-                    compiledPackage.AddFile(libDir.FullName, file.Name);
-
-                    // add the compiler and add the library to the compiler.
-                    compilerDictionary.GetOrAddNew(compiler)[library] =
-                        compiledPackage;
-                }
-            }
+            ).Create();
         }
 
         private static A A(string name, string library, Version version)
@@ -137,7 +111,10 @@ namespace builder
             // library name -> library.
             var libraryDictionary = new Dictionary<string, CompiledLibrary>();
 
-            ScanCompiledFileSet(compilerDictionary, libraryDictionary);
+            BinaryFetcher.FetchBinariesFromStage(
+                Config.BoostDir,
+                compilerDictionary,
+                libraryDictionary);
 
             MakePackages(releaseNotes, libraryDictionary);
 
@@ -161,7 +138,7 @@ namespace builder
                 [T.H1("Headers Only Libraries")]
                 [T.List[A("boost", Config.Version)]];
 
-            var path = Path.Combine(Config.BoostDir, "boost");
+            var path = Path.Combine(Config.BoostDir.FullName, "boost");
             var fileList =
                 new Dir(new DirectoryInfo(path), "boost").
                 FileList(f => true);
@@ -188,7 +165,7 @@ namespace builder
                 fileList.Select(
                     f =>
                         new Nuspec.File(
-                            Path.Combine(Config.BoostDir, f),
+                            Path.Combine(Config.BoostDir.FullName, f),
                             Path.Combine(Targets.IncludePath, f)
                         )
                 ),
@@ -204,7 +181,7 @@ namespace builder
             var srcLibList = new List<string>();
 
             foreach (var directory in Directory
-                .GetDirectories(Path.Combine(Config.BoostDir, "libs")))
+                .GetDirectories(Path.Combine(Config.BoostDir.FullName, "libs")))
             {
                 var src = new DirectoryInfo(Path.Combine(directory, "src"));
                 if (src.Exists)
@@ -277,7 +254,7 @@ namespace builder
                         packageValue.FileList.Select(
                             f =>
                                 new Nuspec.File(
-                                    Path.Combine(Config.BoostDir, f),
+                                    Path.Combine(Config.BoostDir.FullName, f),
                                     Targets.LibNativePath)
                         ),
                         SrcPackage.BoostDependency,
