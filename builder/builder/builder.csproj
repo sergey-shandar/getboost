@@ -53,6 +53,7 @@
     <Compile Include="CompiledLibrary.cs" />
     <Compile Include="CompiledPackage.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="Dir.cs" />
     <Compile Include="MarkDown.cs" />
     <Compile Include="Library.cs" />
     <Compile Include="Version.cs" />
