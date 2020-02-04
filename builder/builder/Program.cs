@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.IO;
 using builder.MarkDown;
@@ -120,33 +119,59 @@ namespace builder
 
         static void Main(string[] args)
         {
-            var doc = new Doc();
+            var releaseNotes = new Doc();
 
-            // Changes
+            GenerateChangeset(releaseNotes);
+
+            MakeHeaderOnlyPackage(releaseNotes);
+
+            MakeSourcePackages(releaseNotes);
+
+            // create dictionaries for binary NuGet packages.
+            releaseNotes = releaseNotes[T.H1("Precompiled Libraries")];
+
+            // compiler -> (library name -> pacakge)
+            var compilerDictionary = new Dictionary<string, Dictionary<string, CompiledPackage>>();
+
+            // library name -> library.
+            var libraryDictionary = new Dictionary<string, CompiledLibrary>();
+
+            ScanCompiledFileSet(compilerDictionary, libraryDictionary);
+
+            MakePackages(releaseNotes, libraryDictionary);
+
+            MakeAggregatePackage(releaseNotes, compilerDictionary);
+
+            WriteReleaseFile(releaseNotes);
+        }
+
+        private static void GenerateChangeset(Doc releaseNotes)
+        {
+            releaseNotes = releaseNotes[T.H1("Release Notes")];
+            foreach (var change in Config.Release)
             {
-                doc = doc[T.H1("Release Notes")];
-                foreach (var change in Config.Release)
-                {
-                    doc = doc[change];
-                }
+                releaseNotes = releaseNotes[change];
             }
+        }
 
-            // headers only library.
-            {
-                doc = doc
-                    [T.H1("Headers Only Libraries")]
-                    [T.List[A("boost", Config.Version)]];
-                var path = Path.Combine(Config.BoostDir, "boost");
-                var fileList =
-                    new Dir(new DirectoryInfo(path), "boost").
-                    FileList(f => true);
-                Nuspec.Create(
-                    "boost",
-                    "boost",
-                    Config.Version,
-                    "boost",
-                    new[]
-                    {
+        private static void MakeHeaderOnlyPackage(Doc doc)
+        {
+            doc = doc
+                [T.H1("Headers Only Libraries")]
+                [T.List[A("boost", Config.Version)]];
+
+            var path = Path.Combine(Config.BoostDir, "boost");
+            var fileList =
+                new Dir(new DirectoryInfo(path), "boost").
+                FileList(f => true);
+
+            Nuspec.Create(
+                "boost",
+                "boost",
+                Config.Version,
+                "boost",
+                new[]
+                {
                         new Targets.ItemDefinitionGroup(
                             clCompile:
                                 new Targets.ClCompile(
@@ -158,23 +183,25 @@ namespace builder
                                         }
                                 )
                         )
-                    },
-                    fileList.Select(
-                        f =>
-                            new Nuspec.File(
-                                Path.Combine(Config.BoostDir, f),
-                                Path.Combine(Targets.IncludePath, f)
-                            )
-                    ),
-                    new CompilationUnit[0],
-                    new Nuspec.Dependency[0],
-                    new[] { "headers" }
-                );
-            }
+                },
+                fileList.Select(
+                    f =>
+                        new Nuspec.File(
+                            Path.Combine(Config.BoostDir, f),
+                            Path.Combine(Targets.IncludePath, f)
+                        )
+                ),
+                new CompilationUnit[0],
+                new Nuspec.Dependency[0],
+                new[] { "headers" }
+            );
+        }
 
-            // source libraries.
-            doc = doc[T.H1("Source Libraries")];
+        private static void MakeSourcePackages(Doc releaseNotes)
+        {
+            releaseNotes = releaseNotes[T.H1("Source Libraries")];
             var srcLibList = new List<string>();
+
             foreach (var directory in Directory
                 .GetDirectories(Path.Combine(Config.BoostDir, "libs")))
             {
@@ -193,11 +220,12 @@ namespace builder
                     {
                         var fullName = "boost_" + libName + "-src";
                         srcLibList.Add(libName);
-                        doc = doc[T.List[A(
+                        releaseNotes = releaseNotes[T.List[A(
                             libName, fullName, Config.Version)]];
                     }
                 }
             }
+
             Nuspec.Create(
                     "boost-src",
                     "boost-src",
@@ -209,46 +237,12 @@ namespace builder
                     srcLibList.Select(srcLib => new Nuspec.Dependency(
                         "boost_" + srcLib + "-src", Config.Version.ToString())),
                     new[] { "sources" });
+        }
 
-            // create dictionaries for binary NuGet packages.
-            doc = doc[T.H1("Precompiled Libraries")];
-
-            // compiler -> (library name -> pacakge)
-            var compilerDictionary =
-                new Dictionary<string, Dictionary<string, CompiledPackage>>();
-
-            // library name -> library.
-            var libraryDictionary = new Dictionary<string, CompiledLibrary>();
-
-            ScanCompiledFileSet(compilerDictionary, libraryDictionary);
-
-            // all libraries for specific compiler.
-            {
-                var list = T.List[T.Text("all libraries")];
-                foreach (var compiler in compilerDictionary.Keys.OrderBy(Config.CompilerNumber))
-                {
-                    var id = "boost-" + compiler;
-                    var compilerLibraries = compilerDictionary[compiler];
-                    CreateBinaryNuspec(
-                        id,
-                        compiler,
-                        Enumerable.Empty<Targets.ItemDefinitionGroup>(),
-                        Enumerable.Empty<Nuspec.File>(),
-                        compilerLibraries
-                            .Keys
-                            .Select(lib => SrcPackage.Dependency(lib, compiler)),
-                        Optional<string>.Absent.Value);
-                    list = list
-                        [T.Text(" ")]
-                        [A(
-                            compiler,
-                            id,
-                            SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
-                }
-                doc = doc[list];
-            }
-
-            //
+        private static void MakePackages(
+            Doc releaseNotes,
+            Dictionary<string, CompiledLibrary> libraryDictionary)
+        {
             var itemDefinitionGroupList = new[]
             {
                 new Targets.ItemDefinitionGroup(
@@ -261,12 +255,12 @@ namespace builder
                     ))
             };
 
-            // NuGet packages for each library. 
             foreach (var library in libraryDictionary)
             {
                 var name = library.Key;
                 var libraryId = "boost_" + name;
                 var list = T.List[T.Text(name)];
+
                 foreach (var package in library
                     .Value
                     .PackageDictionary
@@ -294,15 +288,44 @@ namespace builder
                             nuspecId,
                             SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
                 }
-                doc = doc[list];
-            }
-
-            // release.md
-            using (var file = new StreamWriter("RELEASE.md"))
-            {
-                doc.Write(file);
+                releaseNotes = releaseNotes[list];
             }
         }
 
+        private static void MakeAggregatePackage(
+            Doc releaseNotes,
+            Dictionary<string, Dictionary<string, CompiledPackage>> compilerDictionary)
+        {
+            var list = T.List[T.Text("all libraries")];
+            foreach (var compiler in compilerDictionary.Keys.OrderBy(Config.CompilerNumber))
+            {
+                var id = "boost-" + compiler;
+                var compilerLibraries = compilerDictionary[compiler];
+                CreateBinaryNuspec(
+                    id,
+                    compiler,
+                    Enumerable.Empty<Targets.ItemDefinitionGroup>(),
+                    Enumerable.Empty<Nuspec.File>(),
+                    compilerLibraries
+                        .Keys
+                        .Select(lib => SrcPackage.Dependency(lib, compiler)),
+                    Optional<string>.Absent.Value);
+                list = list
+                    [T.Text(" ")]
+                    [A(
+                        compiler,
+                        id,
+                        SrcPackage.CompilerVersion(Config.CompilerMap[compiler]))];
+            }
+            releaseNotes = releaseNotes[list];
+        }
+
+        private static void WriteReleaseFile(Doc releaseNotes)
+        {
+            using (var file = new StreamWriter("RELEASE.md"))
+            {
+                releaseNotes.Write(file);
+            }
+        }
     }
 }
