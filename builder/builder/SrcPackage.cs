@@ -63,7 +63,8 @@ namespace builder
                     new UnstableVersion(
                         stable.Major,
                         stable.Minor,
-                        stable.MajorRevision,
+                        stable.Patch,
+                        stable.PackageVersion,
                         info.PreRelease),
                 unstable => unstable);
 

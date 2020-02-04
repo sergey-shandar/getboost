@@ -4,63 +4,64 @@ namespace builder
 {
     public abstract class Version
     {
-        public readonly int Major;
+        public readonly uint Major;
 
-        public readonly int Minor;
+        public readonly uint Minor;
 
-        public readonly int MajorRevision;
+        public readonly uint Patch;
+
+        public readonly uint PackageVersion;
 
         public abstract T Switch<T>(
             Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable);
 
-        protected Version(int major, int minor, int majorRevision)
+        protected Version(uint major, uint minor, uint patch, uint packageVersion)
         {
+            if (packageVersion < 1)
+            {
+                throw new ArgumentOutOfRangeException(
+                    "packageVersion",
+                    "Package Version has to be greater or equal to 1");
+            }
+
             Major = major;
             Minor = minor;
-            MajorRevision = majorRevision;
+            Patch = patch;
+            PackageVersion = packageVersion;
         }
 
-        public string BaseString
-            => Major + "." + Minor + "." + MajorRevision;
+        public string BaseString => Major + "." + Minor + "." + Patch + "." + PackageVersion;
 
-        public override string ToString()
-            => BaseString;
+        public override string ToString() => BaseString;
     }
 
     public sealed class UnstableVersion : Version
     {
-        public readonly string MinorRevision;
+        public readonly string PreReleaseVersion;
 
         public UnstableVersion(
-            int major, int minor, int majorRevision, string minorRevision) :
-            base(major, minor, majorRevision)
+            uint major, uint minor, uint majorRevision, uint packageVersion, string preReleaseVersion) :
+            base(major, minor, majorRevision, packageVersion)
         {
-            MinorRevision = minorRevision;
+            PreReleaseVersion = preReleaseVersion;
         }
 
         public override T Switch<T>(Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable)
             => unstable(this);
 
         public override string ToString()
-            => base.ToString() + "-" + MinorRevision;
+            => base.ToString() + "-" + PreReleaseVersion;
     }
 
     public sealed class StableVersion : Version
     {
-        public readonly int MinorRevision;
-
-        public StableVersion(
-            int major, int minor, int majorRevision, int minorRevision) :
-            base(major, minor, majorRevision)
+        public StableVersion(uint major, uint minor, uint patch, uint packageVersion) :
+            base(major, minor, patch, packageVersion)
         {
-            MinorRevision = minorRevision;
         }
 
         public override T Switch<T>(
             Func<StableVersion, T> stable, Func<UnstableVersion, T> unstable)
             => stable(this);
-
-        public override string ToString()
-            => base.ToString() + "." + MinorRevision;
     }
 }
