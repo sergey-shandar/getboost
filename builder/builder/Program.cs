@@ -9,7 +9,7 @@ namespace builder
 {
     partial class Program
     {
-        static IEnumerable<SrcPackage> CreatePackageList(
+        private static IEnumerable<SrcPackage> CreatePackageList(
             string name,
             string path,
             IEnumerable<SrcPackage> packageListConfig)
@@ -39,7 +39,7 @@ namespace builder
             );
         }
 
-        static IEnumerable<string> MakeSrcLibrary(
+        private static IEnumerable<string> MakeSrcLibrary(
             Library libraryConfig, string src)
         {
             var name = libraryConfig.Name;
@@ -54,7 +54,7 @@ namespace builder
             Create();
         }
 
-        static void ScanCompiledFileSet(
+        private static void ScanCompiledFileSet(
             Dictionary<string, Dictionary<string, CompiledPackage>> compilerDictionary,
             Dictionary<string, CompiledLibrary> libraryDictionary)
         {
@@ -80,7 +80,7 @@ namespace builder
             }
         }
 
-        static A A(string name, string library, Version version)
+        private static A A(string name, string library, Version version)
             => T.A(
                 name,
                 "http://nuget.org/packages/" +
@@ -88,10 +88,10 @@ namespace builder
                     "/" +
                     version);
 
-        static A A(string url, Version version)
+        private static A A(string url, Version version)
             => A(url, url, version);
 
-        static void CreateBinaryNuspec(
+        private static void CreateBinaryNuspec(
             string id,
             string compiler,
             IEnumerable<Targets.ItemDefinitionGroup> itemDefinitionGroupList,
