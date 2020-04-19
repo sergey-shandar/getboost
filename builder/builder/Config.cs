@@ -6,7 +6,7 @@ namespace builder
     public static class Config
     {
         public static readonly Version Version = 
-            new StableVersion(1, 71, 0, 0);
+            new StableVersion(1, 72, 0, 0);
 
         public static readonly List[] Release =
         {
@@ -16,7 +16,7 @@ namespace builder
 
         public const string Owners = "sergey_shandar";
 
-        public const string BoostDir = @"..\..\..\..\..\boost\";
+        public const string BoostDir = @"..\..\..\..\..\..\boost\boost";
 
         public sealed class CompilerInfo
         {
@@ -40,8 +40,8 @@ namespace builder
             { "vc110", new CompilerInfo("Visual Studio 2012 Update 4") },
             { "vc120", new CompilerInfo("Visual Studio 2013 Update 5") },
             { "vc140", new CompilerInfo("Visual Studio 2015 Update 3") },
-            { "vc141", new CompilerInfo("Visual Studio 2017 15.9.12") },
-            { "vc142", new CompilerInfo("Visual Studio 2019 16.1.1") },
+            { "vc141", new CompilerInfo("Visual Studio 2017 15.9.17") },
+            { "vc142", new CompilerInfo("Visual Studio 2019 16.3.6") },
         };
 
         public static int CompilerNumber(string key)
