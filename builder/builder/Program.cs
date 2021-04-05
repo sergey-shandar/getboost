@@ -212,6 +212,7 @@ namespace builder
             }
 
             // source libraries.
+            /*
             doc = doc[T.H1("Source Libraries")];
             var srcLibList = new List<string>(); 
             foreach (var directory in Directory
@@ -248,6 +249,7 @@ namespace builder
                     srcLibList.Select(srcLib => new Nuspec.Dependency(
                         "boost_" + srcLib + "-src", Config.Version.ToString())),
                     new[] { "sources" });
+            */
 
             // create dictionaries for binary NuGet packages.
             doc = doc[T.H1("Precompiled Libraries")];
