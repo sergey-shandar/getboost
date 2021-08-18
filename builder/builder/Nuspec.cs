@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using System.Diagnostics;
 using System.IO;
+using System;
 
 namespace builder
 {
@@ -89,6 +90,21 @@ namespace builder
                 {
                     UseShellExecute = false,
                 }).WaitForExit();
+            var nupkgFile = id + "." + version + ".nupkg";
+            Console.WriteLine("uploading: " + nupkgFile);
+            {
+                var p = Process.Start(
+                  new ProcessStartInfo(
+                      @"..\..\..\packages\NuGet.CommandLine.5.10.0\tools\nuget.exe",
+                      "push " + nupkgFile + " -Source https://api.nuget.org/v3/index.json -ApiKey")
+                  {
+                      UseShellExecute = false,
+                  });
+                p.WaitForExit();
+                if (p.ExitCode != 0) {
+                    Environment.Exit(p.ExitCode);
+                }
+            }
         }
 
         public static void Create(
