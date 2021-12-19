@@ -47,13 +47,10 @@ namespace builder
 
     public sealed class StableVersion : Version
     {
-        public readonly int MinorRevision;
-
         public StableVersion(
-            int major, int minor, int majorRevision, int minorRevision) :
+            int major, int minor, int majorRevision) :
             base(major, minor, majorRevision)
         {
-            MinorRevision = minorRevision;
         }
 
         public override T Switch<T>(
@@ -61,6 +58,6 @@ namespace builder
             => stable(this);
 
         public override string ToString()
-            => base.ToString() + "." + MinorRevision;
+            => base.ToString();
     }
 }
