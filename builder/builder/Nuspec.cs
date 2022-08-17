@@ -85,7 +85,7 @@ namespace builder
             nuspec.CreateDocument().Save(nuspecFile);
             Process.Start(
                 new ProcessStartInfo(
-                    @"..\..\..\packages\NuGet.CommandLine.5.10.0\tools\nuget.exe", 
+                    @"..\..\..\packages\NuGet.CommandLine.5.11.2\tools\nuget.exe", 
                     "pack " + nuspecFile)
                 {
                     UseShellExecute = false,
