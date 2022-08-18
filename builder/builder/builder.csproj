@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiKey.cs" />
     <Compile Include="Collections.cs" />
     <Compile Include="CompilationUnit.cs">
       <SubType>Code</SubType>

@@ -50,3 +50,4 @@ builder/packages/repositories.config
 /builder/packages/
 /builder/builderTest/bin/Debug
 .vs/
+/builder/builder/ApiKey.cs
