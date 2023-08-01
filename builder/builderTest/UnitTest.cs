@@ -63,7 +63,7 @@ namespace builderTest
             // M(Enumerable.Empty<string>());
             // Lib(Enumerable.Empty<Package>());
             Assert.AreEqual(new UnstableVersion(1, 56, 0, "rc1").ToString(), "1.56.0-rc1");
-            Assert.AreEqual(new StableVersion(1, 55, 0, 16).ToString(), "1.55.0.16");
+            Assert.AreEqual(new StableVersion(1, 55, 0).ToString(), "1.55.0");
         }
     }
 }
