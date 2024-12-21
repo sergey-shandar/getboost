@@ -1,0 +1,106 @@
+version: 1.87.{build}
+
+
+environment:
+  matrix:
+
+  - PlatformToolset: v143
+    APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+    BUILD_BOOST_VERSION: 1_87_0
+    BUILD_BOOST_VERSION_DOT: 1.87.0
+    BUILD_MSVC_VERSION_DOT: 14.3
+
+configuration:
+    - Release
+    #- Debug
+
+platform:
+    - Any CPU
+
+install:
+    - if "%platform%"=="Any CPU" set archi=amd64
+    - if "%platform%"=="Any CPU" set platform_input=Any CPU
+
+
+    - if "%PlatformToolset%"=="v140" call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" %archi%
+    - if "%PlatformToolset%"=="v141" call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %archi%
+    - if "%PlatformToolset%"=="v142" call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvarsall.bat" %archi%
+    - if "%PlatformToolset%"=="v143" call "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvarsall.bat" %archi%
+
+    - cd "%APPVEYOR_BUILD_FOLDER%"\..\..
+    - mkdir boostorg
+    - cd boostorg
+    #  build from source, but fails due to runtime limitation as each build takes ~ 40min
+    #- appveyor DownloadFile https://boostorg.jfrog.io/artifactory/main/release/%BUILD_BOOST_VERSION_DOT%/source/boost_%BUILD_BOOST_VERSION%.7z
+    #- boost.bat
+
+    # Free disk space for boost zip package
+    - rmdir /q /s C:\Qt
+    - rmdir /q /s C:\Python26
+    - rmdir /q /s C:\Python26-x64
+    - rmdir /q /s C:\Python27
+    - rmdir /q /s C:\Python27-x64
+    - rmdir /q /s C:\Python33
+    - rmdir /q /s C:\Python33-x64
+    - rmdir /q /s C:\Python34
+    - rmdir /q /s C:\Python34-x64
+    - rmdir /q /s C:\Python35
+    - rmdir /q /s C:\Python35-x64
+    - rmdir /q /s C:\Python36
+    - rmdir /q /s C:\Python36-x64
+    - rmdir /q /s C:\Python37
+    - rmdir /q /s C:\Python37-x64
+    - rmdir /q /s C:\Python38
+    - rmdir /q /s C:\Python38-x64
+    - rmdir /q /s C:\Python39
+    - rmdir /q /s C:\Python39-x64
+    - rmdir /q /s C:\Python310
+    - rmdir /q /s C:\Python310-x64
+    - rmdir /q /s C:\Python311
+    - rmdir /q /s C:\Python311-x64
+    - rmdir /q /s C:\Python312
+    - rmdir /q /s C:\Python312-x64
+
+    #  complete zip, but fails due to storage limitations on appveyor (artifactory download is much faster than sourceforge)
+    - appveyor DownloadFile https://boostorg.jfrog.io/artifactory/main/release/%BUILD_BOOST_VERSION_DOT%/binaries/boost_%BUILD_BOOST_VERSION%-bin-msvc-all-32-64.7z
+    #- appveyor DownloadFile https://sourceforge.net/projects/boost/files/boost-binaries/%BUILD_BOOST_VERSION_DOT%/boost_%BUILD_BOOST_VERSION%-bin-msvc-all-32-64.7z
+    - 7z x -y boost_%BUILD_BOOST_VERSION%-bin-msvc-all-32-64.7z > nul
+    - del /q boost_%BUILD_BOOST_VERSION%-bin-msvc-all-32-64.7z
+    - rename boost_%BUILD_BOOST_VERSION% boost
+
+
+    #- appveyor DownloadFile https://boostorg.jfrog.io/artifactory/main/release/%BUILD_BOOST_VERSION_DOT%/binaries/boost_%BUILD_BOOST_VERSION%-msvc-%BUILD_MSVC_VERSION_DOT%-32.exe
+    #- appveyor DownloadFile https://boostorg.jfrog.io/artifactory/main/release/%BUILD_BOOST_VERSION_DOT%/binaries/boost_%BUILD_BOOST_VERSION%-msvc-%BUILD_MSVC_VERSION_DOT%-64.exe
+    #- boost_%BUILD_BOOST_VERSION%-msvc-%BUILD_MSVC_VERSION_DOT%-64.exe /SILENT /DIR=C:\boostorg\boost
+    #- boost_%BUILD_BOOST_VERSION%-msvc-%BUILD_MSVC_VERSION_DOT%-32.exe /SILENT /DIR=C:\boostorg\boost
+
+    - nuget restore "%APPVEYOR_BUILD_FOLDER%"\builder\builder\packages.config -PackagesDirectory "%APPVEYOR_BUILD_FOLDER%"\builder\packages
+    - nuget restore "%APPVEYOR_BUILD_FOLDER%"\builder\builderTest\packages.config -PackagesDirectory "%APPVEYOR_BUILD_FOLDER%"\builder\packages
+
+
+build_script:
+    - cd "%APPVEYOR_BUILD_FOLDER%"\builder
+    - msbuild builder.sln /m /verbosity:minimal /t:restore /p:configuration="%configuration%" /p:platform="%platform_input%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - msbuild builder.sln /m /verbosity:minimal /p:configuration="%configuration%" /p:platform="%platform_input%" /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll"
+    - cd "%APPVEYOR_BUILD_FOLDER%"
+
+after_build:
+    - cd "%APPVEYOR_BUILD_FOLDER%"\builder\builder\bin\Release\
+    - call builder.exe
+
+artifacts:
+    #- path: installer\build\**\*.*
+    #  name: releases
+
+deploy:
+    provider: GitHub
+    auth_token:
+        secure: #!TODO!
+    artifact: releases
+    draft: false
+    prerelease: false
+    force_update: true
+    on:
+        appveyor_repo_tag: true
+        PlatformToolset: v143
+        configuration: Release

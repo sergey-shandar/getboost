@@ -1,0 +1,51 @@
+name: CI_build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        build_configuration: [Release]
+        build_platform: [Any CPU]
+        build_boost_version: [1_87_0]
+        build_boost_version_dot: [1.87.0]
+        build_msvc_version_dot: [14.3, 14.2, 14.1]
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+
+    - name: Setup Nuget.exe
+      uses: nuget/setup-nuget@v2
+
+    - name: restore input nuget packages
+      working-directory: builder\
+      run: |
+           nuget restore builder\packages.config -PackagesDirectory packages
+           nuget restore builderTest\packages.config -PackagesDirectory packages
+
+    - name: Setup to add MSBuild.exe to path
+      uses: microsoft/setup-msbuild@v2
+
+    - name: MSBuild of builder
+      working-directory: builder\
+      run: |
+           msbuild builder.sln /m /verbosity:minimal /t:restore /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}"
+           msbuild builder.sln /m /p:configuration="${{ matrix.build_configuration }}" /p:platform="${{ matrix.build_platform }}"
+      
+    - name: boost binary download created by https://github.com/teeks99/boost-release-windows
+      working-directory: .
+      run: |
+          Set-Location -Path 'D:\a'
+          New-Item -ItemType directory -Path D:\a\boostorg
+          Set-Location -Path 'D:\a\boostorg'
+          (New-Object System.Net.WebClient).DownloadFile("https://boostorg.jfrog.io/artifactory/main/release/${{ matrix.build_boost_version_dot }}/binaries/boost_${{ matrix.build_boost_version }}-msvc-${{ matrix.build_msvc_version_dot }}-64.exe", "D:\a\boostorg\boost_${{ matrix.build_boost_version }}-msvc-${{ matrix.build_msvc_version_dot }}-64.exe")
+          (New-Object System.Net.WebClient).DownloadFile("https://boostorg.jfrog.io/artifactory/main/release/${{ matrix.build_boost_version_dot }}/binaries/boost_${{ matrix.build_boost_version }}-msvc-${{ matrix.build_msvc_version_dot }}-32.exe", "D:\a\boostorg\boost_${{ matrix.build_boost_version }}-msvc-${{ matrix.build_msvc_version_dot }}-32.exe")
+          .\boost_${{ matrix.build_boost_version }}-msvc-${{ matrix.build_msvc_version_dot }}-64.exe /SILENT /DIR=D:\a\boostorg\boost | Out-Null
+          .\boost_${{ matrix.build_boost_version }}-msvc-${{ matrix.build_msvc_version_dot }}-32.exe /SILENT /DIR=D:\a\boostorg\boost | Out-Null
+
+    - name: run builder
+      working-directory: builder\builder\bin\Release\
+      run: .\builder.exe
